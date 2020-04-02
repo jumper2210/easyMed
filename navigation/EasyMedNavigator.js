@@ -7,13 +7,22 @@ import {
 import { Platform, SafeAreaView, Button, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
-import AddPlaceScreen, {
-  screenOptions as addPlaceScreenOptions
-} from "../screens/AddPlaceScreen";
+
+import ClinicScreen, {
+  screenOptions as clinicScreenOptions
+} from "../screens/clinic/ClinicOverviewScreen";
 
 import HomeScreen, {
   screenOptions as HomeScreenOptions
 } from "../screens/HomeScreen";
+
+import NewClinicScreen, {
+  screenOptions as AddClinicScreenOptions
+} from "../screens/clinic/NewClinicScreen";
+
+import ClinicDetail, {
+  screenOptions as clinicDetailOptions
+} from "../screens/clinic/ClinicDetailScreen";
 
 const defaultNavOptions = {
   headerStyle: {
@@ -44,13 +53,23 @@ export const HomeNavigator = () => {
 
 const AddPlaceStackNavigator = createStackNavigator();
 
-export const AddPlaceNavigator = () => {
+export const ClinicNavigator = () => {
   return (
     <AddPlaceStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <AddPlaceStackNavigator.Screen
-        name="Office"
-        component={AddPlaceScreen}
-        options={addPlaceScreenOptions}
+        name="Clinic"
+        component={ClinicScreen}
+        options={clinicScreenOptions}
+      />
+      <AddPlaceStackNavigator.Screen
+        name="AddClinic"
+        component={NewClinicScreen}
+        options={AddClinicScreenOptions}
+      />
+      <AddPlaceStackNavigator.Screen
+        name="ClinicDetail"
+        component={ClinicDetail}
+        options={clinicDetailOptions}
       />
     </AddPlaceStackNavigator.Navigator>
   );
@@ -88,12 +107,12 @@ export const EasyMedNavigator = () => {
         }}
       />
       <EasyMedDrawer.Screen
-        name="Office"
-        component={AddPlaceNavigator}
+        name="Clinic"
+        component={ClinicNavigator}
         options={{
           drawerIcon: props => (
             <Ionicons
-              name={Platform.OS === "android" ? "md-add" : "ios-add"}
+              name={Platform.OS === "android" ? "md-business" : "ios-business"}
               size={23}
               color={props.color}
             />

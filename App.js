@@ -3,7 +3,16 @@ import { StyleSheet, View } from "react-native";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import ReduxThunk from "redux-thunk";
+import clinicReducer from "./store/reducers/clinics/clinics-reducer";
 
+const rootReducer = combineReducers({
+  clinics: clinicReducer
+});
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 const fetchFonts = () => {
   return Font.loadAsync({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -24,5 +33,9 @@ export default function App() {
       />
     );
   }
-  return <AppNavigator />;
+  return (
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
+  );
 }
