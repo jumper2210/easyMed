@@ -41,7 +41,7 @@ const NewClinicScreen = props => {
         <View style={styles.saveButton}>
           <Button
             title="Save Clinic"
-            color={Colors.primary}
+            color={Colors.secondary}
             onPress={saveClinicHandler}
           />
         </View>

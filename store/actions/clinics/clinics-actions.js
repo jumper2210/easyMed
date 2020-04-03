@@ -35,7 +35,7 @@ export const loadClinics = () => {
   return async dispatch => {
     try {
       const dbResult = await fetchClinics();
-      dispatch({ type: SET_CLINIC, clinics: [] });
+      dispatch({ type: SET_CLINIC, clinics: dbResult.rows._array });
     } catch (err) {
       throw err;
     }

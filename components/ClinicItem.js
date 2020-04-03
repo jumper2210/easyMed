@@ -18,29 +18,29 @@ const styles = StyleSheet.create({
   placeItem: {
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingVertical: 35,
+    paddingHorizontal: 25,
     flexDirection: "row",
     alignItems: "center"
   },
   image: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 130,
+    height: 130,
+    borderRadius: 60,
     backgroundColor: "#ccc",
     borderColor: Colors.primary,
     borderWidth: 1
   },
   infoContainer: {
-    marginLeft: 25,
+    marginLeft: 30,
     width: 250,
     justifyContent: "center",
     alignItems: "flex-start"
   },
   title: {
     color: "black",
-    fontSize: 18,
-    marginBottom: 5
+    fontSize: 20,
+    marginBottom: 2
   },
   address: {
     color: "#666",

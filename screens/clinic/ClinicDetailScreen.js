@@ -11,7 +11,7 @@ const ClinicDetailScreen = props => {
 };
 
 export const screenOptions = navData => {
-  return { headerTitle: navData.navigation.getParam("ClinicDetail") };
+  return { headerTitle: navData.route.params.ClinicDetail };
 };
 
 const styles = StyleSheet.create({});

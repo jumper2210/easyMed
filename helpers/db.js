@@ -1,4 +1,4 @@
-import { SQLite } from "expo-sqlite";
+import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabase("clinics.db");
 
@@ -20,7 +20,23 @@ export const init = () => {
   return promise;
 };
 
-export const insertClinic = (title, imageUri, address, lat, lng) => {};
+export const insertClinic = (title, imageUri, address, lat, lng) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `INSERT INTO clinics (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?);`,
+        [title, imageUri, address, lat, lng],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
 
 export const fetchClinics = () => {
   const promise = new Promise((resolve, reject) => {
