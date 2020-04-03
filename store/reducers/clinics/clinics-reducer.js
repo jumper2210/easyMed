@@ -9,8 +9,9 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_CLINIC:
       const newClinic = new Clinic(
-        new Date().toString(),
-        action.placeData.title
+        action.placeData.id.toString(),
+        action.placeData.title,
+        action.placeData.image
       );
       return {
         clinics: state.clinics.concat(newClinic)

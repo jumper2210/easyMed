@@ -13,17 +13,21 @@ import Colors from "../../constants/Colors";
 import ImgPicker from "../../components/ImgPicker";
 
 const NewClinicScreen = props => {
+  const [selectedImage, setSelectedImage] = useState();
+  const [titleValue, setTitleValue] = useState("");
   const titleChangedHandler = text => {
     setTitleValue(text);
   };
-
   const dispatch = useDispatch();
 
+  const imageTakenHandler = imagePath => {
+    setSelectedImage(imagePath);
+  };
   const saveClinicHandler = () => {
-    dispatch(clinicsActions.addClinic(titleValue));
+    dispatch(clinicsActions.addClinic(titleValue, selectedImage));
     props.navigation.goBack();
   };
-  const [titleValue, setTitleValue] = useState("");
+
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -33,7 +37,7 @@ const NewClinicScreen = props => {
           onChangeText={titleChangedHandler}
           value={titleValue}
         />
-        <ImgPicker />
+        <ImgPicker onImageTaken={imageTakenHandler} />
         <View style={styles.saveButton}>
           <Button
             title="Save Clinic"

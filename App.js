@@ -7,6 +7,16 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import clinicReducer from "./store/reducers/clinics/clinics-reducer";
+import { init } from "./helpers/db";
+
+init()
+  .then(() => {
+    console.log("Initialized database");
+  })
+  .catch(err => {
+    console.log("Initialized db failed.");
+    console.log(err);
+  });
 
 const rootReducer = combineReducers({
   clinics: clinicReducer

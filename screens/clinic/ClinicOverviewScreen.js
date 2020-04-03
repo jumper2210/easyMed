@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Text, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../UI/HeaderButton";
 import { FlatList } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ClinicItem from "../../components/ClinicItem";
+import * as clinicsActions from "../../store/actions/clinics/clinics-actions";
 
 const AddPlaceScreen = props => {
   const clinics = useSelector(state => state.clinics.clinics);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(clinicsActions.loadClinics());
+  }, [dispatch]);
+
   return (
     <FlatList
       data={clinics}
       renderItem={itemData => (
         <ClinicItem
-          image={null}
+          image={itemData.item.imageUri}
           title={itemData.item.title}
           address={null}
           onSelect={() => {
