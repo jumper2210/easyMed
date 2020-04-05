@@ -1,4 +1,4 @@
-# easyMed - my Engineer's Thesis 
+## easyMed - (Engineer's Thesis) 
 
 ## Technologies
 - React Native (Navigation 5+)
