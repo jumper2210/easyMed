@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import * as clinicsActions from "../../store/actions/clinics/clinics-actions";
 import Colors from "../../constants/Colors";
 import ImgPicker from "../../components/ImgPicker";
+import LocationPicker from "../../components/LocationPicker";
 
 const NewClinicScreen = props => {
   const [selectedImage, setSelectedImage] = useState();
@@ -38,6 +39,7 @@ const NewClinicScreen = props => {
           value={titleValue}
         />
         <ImgPicker onImageTaken={imageTakenHandler} />
+        <LocationPicker />
         <View style={styles.saveButton}>
           <Button
             title="Save Clinic"
