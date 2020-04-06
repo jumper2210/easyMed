@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   ScrollView,
   View,
   Button,
   Text,
   TextInput,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import * as clinicsActions from "../../store/actions/clinics/clinics-actions";
@@ -13,21 +13,28 @@ import Colors from "../../constants/Colors";
 import ImgPicker from "../../components/ImgPicker";
 import LocationPicker from "../../components/LocationPicker";
 
-const NewClinicScreen = props => {
+const NewClinicScreen = (props) => {
   const [selectedImage, setSelectedImage] = useState();
   const [titleValue, setTitleValue] = useState("");
-  const titleChangedHandler = text => {
+  const [selectedLocation, setSelectedLocation] = useState();
+
+  const titleChangedHandler = (text) => {
     setTitleValue(text);
   };
   const dispatch = useDispatch();
 
-  const imageTakenHandler = imagePath => {
+  const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
   };
   const saveClinicHandler = () => {
-    dispatch(clinicsActions.addClinic(titleValue, selectedImage));
+    dispatch(
+      clinicsActions.addClinic(titleValue, selectedImage, selectedLocation)
+    );
     props.navigation.goBack();
   };
+  const locationPickerHandler = useCallback((location) => {
+    setSelectedLocation(location);
+  }, []);
 
   return (
     <ScrollView>
@@ -39,7 +46,10 @@ const NewClinicScreen = props => {
           value={titleValue}
         />
         <ImgPicker onImageTaken={imageTakenHandler} />
-        <LocationPicker />
+        <LocationPicker
+          navigation={props.navigation}
+          onLocationPicked={locationPickerHandler}
+        />
         <View style={styles.saveButton}>
           <Button
             title="Save Clinic"
@@ -55,25 +65,25 @@ const NewClinicScreen = props => {
 export const screenOptions = { headerTitle: "Add Your Clinic" };
 const styles = StyleSheet.create({
   form: {
-    margin: 30
+    margin: 30,
   },
   label: {
     fontSize: 18,
-    marginBottom: 15
+    marginBottom: 15,
   },
   textInput: {
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     marginBottom: 15,
     paddingVertical: 4,
-    paddingHorizontal: 2
+    paddingHorizontal: 2,
   },
   saveButton: {
     marginTop: 25,
     width: "100%",
     height: "100%",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default NewClinicScreen;

@@ -7,8 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import ClinicItem from "../../components/ClinicItem";
 import * as clinicsActions from "../../store/actions/clinics/clinics-actions";
 
-const AddPlaceScreen = props => {
-  const clinics = useSelector(state => state.clinics.clinics);
+const AddPlaceScreen = (props) => {
+  const clinics = useSelector((state) => state.clinics.clinics);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(clinicsActions.loadClinics());
@@ -17,15 +17,16 @@ const AddPlaceScreen = props => {
   return (
     <FlatList
       data={clinics}
-      renderItem={itemData => (
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
         <ClinicItem
           image={itemData.item.imageUri}
           title={itemData.item.title}
-          address={null}
+          address={itemData.item.address}
           onSelect={() => {
             props.navigation.navigate("ClinicDetail", {
               clinicTitle: itemData.item.title,
-              placeId: itemData.item.id
+              placeId: itemData.item.id,
             });
           }}
         />
@@ -34,7 +35,7 @@ const AddPlaceScreen = props => {
   );
 };
 
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Clinics",
     headerLeft: () => (
@@ -58,10 +59,8 @@ export const screenOptions = navData => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
-const styles = StyleSheet.create({
-  centered: { flex: 1, justifyContent: "center", alignItems: "center" }
-});
+const styles = StyleSheet.create({});
 export default AddPlaceScreen;

@@ -8,7 +8,9 @@ const PlaceItem = (props) => {
       <Image style={styles.image} source={{ uri: props.image }} />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.address}>{props.address}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.address}>{props.address}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     paddingVertical: 35,
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -39,12 +41,15 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: 2,
   },
   address: {
-    color: "#666",
-    fontSize: 16,
+    color: "#665",
+    fontSize: 15,
+  },
+  textContainer: {
+    marginVertical: 1,
   },
 });
 
