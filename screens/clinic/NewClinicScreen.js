@@ -49,6 +49,7 @@ const NewClinicScreen = (props) => {
         <LocationPicker
           navigation={props.navigation}
           onLocationPicked={locationPickerHandler}
+          route={props.route}
         />
         <View style={styles.saveButton}>
           <Button

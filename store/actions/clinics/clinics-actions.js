@@ -16,7 +16,7 @@ export const addClinic = (title, image, location) => {
     }
 
     const restData = await response.json();
-    console.log(restData, "TUU", ENV.googleApiKey);
+
     if (!restData.results) {
       throw new Error("something went wrong!");
     }

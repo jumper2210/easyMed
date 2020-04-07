@@ -16,8 +16,8 @@ const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState(false);
   const [pickedLocation, setPickedLocation] = useState();
 
-  const mapPickedLocation = props.navigation.params
-    ? props.navigation.params.pickedLocation
+  const mapPickedLocation = props.route.params
+    ? props.route.params.pickedLocation
     : null;
 
   const { onLocationPicked } = props;

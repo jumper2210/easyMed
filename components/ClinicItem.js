@@ -18,7 +18,7 @@ const PlaceItem = (props) => {
 
 const styles = StyleSheet.create({
   placeItem: {
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#323210",
     borderBottomWidth: 1,
     paddingVertical: 35,
     paddingHorizontal: 20,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginLeft: 30,
-    width: 250,
+    width: 140,
     justifyContent: "center",
     alignItems: "flex-start",
   },
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   textContainer: {
-    marginVertical: 1,
+    marginVertical: 3,
+    marginRight: 2,
   },
 });
 

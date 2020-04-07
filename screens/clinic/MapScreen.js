@@ -1,40 +1,48 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, Platform } from "react-native";
-
 import MapView, { Marker } from "react-native-maps";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../../constants/Colors";
 const MapScreen = (props) => {
-  const [selectedLocation, setSelectedLocation] = useState();
+  const initialLocation = props.navigation.params
+    ? props.navigation.params.initialLocation
+    : null;
+  const readonly = props.navigation.params
+    ? props.navigation.params.readonly
+    : null;
 
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
   let markerCoordinates;
-
   const mapRegion = {
-    latitude: 37.78,
-    longitude: -122.43,
+    latitude: initialLocation ? initialLocation.lat : 37.78,
+    longitude: initialLocation ? initialLocation.lng : -122.43,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
 
   const selectedLocationHandler = (event) => {
+    if (readonly) {
+      return;
+    }
+
     setSelectedLocation({
       lat: event.nativeEvent.coordinate.latitude,
       lng: event.nativeEvent.coordinate.longitude,
     });
   };
 
-  const savePickerLocationHandler = useCallback(() => {
+  const savePickedLocationHandler = useCallback(() => {
     if (!selectedLocation) {
       return;
     }
-    props.navigation.navigate("NewClinic", {
+    props.navigation.navigate("AddClinic", {
       pickedLocation: selectedLocation,
     });
   }, [selectedLocation]);
 
   useEffect(() => {
-    props.navigation.setOptions({});
-  }, [savePickerLocationHandler]);
+    props.navigation.setParams({ saveLocation: savePickedLocationHandler });
+  }, [savePickedLocationHandler]);
 
   if (selectedLocation) {
     markerCoordinates = {
@@ -56,7 +64,14 @@ const MapScreen = (props) => {
 };
 
 export const screenOptions = (navData) => {
-  const saveFn = navData.route.params ? navData.route.saveLocation : null;
+  const saveFn = navData.route.params
+    ? navData.route.params.saveLocation
+    : null;
+
+  const readonly = navData.route.params ? navData.route.params.readonly : null;
+  if (readonly) {
+    return {};
+  }
   return {
     headerRight: () => (
       <TouchableOpacity style={styles.headerButton} onPress={saveFn}>
