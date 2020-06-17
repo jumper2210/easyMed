@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
         clinics: action.clinics.map(
           (cl) =>
             new Clinic(
-              cl.id.toString(),
+              cl._id.toString(),
               cl.title,
               cl.imageUri,
               cl.address,
@@ -21,14 +21,15 @@ export default (state = initialState, action) => {
             )
         ),
       };
+
     case ADD_CLINIC:
       const newClinic = new Clinic(
-        action.placeData.id.toString(),
-        action.placeData.title,
-        action.placeData.image,
-        action.placeData.address,
-        action.placeData.coords.lat,
-        action.placeData.coords.lng
+        action.clinic._id,
+        action.clinic.title,
+        action.clinic.imageUri,
+        action.clinic.address,
+        action.clinic.lat,
+        action.clinic.lng
       );
       return {
         clinics: state.clinics.concat(newClinic),

@@ -4,7 +4,7 @@ import Colors from "../constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 
-const ImgPicker = props => {
+const ImgPicker = (props) => {
   const [pickedImage, setPickedImage] = useState();
 
   const verifyPermissions = async () => {
@@ -31,31 +31,33 @@ const ImgPicker = props => {
     const image = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [16, 9],
-      quality: 0.5
+      quality: 0.5,
     });
     setPickedImage(image.uri);
     props.onImageTaken(image.uri);
   };
+
   return (
     <View style={styles.imagePicker}>
       <View style={styles.imagePreview}>
         {!pickedImage ? (
-          <Text>Pick a image!</Text>
+          <Text>Zrób zdjęcie!</Text>
         ) : (
           <Image style={styles.image} source={{ uri: pickedImage }} />
         )}
       </View>
       <Button
-        title="Take Image"
+        title="Zrób zdjęcie"
         color={Colors.primary}
         onPress={takeImageHandler}
       />
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   imagePicker: {
-    alignItems: "center"
+    alignItems: "center",
   },
   imagePreview: {
     width: "100%",
@@ -63,11 +65,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: "#ccc"
+    borderColor: "#ccc",
   },
   image: {
     width: "100%",
-    height: "100%"
-  }
+    height: "100%",
+  },
 });
 export default ImgPicker;

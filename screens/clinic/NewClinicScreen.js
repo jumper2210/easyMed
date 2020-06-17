@@ -26,12 +26,14 @@ const NewClinicScreen = (props) => {
   const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
   };
+
   const saveClinicHandler = () => {
     dispatch(
       clinicsActions.addClinic(titleValue, selectedImage, selectedLocation)
     );
     props.navigation.goBack();
   };
+
   const locationPickerHandler = useCallback((location) => {
     setSelectedLocation(location);
   }, []);
@@ -64,6 +66,7 @@ const NewClinicScreen = (props) => {
 };
 
 export const screenOptions = { headerTitle: "Add Your Clinic" };
+
 const styles = StyleSheet.create({
   form: {
     margin: 30,

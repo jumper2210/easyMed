@@ -2,7 +2,8 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 
-const PlaceItem = (props) => {
+const ClinicItem = (props) => {
+  console.log(props.imageUri + "tutaj lipa");
   return (
     <TouchableOpacity onPress={props.onSelect} style={styles.placeItem}>
       <Image style={styles.image} source={{ uri: props.image }} />
@@ -26,9 +27,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 130,
-    height: 130,
-    borderRadius: 70,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     backgroundColor: "#ccc",
     borderColor: Colors.primary,
     borderWidth: 1,
@@ -54,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaceItem;
+export default ClinicItem;

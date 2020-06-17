@@ -1,6 +1,6 @@
 class Clinic {
-  constructor(id, title, imageUri, address, lat, lng) {
-    this.id = id;
+  constructor(_id, title, imageUri, address, lat, lng) {
+    this._id = _id;
     this.title = title;
     this.imageUri = imageUri;
     this.address = address;

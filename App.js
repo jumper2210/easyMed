@@ -7,26 +7,16 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import clinicReducer from "./store/reducers/clinics/clinics-reducer";
-import { init } from "./helpers/db";
-
-init()
-  .then(() => {
-    console.log("Initialized database");
-  })
-  .catch(err => {
-    console.log("Initialized db failed.");
-    console.log(err);
-  });
 
 const rootReducer = combineReducers({
-  clinics: clinicReducer
+  clinics: clinicReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 const fetchFonts = () => {
   return Font.loadAsync({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf")
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   });
 };
 

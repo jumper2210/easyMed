@@ -3,6 +3,7 @@ import { StyleSheet, Text, Platform } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../../constants/Colors";
+
 const MapScreen = (props) => {
   const initialLocation = props.navigation.params
     ? props.navigation.params.initialLocation
@@ -13,6 +14,7 @@ const MapScreen = (props) => {
 
   const [selectedLocation, setSelectedLocation] = useState(initialLocation);
   let markerCoordinates;
+
   const mapRegion = {
     latitude: initialLocation ? initialLocation.lat : 37.78,
     longitude: initialLocation ? initialLocation.lng : -122.43,

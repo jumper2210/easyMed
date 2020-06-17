@@ -21,7 +21,6 @@ const LocationPicker = (props) => {
     : null;
 
   const { onLocationPicked } = props;
-
   useEffect(() => {
     if (mapPickedLocation) {
       setPickedLocation(mapPickedLocation);

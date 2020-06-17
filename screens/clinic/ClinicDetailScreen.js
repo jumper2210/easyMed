@@ -7,16 +7,18 @@ import Colors from "../../constants/Colors";
 const ClinicDetailScreen = (props) => {
   const clinicId = props.route.params.placeId;
   const selectedClinic = useSelector((state) =>
-    state.clinics.clinics.find((clinic) => clinic.id === clinicId)
+    state.clinics.clinics.find((clinic) => clinic._id === clinicId)
   );
+
+  console.log(selectedClinic.imageUri + "tutaj o");
   const selectedLocation = { lat: selectedClinic.lat, lng: selectedClinic.lng };
+
   const showMapHandler = () => {
     props.navigation.navigate("MapScreen", {
       readonly: true,
       initialLocation: selectedLocation,
     });
   };
-
   return (
     <ScrollView contentContainerStyle={{ alignItems: "center" }}>
       <Image source={{ uri: selectedClinic.imageUri }} style={styles.image} />
@@ -37,6 +39,7 @@ const ClinicDetailScreen = (props) => {
 export const screenOptions = (navData) => {
   return { headerTitle: navData.route.params.ClinicDetail };
 };
+
 const styles = StyleSheet.create({
   image: {
     height: "35%",

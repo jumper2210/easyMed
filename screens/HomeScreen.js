@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import HeaderButton from "../UI/HeaderButton";
+import HeaderButton from "../UI/CustomHeaderButton";
 import { LinearGradient } from "expo-linear-gradient";
 
 const StartupScreen = (props) => {
@@ -21,7 +21,7 @@ const StartupScreen = (props) => {
       </LinearGradient>
     </View>
   );
-};
+
 export const screenOptions = (navData) => {
   return {
     headerTitle: "Home",
@@ -38,6 +38,7 @@ export const screenOptions = (navData) => {
     ),
   };
 };
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
