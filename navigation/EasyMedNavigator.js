@@ -4,7 +4,7 @@ import {
   createDrawerNavigator,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { Platform, SafeAreaView, Button, View } from "react-native";
+import { Platform, SafeAreaView, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 
@@ -27,6 +27,9 @@ import ClinicDetail, {
 import MapScreen, {
   screenOptions as mapScreenOptions,
 } from "../screens/clinic/MapScreen";
+import AuthScreen, {
+  screenOptions as AuthScreenOptions,
+} from "../screens/User/AuthScreen";
 
 const defaultNavOptions = {
   headerStyle: {
@@ -39,6 +42,20 @@ const defaultNavOptions = {
     fontFamily: "open-sans",
   },
   headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
+};
+
+const AuthStackNavigator = createStackNavigator();
+
+export const AutNavigator = () => {
+  return (
+    <AuthStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <AuthStackNavigator.Screen
+        name="Auth"
+        component={AuthScreen}
+        options={AuthScreenOptions}
+      />
+    </AuthStackNavigator.Navigator>
+  );
 };
 
 const HomeStackNavigator = createStackNavigator();

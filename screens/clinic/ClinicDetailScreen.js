@@ -1,16 +1,15 @@
 import React from "react";
 import { ScrollView, Image, View, StyleSheet, Text } from "react-native";
-import MapPreview from "../../components/MapPreview";
+import MapPreview from "../../components/AddClinicComponents/MapPreview";
 import { useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
 
 const ClinicDetailScreen = (props) => {
   const clinicId = props.route.params.placeId;
   const selectedClinic = useSelector((state) =>
-    state.clinics.clinics.find((clinic) => clinic._id === clinicId)
+    state.clinicsState.clinics.find((clinic) => clinic._id === clinicId)
   );
 
-  console.log(selectedClinic.imageUri + "tutaj o");
   const selectedLocation = { lat: selectedClinic.lat, lng: selectedClinic.lng };
 
   const showMapHandler = () => {

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors";
 import MapPreview from "./MapPreview";
 
 const LocationPicker = (props) => {

@@ -4,11 +4,11 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../UI/CustomHeaderButton";
 import { FlatList } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "react-redux";
-import ClinicItem from "../../components/ClinicItem";
+import ClinicItem from "../../components/AddClinicComponents/ClinicItem";
 import * as clinicsActions from "../../store/actions/clinics/clinics-actions";
 
 const ClinicOverviewScreen = (props) => {
-  const clinics = useSelector((state) => state.clinics.clinics);
+  const clinics = useSelector((state) => state.clinicsState.clinics);
   const dispatch = useDispatch();
 
   useEffect(() => {

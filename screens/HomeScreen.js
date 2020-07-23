@@ -1,27 +1,19 @@
 import React from "react";
-import { View, StyleSheet, Text, Platform } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../UI/CustomHeaderButton";
-import { LinearGradient } from "expo-linear-gradient";
+import NavigationItem from "../components/NavigationItem";
+import { ScrollView } from "react-native-gesture-handler";
 
-const StartupScreen = (props) => {
+const HomeScreen = (props) => {
   return (
-    <View style={styles.screen}>
-      <LinearGradient
-        colors={["#4c669f", "#3b5998", "#192f6a"]}
-        style={{
-          width: "100%",
-          height: "100%",
-          alignItems: "center",
-        }}
-      >
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>Witaj w Easy-Med</Text>
-        </View>
-      </LinearGradient>
-    </View>
+    <ScrollView>
+      <View style={styles.NavItemStyle}>
+        <NavigationItem name={"name1"} icon={"icon1"} />
+      </View>
+    </ScrollView>
   );
-
+};
 export const screenOptions = (navData) => {
   return {
     headerTitle: "Home",
@@ -40,18 +32,11 @@ export const screenOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
-  screen: {
+  NavItemStyle: {
+    padding: 10,
+    flexDirection: "row",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  textContainer: {
-    paddingTop: 200,
-  },
-  title: {
-    fontSize: 25,
-    color: "white",
   },
 });
 
-export default StartupScreen;
+export default HomeScreen;

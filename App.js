@@ -9,7 +9,7 @@ import ReduxThunk from "redux-thunk";
 import clinicReducer from "./store/reducers/clinics/clinics-reducer";
 
 const rootReducer = combineReducers({
-  clinics: clinicReducer,
+  clinicsState: clinicReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

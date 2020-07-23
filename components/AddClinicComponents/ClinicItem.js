@@ -1,9 +1,8 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors";
 
 const ClinicItem = (props) => {
-  console.log(props.imageUri + "tutaj lipa");
   return (
     <TouchableOpacity onPress={props.onSelect} style={styles.placeItem}>
       <Image style={styles.image} source={{ uri: props.image }} />
