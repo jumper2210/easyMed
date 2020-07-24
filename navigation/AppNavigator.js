@@ -5,8 +5,8 @@ import { EasyMedNavigator, AutNavigator } from "./EasyMedNavigator";
 const AppNavigator = (props) => {
   return (
     <NavigationContainer>
-      {/* <AutNavigator /> */}
-      <EasyMedNavigator />
+      <AutNavigator />
+      {/* <EasyMedNavigator /> */}
     </NavigationContainer>
   );
 };

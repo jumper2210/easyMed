@@ -16,7 +16,7 @@ export const addClinic = (title, imageUri, location) => {
     const address = cnvAddress.results[0].formatted_address;
 
     let method = "POST";
-    let url = "http://192.168.1.17:8080/clinicFeed/clinic";
+    let url = "http://localhost:8080/clinicFeed/createClinic";
 
     fetch(url, {
       method: method,
@@ -54,7 +54,7 @@ export const addClinic = (title, imageUri, location) => {
 };
 export const loadClinics = () => {
   return async (dispatch) => {
-    fetch("http://192.168.1.17:8080/clinicFeed/clinics")
+    fetch("http://192.168.1.17:8080/clinicFeed/getClinics")
       .then((res) => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch Clinic");
