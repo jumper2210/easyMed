@@ -1,4 +1,4 @@
-import ENV from "../../../env";
+import ENV from "../../env";
 
 export const ADD_CLINIC = "ADD_CLINIC";
 export const SET_CLINIC = "SET_CLINIC";

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
-import clinicReducer from "./store/reducers/clinics/clinics-reducer";
+import clinicReducer from "./store/reducers/clinics";
+import authReducer from "./store/reducers/auth";
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
+  authState: authReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

@@ -4,9 +4,10 @@ import {
   createDrawerNavigator,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { Platform, SafeAreaView, View } from "react-native";
+import { Platform, SafeAreaView, View, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
+import * as authActions from "../store/actions/auth";
 
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
@@ -30,7 +31,7 @@ import MapScreen, {
 import AuthScreen, {
   screenOptions as AuthScreenOptions,
 } from "../screens/User/AuthScreen";
-
+import { useDispatch } from "react-redux";
 const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primary : "",
@@ -42,20 +43,6 @@ const defaultNavOptions = {
     fontFamily: "open-sans",
   },
   headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
-};
-
-const AuthStackNavigator = createStackNavigator();
-
-export const AutNavigator = () => {
-  return (
-    <AuthStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <AuthStackNavigator.Screen
-        name="Auth"
-        component={AuthScreen}
-        options={AuthScreenOptions}
-      />
-    </AuthStackNavigator.Navigator>
-  );
 };
 
 const HomeStackNavigator = createStackNavigator();
@@ -104,6 +91,7 @@ export const ClinicNavigator = () => {
 const EasyMedDrawer = createDrawerNavigator();
 
 export const EasyMedNavigator = () => {
+  const dispatch = useDispatch();
   return (
     <EasyMedDrawer.Navigator
       drawerContent={(props) => {
@@ -111,6 +99,14 @@ export const EasyMedNavigator = () => {
           <View style={{ flex: 1, paddingTop: 20 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
               <DrawerItemList {...props} />
+              <Button
+                title="Logout"
+                color={Colors.primary}
+                onPress={() => {
+                  dispatch(authActions.logout());
+                  console.log("s");
+                }}
+              />
             </SafeAreaView>
           </View>
         );
@@ -132,19 +128,19 @@ export const EasyMedNavigator = () => {
           ),
         }}
       />
-      <EasyMedDrawer.Screen
-        name="Clinic"
-        component={ClinicNavigator}
-        options={{
-          drawerIcon: (props) => (
-            <Ionicons
-              name={Platform.OS === "android" ? "md-business" : "ios-business"}
-              size={23}
-              color={props.color}
-            />
-          ),
-        }}
-      />
     </EasyMedDrawer.Navigator>
+  );
+};
+const AuthStackNavigator = createStackNavigator();
+
+export const AuthNavigator = () => {
+  return (
+    <AuthStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <AuthStackNavigator.Screen
+        name="Auth"
+        component={AuthScreen}
+        options={AuthScreenOptions}
+      />
+    </AuthStackNavigator.Navigator>
   );
 };

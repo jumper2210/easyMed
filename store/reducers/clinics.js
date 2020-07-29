@@ -1,5 +1,5 @@
-import { ADD_CLINIC, SET_CLINIC } from "../../actions/clinics/clinics-actions";
-import Clinic from "../../../models/clinic";
+import { ADD_CLINIC, SET_CLINIC } from "../actions/clinics";
+import Clinic from "../../models/clinic";
 
 const initialState = {
   clinics: [],

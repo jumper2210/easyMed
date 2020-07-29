@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import * as clinicsActions from "../../store/actions/clinics/clinics-actions";
+import * as clinicsActions from "../../store/actions/clinics";
 import Colors from "../../constants/Colors";
 import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import LocationPicker from "../../components/AddClinicComponents/LocationPicker";

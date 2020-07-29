@@ -5,7 +5,7 @@ import CustomHeaderButton from "../../UI/CustomHeaderButton";
 import { FlatList } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "react-redux";
 import ClinicItem from "../../components/AddClinicComponents/ClinicItem";
-import * as clinicsActions from "../../store/actions/clinics/clinics-actions";
+import * as clinicsActions from "../../store/actions/clinics";
 
 const ClinicOverviewScreen = (props) => {
   const clinics = useSelector((state) => state.clinicsState.clinics);

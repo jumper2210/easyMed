@@ -6,6 +6,7 @@ import NavigationItem from "../components/NavigationItem";
 import { ScrollView } from "react-native-gesture-handler";
 
 const HomeScreen = (props) => {
+  console.log("home");
   return (
     <ScrollView>
       <View style={styles.NavItemStyle}>
