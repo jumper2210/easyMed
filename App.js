@@ -7,10 +7,12 @@ import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import clinicReducer from "./store/reducers/clinics";
 import authReducer from "./store/reducers/auth";
+import chatReducer from "./store/reducers/chat";
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
   authState: authReducer,
+  chatState: chatReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

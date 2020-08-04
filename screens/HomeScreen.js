@@ -5,12 +5,26 @@ import HeaderButton from "../UI/CustomHeaderButton";
 import NavigationItem from "../components/NavigationItem";
 import { ScrollView } from "react-native-gesture-handler";
 
-const HomeScreen = (props) => {
-  console.log("home");
+const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.NavItemStyle}>
-        <NavigationItem name={"name1"} icon={"icon1"} />
+        <NavigationItem
+          name={"Chat with doctor"}
+          iconName={
+            Platform.OS === "android" ? "md-chatboxes" : "ios-chatboxes"
+          }
+          onPress={() => {
+            navigation.navigate("ChatNavigator");
+          }}
+        />
+        <NavigationItem
+          name={"Clinic"}
+          iconName={Platform.OS === "android" ? "md-medical" : "ios-medical"}
+          onPress={() => {
+            navigation.navigate("ClinicScreen");
+          }}
+        />
       </View>
     </ScrollView>
   );
@@ -34,7 +48,7 @@ export const screenOptions = (navData) => {
 
 const styles = StyleSheet.create({
   NavItemStyle: {
-    padding: 10,
+    padding: 1,
     flexDirection: "row",
     flex: 1,
   },

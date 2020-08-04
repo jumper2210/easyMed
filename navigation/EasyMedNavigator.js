@@ -8,6 +8,7 @@ import { Platform, SafeAreaView, View, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import * as authActions from "../store/actions/auth";
+import { useDispatch } from "react-redux";
 
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
@@ -31,7 +32,23 @@ import MapScreen, {
 import AuthScreen, {
   screenOptions as AuthScreenOptions,
 } from "../screens/User/AuthScreen";
-import { useDispatch } from "react-redux";
+
+import MedForm, {
+  screenOptions as medFormScreenOptions,
+} from "../screens/chat/MedFormScreen";
+
+import MedFormDetails, {
+  screenOptions as medFormDetailsScreenOptions,
+} from "../screens/chat/MedFormDetailsScreen";
+
+import ChatGroupScreen, {
+  screenOptions as chatGroupScreenOptions,
+} from "../screens/chat/ChatGroupsScreen";
+
+import ConversationScreen, {
+  screenOptions as conversationScreenOptions,
+} from "../screens/chat/ConversationScreen";
+
 const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primary : "",
@@ -56,6 +73,35 @@ export const HomeNavigator = () => {
         options={HomeScreenOptions}
       />
     </HomeStackNavigator.Navigator>
+  );
+};
+
+const ChatStackNavigator = createStackNavigator();
+
+export const ChatNavigator = () => {
+  return (
+    <ChatStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <ChatStackNavigator.Screen
+        name="Form"
+        component={MedForm}
+        options={medFormScreenOptions}
+      />
+      <ChatStackNavigator.Screen
+        name="FormDetails"
+        component={MedFormDetails}
+        options={medFormDetailsScreenOptions}
+      />
+      <ChatStackNavigator.Screen
+        name="ChatGroups"
+        component={ChatGroupScreen}
+        options={chatGroupScreenOptions}
+      />
+      <ChatStackNavigator.Screen
+        name="Conversation"
+        component={ConversationScreen}
+        options={conversationScreenOptions}
+      />
+    </ChatStackNavigator.Navigator>
   );
 };
 
@@ -104,7 +150,6 @@ export const EasyMedNavigator = () => {
                 color={Colors.primary}
                 onPress={() => {
                   dispatch(authActions.logout());
-                  console.log("s");
                 }}
               />
             </SafeAreaView>
@@ -128,6 +173,8 @@ export const EasyMedNavigator = () => {
           ),
         }}
       />
+      <EasyMedDrawer.Screen name="CreateChat" component={ChatNavigator} />
+      <EasyMedDrawer.Screen name="ClinicScreen" component={ClinicNavigator} />
     </EasyMedDrawer.Navigator>
   );
 };

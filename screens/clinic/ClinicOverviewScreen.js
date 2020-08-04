@@ -14,7 +14,7 @@ const ClinicOverviewScreen = (props) => {
   useEffect(() => {
     dispatch(clinicsActions.loadClinics());
   }, [dispatch]);
-  console.log(clinics);
+
   return (
     <FlatList
       data={clinics}

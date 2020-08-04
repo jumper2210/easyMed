@@ -1,12 +1,14 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
+import CustomIcon from "../UI/CustomIcon";
+
 const NavigationItem = (props) => {
   return (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={props.onPress}>
       <View style={styles.iconContainer}>
-        <Text style={styles.icon}>{props.icon}</Text>
+        <CustomIcon style={styles.icon} iconName={props.iconName} />
       </View>
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{props.name}</Text>
@@ -18,13 +20,18 @@ const NavigationItem = (props) => {
 const styles = StyleSheet.create({
   item: {
     backgroundColor: Colors.secondary,
-    width: "100%",
-    paddingVertical: 30,
-    paddingHorizontal: 35,
-    borderBottomWidth: 1,
-    borderLeftWidth: 1,
+    width: Dimensions.get("window").width / 2 - 5,
+    paddingVertical: 40,
     flexDirection: "column",
     justifyContent: "center",
+    shadowColor: "black",
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 30,
+    elevation: 8,
+    borderRadius: 5,
+    borderLeftWidth: 1,
+    borderLeftColor: "white",
   },
   icon: {
     height: 100,
@@ -33,7 +40,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   nameContainer: {
-    alignItems: "flex-start",
+    marginTop: 20,
     width: "100%",
   },
   iconContainer: {
@@ -41,7 +48,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   name: {
-    fontSize: 25,
+    fontSize: 20,
+    textAlign: "center",
+    color: "white",
   },
 });
 
