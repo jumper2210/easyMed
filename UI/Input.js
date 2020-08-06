@@ -88,10 +88,11 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: "open-sans-bold",
     marginVertical: 8,
+    fontSize: 13,
   },
   input: {
     paddingHorizontal: 2,
-    paddingVertical: 5,
+    paddingVertical: 1,
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
   },

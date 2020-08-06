@@ -20,7 +20,7 @@ const NavigationItem = (props) => {
 const styles = StyleSheet.create({
   item: {
     backgroundColor: Colors.secondary,
-    width: Dimensions.get("window").width / 2 - 5,
+    width: Dimensions.get("window").width / 2 - 2,
     paddingVertical: 40,
     flexDirection: "column",
     justifyContent: "center",

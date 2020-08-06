@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 const ChatGroupsScreen = (props) => {
-  return <View style={styles.screen}>CHAT-GROUPS</View>;
+  return <Text style={styles.screen}>CHAT-GROUPS</Text>;
 };
 const styles = StyleSheet.create({
   screen: {

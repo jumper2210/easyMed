@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
             Platform.OS === "android" ? "md-chatboxes" : "ios-chatboxes"
           }
           onPress={() => {
-            navigation.navigate("ChatNavigator");
+            navigation.navigate("CreateChat");
           }}
         />
         <NavigationItem

@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 const ConversationScreen = (props) => {
-  return <View style={styles.screen}>CONVERSATION</View>;
+  return <Text style={styles.screen}>CONVERSATION</Text>;
 };
 const styles = StyleSheet.create({
   screen: {

@@ -80,7 +80,7 @@ const ChatStackNavigator = createStackNavigator();
 
 export const ChatNavigator = () => {
   return (
-    <ChatStackNavigator.Navigator screenOptions={defaultNavOptions}>
+    <ChatStackNavigator.Navigator screenOptions={{ headerShown: false }}>
       <ChatStackNavigator.Screen
         name="Form"
         component={MedForm}
