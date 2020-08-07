@@ -5,13 +5,11 @@ export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 export const LOGOUT = "LOGOUT";
 
 export const authenticate = (userId, token) => {
-  let check = null;
   return (dispatch) => {
     dispatch({
       type: AUTHENTICATE,
       userId: userId,
       token: token,
-      check: 1,
     });
   };
 };

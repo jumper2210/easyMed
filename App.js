@@ -8,11 +8,13 @@ import ReduxThunk from "redux-thunk";
 import clinicReducer from "./store/reducers/clinics";
 import authReducer from "./store/reducers/auth";
 import chatReducer from "./store/reducers/chat";
+import medicalCaseReducer from "./store/reducers/medicalCase";
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
   authState: authReducer,
   chatState: chatReducer,
+  medicalCaseState: medicalCaseReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

@@ -37,10 +37,6 @@ import MedForm, {
   screenOptions as medFormScreenOptions,
 } from "../screens/chat/MedFormScreen";
 
-import MedFormDetails, {
-  screenOptions as medFormDetailsScreenOptions,
-} from "../screens/chat/MedFormDetailsScreen";
-
 import ChatGroupScreen, {
   screenOptions as chatGroupScreenOptions,
 } from "../screens/chat/ChatGroupsScreen";
@@ -80,17 +76,13 @@ const ChatStackNavigator = createStackNavigator();
 
 export const ChatNavigator = () => {
   return (
-    <ChatStackNavigator.Navigator screenOptions={{ headerShown: false }}>
+    <ChatStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <ChatStackNavigator.Screen
         name="Form"
         component={MedForm}
         options={medFormScreenOptions}
       />
-      <ChatStackNavigator.Screen
-        name="FormDetails"
-        component={MedFormDetails}
-        options={medFormDetailsScreenOptions}
-      />
+
       <ChatStackNavigator.Screen
         name="ChatGroups"
         component={ChatGroupScreen}

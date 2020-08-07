@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useReducer, useCallback } from "react";
 import {
   StyleSheet,
   Picker,
@@ -6,16 +6,174 @@ import {
   View,
   Text,
   Button,
+  Alert,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
 import Input from "../../UI/Input";
 import Card from "../../UI/Card";
 import Colors from "../../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView } from "react-native-gesture-handler";
+import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
+import * as medicalCaseActions from "../../store/actions/medicalCase";
 
-const MedFormScreen = (props) => {
-  const [selectedValue, setSelectedValue] = useState("");
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value,
+    };
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid,
+    };
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+    }
+    return {
+      formIsValid: updatedFormIsValid,
+      inputValidities: updatedValidities,
+      inputValues: updatedValues,
+    };
+  }
+  return state;
+};
+const MedFormScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState("fever");
+  const [isFormDetails, setIsFormDetails] = useState(false);
+  const [error, setError] = useState();
+  const [selectedImage, setSelectedImage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: {
+      otherSymptom: "",
+      age: "",
+      scale: "",
+      increase: "",
+      locationOfPain: "",
+      radiance: "",
+    },
+    inputValidities: {
+      others: false,
+      age: false,
+      scale: false,
+      increase: false,
+      locationOfPain: false,
+      radiance: false,
+    },
+    formIsValid: false,
+  });
 
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error Occurred!", error, [{ text: "Okay" }]);
+    }
+  }, [error]);
+
+  const imageTakenHandler = (imagePath) => {
+    setSelectedImage(imagePath);
+  };
+
+  const formHandler = async () => {
+    let action = null;
+    action = medicalCaseActions.createMedicalCase(
+      selectedImage,
+      selectedValue,
+      formState.inputValues.otherSymptom,
+      formState.inputValues.age,
+      formState.inputValues.scale,
+      formState.inputValues.increase,
+      formState.inputValues.locationOfPain,
+      formState.inputValues.radiance
+    );
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(false);
+    }
+  };
+
+  const inputChangeHandler = useCallback(
+    (inputIdentifier, inputValue, inputValidity) => {
+      dispatchFormState({
+        type: FORM_INPUT_UPDATE,
+        value: inputValue,
+        isValid: inputValidity,
+        input: inputIdentifier,
+      });
+    },
+    [dispatchFormState]
+  );
+
+  let detailsDisplay = null;
+
+  if (isFormDetails === true) {
+    detailsDisplay = (
+      <View>
+        <Card style={styles.cardContainer}>
+          <Input
+            id="escalation"
+            label="escalation of pain. *if relevant"
+            keyboardType="default"
+            autoCapitalize="none"
+            errorMessage="Enter any specific's. *If relevant."
+            onInputChange={inputChangeHandler}
+            initialValue=""
+            editable
+            maxLength={20}
+          />
+          <Input
+            id="locationOfPain"
+            label="location of pain. *if relevant"
+            keyboardType="default"
+            autoCapitalize="none"
+            errorMessage="determine where you feel pain. *If relevant."
+            onInputChange={inputChangeHandler}
+            initialValue=""
+            editable
+            maxLength={20}
+          />
+          <Input
+            id="radiance"
+            label="Pain radiation. *If relevant"
+            keyboardType="default"
+            autoCapitalize="none"
+            errorMessage="determine of pain radiation. *if relevant."
+            onInputChange={inputChangeHandler}
+            initialValue=""
+            editable
+            maxLength={40}
+          />
+          <ImgPicker onImageTaken={imageTakenHandler} />
+
+          <View style={styles.buttonsContainer}>
+            <View style={styles.button}>
+              <Button
+                title="Create Form"
+                onPress={() => {
+                  formHandler();
+                  console.log("click");
+                }}
+              />
+            </View>
+            <Button
+              title="Back"
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
+            />
+          </View>
+        </Card>
+      </View>
+    );
+  }
   return (
     <KeyboardAvoidingView
       behavior="height"
@@ -26,17 +184,13 @@ const MedFormScreen = (props) => {
         colors={[Colors.primary, Colors.secondary]}
         style={styles.gradient}
       >
-        <View style={styles.textContainer}>
-          <Text style={styles.mainInfo}>
-            Please fill in information about your symptom's
-          </Text>
-        </View>
-        <Card style={styles.formContainer}>
-          <ScrollView>
+        <ScrollView>
+          <Card style={styles.cardContainer}>
             <View style={styles.textSymptomContainer}>
               <Text style={styles.textSymptom}>pick your current symptom</Text>
             </View>
             <Picker
+              selectedValue={selectedValue}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedValue(itemValue)
               }
@@ -49,13 +203,13 @@ const MedFormScreen = (props) => {
               <Text style={styles.otherInfo}>or describe your symptoms</Text>
             </View>
             <Input
-              id="others"
-              label="others"
+              id="otherSymptom"
+              label="other symptom"
               keyboardType="default"
               required
               autoCapitalize="none"
               errorMessage="Please enter your others symptoms."
-              onInputChange={() => {}}
+              onInputChange={inputChangeHandler}
               numeric
               initialValue=""
               editable
@@ -67,7 +221,7 @@ const MedFormScreen = (props) => {
               required
               autoCapitalize="none"
               errorMessage="Please enter your age."
-              onInputChange={() => {}}
+              onInputChange={inputChangeHandler}
               keyboardType="decimal-pad"
               initialValue=""
             />
@@ -78,7 +232,7 @@ const MedFormScreen = (props) => {
               required
               autoCapitalize="none"
               errorMessage="Please enter your scale."
-              onInputChange={() => {}}
+              onInputChange={inputChangeHandler}
               numeric
               initialValue=""
             />
@@ -89,7 +243,7 @@ const MedFormScreen = (props) => {
               required
               autoCapitalize="none"
               errorMessage="Please enter your increase."
-              onInputChange={() => {}}
+              onInputChange={inputChangeHandler}
               numeric
               initialValue=""
             />
@@ -98,19 +252,20 @@ const MedFormScreen = (props) => {
                 <Button
                   title="Details"
                   onPress={() => {
-                    props.navigation.navigate("FormDetails");
+                    setIsFormDetails(true);
                   }}
                 />
               </View>
               <Button
                 title="Back"
                 onPress={() => {
-                  props.navigation.navigate("Home");
+                  navigation.navigate("Home");
                 }}
               />
             </View>
-          </ScrollView>
-        </Card>
+          </Card>
+          {detailsDisplay}
+        </ScrollView>
       </LinearGradient>
     </KeyboardAvoidingView>
   );
@@ -128,26 +283,27 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 10,
+    paddingVertical: 20,
   },
   button: {
-    marginRight: 10,
+    paddingRight: 40,
   },
-  formContainer: {
-    width: "80%",
-    maxWidth: 400,
-    maxHeight: 580,
-    padding: 13,
-  },
-  textContainer: {
-    justifyContent: "center",
+  cardContainer: {
     width: "100%",
-    paddingVertical: 40,
+    maxWidth: 500,
+    maxHeight: 580,
+    padding: 24,
+    marginVertical: 15,
+  },
+  mainInfoContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    paddingVertical: 30,
   },
   mainInfo: {
-    fontSize: 12,
+    fontSize: 10,
     textAlign: "center",
-    color: "white",
     textTransform: "uppercase",
     fontFamily: "open-sans-bold",
   },
@@ -157,7 +313,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   textSymptom: {
-    fontSize: 12,
+    fontSize: 10,
     textAlign: "center",
     textTransform: "uppercase",
   },
@@ -165,11 +321,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     paddingVertical: 20,
-    borderTopWidth: 1,
-    borderTopColor: "black",
   },
   otherInfo: {
-    fontSize: 12,
+    fontSize: 10,
     textAlign: "center",
     textTransform: "uppercase",
   },
