@@ -4,8 +4,9 @@ export const AUTHENTICATE = "AUTHENTICATE";
 export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 export const LOGOUT = "LOGOUT";
 
-export const authenticate = (userId, token) => {
+export const authenticate = (userId, token, expiryTime) => {
   return (dispatch) => {
+    dispatch(setLogoutTimer(expiryTime));
     dispatch({
       type: AUTHENTICATE,
       userId: userId,
@@ -13,7 +14,7 @@ export const authenticate = (userId, token) => {
     });
   };
 };
-
+let timer;
 export const setDidTryAl = () => {
   return { type: SET_DID_TRY_AL };
 };
@@ -43,8 +44,8 @@ export const signup = (email, password, name) => {
 
     const resData = await response.json();
 
-    dispatch(authenticate(resData.userId, resData.token));
-    const expirationDate = new Date(new Date().getTime() + 3600000);
+    dispatch(authenticate(resData.userId, resData.token, resData.expireTime));
+    const expirationDate = new Date(new Date().getTime() + resData.expireTime);
 
     saveDataToStorage(resData.token, resData.userId, expirationDate);
   };
@@ -78,7 +79,7 @@ export const login = (email, password, name) => {
     }
     const resData = await response.json();
 
-    dispatch(authenticate(resData.userId, resData.token));
+    dispatch(authenticate(resData.userId, resData.token, resData.expireTime));
 
     const expirationDate = new Date(
       new Date().getTime() + parseInt(resData.expireTime) * 1000
@@ -90,6 +91,19 @@ export const login = (email, password, name) => {
 export const logout = () => {
   AsyncStorage.removeItem("userData");
   return { type: LOGOUT };
+};
+const clearLogoutTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+  }
+};
+
+const setLogoutTimer = (expirationTime) => {
+  return (dispatch) => {
+    timer = setTimeout(() => {
+      dispatch(logout());
+    }, expirationTime);
+  };
 };
 
 const saveDataToStorage = (token, userId, expirationDate) => {

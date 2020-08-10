@@ -10,13 +10,15 @@ export const createMedicalCase = (
   locationOfPain,
   radiance
 ) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
     const response = await fetch(
       "http://192.168.1.17:8080/medicalCase/createMedicalCase",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({
           imageUri: imageUri,

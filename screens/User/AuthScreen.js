@@ -2,7 +2,6 @@ import React, { useState, useEffect, useReducer, useCallback } from "react";
 import {
   StyleSheet,
   View,
-  Button,
   ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
@@ -14,6 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth";
+import Button from "../../components/Button";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 

@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   View,
   Text,
-  Button,
   Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -16,6 +15,8 @@ import Colors from "../../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import * as medicalCaseActions from "../../store/actions/medicalCase";
+import Button from "../../components/Button";
+import Constants from "../../constants/Constants";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const formReducer = (state, action) => {
@@ -154,16 +155,17 @@ const MedFormScreen = ({ navigation }) => {
           <ImgPicker onImageTaken={imageTakenHandler} />
 
           <View style={styles.buttonsContainer}>
-            <View style={styles.button}>
-              <Button
-                title="Create Form"
-                onPress={() => {
-                  formHandler();
-                  console.log("click");
-                }}
-              />
-            </View>
             <Button
+              style={styles.button}
+              title="Create Form"
+              onPress={() => {
+                formHandler();
+                console.log("click");
+              }}
+            />
+
+            <Button
+              style={styles.button}
               title="Back"
               onPress={() => {
                 navigation.navigate("Home");
@@ -227,7 +229,7 @@ const MedFormScreen = ({ navigation }) => {
             />
             <Input
               id="scale"
-              label="scale"
+              label="scale of pain (0-10)"
               keyboardType="decimal-pad"
               required
               autoCapitalize="none"
@@ -248,18 +250,20 @@ const MedFormScreen = ({ navigation }) => {
               initialValue=""
             />
             <View style={styles.buttonsContainer}>
-              <View style={styles.button}>
-                <Button
-                  title="Details"
-                  onPress={() => {
-                    setIsFormDetails(true);
-                  }}
-                />
-              </View>
               <Button
+                style={styles.button}
+                title={isFormDetails ? "Hide details" : " Show details"}
+                onPress={() => {
+                  setIsFormDetails(true);
+                }}
+              />
+
+              <Button
+                style={styles.button}
                 title="Back"
                 onPress={() => {
                   navigation.navigate("Home");
+                  setIsFormDetails(false);
                 }}
               />
             </View>
@@ -285,12 +289,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 20,
   },
-  button: {
-    paddingRight: 40,
-  },
+  button: { paddingHorizontal: 6, marginRight: 12 },
   cardContainer: {
-    width: "100%",
-    maxWidth: 500,
+    width: Constants.screenWidth - 65,
     maxHeight: 580,
     padding: 24,
     marginVertical: 15,
