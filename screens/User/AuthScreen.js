@@ -42,6 +42,7 @@ const formReducer = (state, action) => {
 
 const AuthScreen = (props) => {
   const dispatch = useDispatch();
+  const [didMount, setDidMount] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -60,9 +61,11 @@ const AuthScreen = (props) => {
   });
 
   useEffect(() => {
+    setDidMount(true);
     if (error) {
       Alert.alert("An error Occurred!", error, [{ text: "Okay" }]);
     }
+    return () => setDidMount(false);
   }, [error]);
 
   const authHandler = async () => {
@@ -84,6 +87,7 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
+
       setIsLoading(false);
     } catch (err) {
       setError(err.message);

@@ -1,5 +1,4 @@
 import { AsyncStorage } from "react-native";
-
 export const AUTHENTICATE = "AUTHENTICATE";
 export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 export const LOGOUT = "LOGOUT";
@@ -89,6 +88,7 @@ export const login = (email, password, name) => {
   };
 };
 export const logout = () => {
+  clearLogoutTimer();
   AsyncStorage.removeItem("userData");
   return { type: LOGOUT };
 };

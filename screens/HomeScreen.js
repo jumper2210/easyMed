@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../UI/CustomHeaderButton";
 import NavigationItem from "../components/NavigationItem";
 import { ScrollView } from "react-native-gesture-handler";
-
+import io from "socket.io-client";
 const HomeScreen = ({ navigation }) => {
+  useEffect(() => {
+    io("http://192.168.1.17:8080");
+  }, []);
   return (
     <ScrollView>
       <View style={styles.NavItemStyle}>
