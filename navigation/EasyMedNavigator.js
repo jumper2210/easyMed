@@ -35,7 +35,7 @@ import AuthScreen, {
 
 import MedForm, {
   screenOptions as medFormScreenOptions,
-} from "../screens/chat/MedFormScreen";
+} from "../screens/form/MedFormScreen";
 
 import ChatGroupScreen, {
   screenOptions as chatGroupScreenOptions,
@@ -78,12 +78,6 @@ export const ChatNavigator = () => {
   return (
     <ChatStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <ChatStackNavigator.Screen
-        name="Form"
-        component={MedForm}
-        options={medFormScreenOptions}
-      />
-
-      <ChatStackNavigator.Screen
         name="ChatGroups"
         component={ChatGroupScreen}
         options={chatGroupScreenOptions}
@@ -94,6 +88,20 @@ export const ChatNavigator = () => {
         options={conversationScreenOptions}
       />
     </ChatStackNavigator.Navigator>
+  );
+};
+
+const CreateChatStackNavigator = createStackNavigator();
+
+export const CreateChatNavigator = () => {
+  return (
+    <CreateChatStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <CreateChatStackNavigator.Screen
+        name="Form"
+        component={MedForm}
+        options={medFormScreenOptions}
+      />
+    </CreateChatStackNavigator.Navigator>
   );
 };
 
@@ -165,7 +173,8 @@ export const EasyMedNavigator = () => {
           ),
         }}
       />
-      <EasyMedDrawer.Screen name="CreateChat" component={ChatNavigator} />
+      <EasyMedDrawer.Screen name="ChatGroupsScreen" component={ChatNavigator} />
+      <EasyMedDrawer.Screen name="FormScreen" component={CreateChatNavigator} />
       <EasyMedDrawer.Screen name="ClinicScreen" component={ClinicNavigator} />
     </EasyMedDrawer.Navigator>
   );

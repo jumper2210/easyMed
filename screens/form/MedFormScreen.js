@@ -7,8 +7,9 @@ import {
   Text,
   Alert,
 } from "react-native";
+
 import { ScrollView } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Input from "../../UI/Input";
 import Card from "../../UI/Card";
 import Colors from "../../constants/Colors";
@@ -17,7 +18,7 @@ import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import * as medicalCaseActions from "../../store/actions/medicalCase";
 import Button from "../../components/Button";
 import Constants from "../../constants/Constants";
-
+import * as chatGroupActions from "../../store/actions/chat";
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -41,13 +42,16 @@ const formReducer = (state, action) => {
   }
   return state;
 };
-const MedFormScreen = ({ navigation }) => {
+const MedFormScreen = ({ navigation }, props) => {
+  const userName = useSelector((state) => state.authState.name);
   const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState("fever");
   const [isFormDetails, setIsFormDetails] = useState(false);
   const [error, setError] = useState();
   const [selectedImage, setSelectedImage] = useState();
   const [isLoading, setIsLoading] = useState(false);
+
+  let action = null;
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       otherSymptom: "",
@@ -77,9 +81,20 @@ const MedFormScreen = ({ navigation }) => {
   const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
   };
+  const createGroupHandler = async () => {
+    action = chatGroupActions.createChatGroup(userName);
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(false);
+    }
+  };
 
   const formHandler = async () => {
-    let action = null;
     action = medicalCaseActions.createMedicalCase(
       selectedImage,
       selectedValue,
@@ -157,10 +172,11 @@ const MedFormScreen = ({ navigation }) => {
           <View style={styles.buttonsContainer}>
             <Button
               style={styles.button}
-              title="Create Form"
+              title="Create Chat"
               onPress={() => {
+                createGroupHandler();
                 formHandler();
-                console.log("click");
+                navigation.navigate("ChatGroupsScreen");
               }}
             />
 

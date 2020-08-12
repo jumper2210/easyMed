@@ -7,13 +7,13 @@ import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import clinicReducer from "./store/reducers/clinics";
 import authReducer from "./store/reducers/auth";
-import chatReducer from "./store/reducers/chat";
+import chatGroupsReducer from "./store/reducers/chat";
 import medicalCaseReducer from "./store/reducers/medicalCase";
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
   authState: authReducer,
-  chatState: chatReducer,
+  chatGroupsState: chatGroupsReducer,
   medicalCaseState: medicalCaseReducer,
 });
 

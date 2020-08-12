@@ -5,9 +5,11 @@ export const SET_CLINIC = "SET_CLINIC";
 
 export const addClinic = (title, imageUri, location) => {
   return async (dispatch) => {
+    console.log(location.lat, location.lng);
     const response = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${ENV.googleApiKey}`
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${location.lat},${location.lng}&key=${ENV.googleApiKey}`
     );
+
     if (!response.ok) {
       throw new Error("something went wrong!");
     }
@@ -16,7 +18,7 @@ export const addClinic = (title, imageUri, location) => {
     const address = cnvAddress.results[0].formatted_address;
 
     let method = "POST";
-    let url = "http://localhost:8080/clinicFeed/createClinic";
+    let url = "http://192.168.1.17:8080/clinicFeed/createClinic";
 
     fetch(url, {
       method: method,
@@ -64,7 +66,5 @@ export const loadClinics = () => {
       .then((resData) => {
         dispatch({ type: SET_CLINIC, clinics: resData.clinics });
       });
-
-    dispatch;
   };
 };

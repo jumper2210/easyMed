@@ -5,20 +5,24 @@ import HeaderButton from "../UI/CustomHeaderButton";
 import NavigationItem from "../components/NavigationItem";
 import { ScrollView } from "react-native-gesture-handler";
 import io from "socket.io-client";
+
 const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     io("http://192.168.1.17:8080");
   }, []);
+
   return (
     <ScrollView>
       <View style={styles.NavItemStyle}>
         <NavigationItem
-          name={"Chat with doctor"}
+          name={"Create chat room"}
           iconName={
-            Platform.OS === "android" ? "md-chatboxes" : "ios-chatboxes"
+            Platform.OS === "android"
+              ? "md-add-circle-outline"
+              : "ios-add-circle-outline"
           }
           onPress={() => {
-            navigation.navigate("CreateChat");
+            navigation.navigate("FormScreen");
           }}
         />
         <NavigationItem
@@ -26,6 +30,15 @@ const HomeScreen = ({ navigation }) => {
           iconName={Platform.OS === "android" ? "md-medical" : "ios-medical"}
           onPress={() => {
             navigation.navigate("ClinicScreen");
+          }}
+        />
+        <NavigationItem
+          name={"Chat room"}
+          iconName={
+            Platform.OS === "android" ? "md-chatboxes" : "ios-chatboxes"
+          }
+          onPress={() => {
+            navigation.navigate("ChatGroupsScreen");
           }}
         />
       </View>
@@ -54,6 +67,7 @@ const styles = StyleSheet.create({
     padding: 1,
     flexDirection: "row",
     flex: 1,
+    flexWrap: "wrap",
   },
 });
 
