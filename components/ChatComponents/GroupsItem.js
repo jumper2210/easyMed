@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import Constants from "../../constants/Constants";
 import Color from "../../constants/Colors";
+import Colors from "../../constants/Colors";
 
 const GroupsItem = (props) => {
   return (
@@ -20,11 +21,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    height: 50,
-    width: Constants.screenWidth,
-    margin: 10,
+    height: 80,
+    width: Constants.screenWidth - 80,
     borderBottomColor: "rgb(0,0,0)",
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.2,
+    backgroundColor: Colors.primary,
+    borderRadius: 15,
+    shadowColor: "#ccc",
+    shadowOffset: { height: 1, width: 1 },
+    shadowRadius: 2,
   },
   descriptionContainer: {
     margin: 5,
@@ -33,25 +38,20 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    shadowColor: Color.gray,
+    shadowColor: "#ccc",
     shadowOffset: { height: 1, width: 1 },
     shadowRadius: 2,
     backgroundColor: Color.theme,
   },
   groupTitle: {
-    color: Color.black,
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "open-sans-bold",
     marginHorizontal: 10,
+    color: Colors.details,
   },
   groupMembers: {
     color: Color.smoke,
     fontSize: 14,
-  },
-  separator: {
-    height: 0.5,
-    width: Constants.width,
-    backgroundColor: Color.theme,
   },
 });
 

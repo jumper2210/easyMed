@@ -19,6 +19,7 @@ import * as medicalCaseActions from "../../store/actions/medicalCase";
 import Button from "../../components/Button";
 import Constants from "../../constants/Constants";
 import * as chatGroupActions from "../../store/actions/chat";
+import Strings from "../../constants/Strings";
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -77,6 +78,22 @@ const MedFormScreen = ({ navigation }, props) => {
       Alert.alert("An error Occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
+
+  const chatGroupsScreenHandler = () => {
+    Alert.alert(
+      "Create chat",
+      "Thank you for complete the form, now you can talk with your doctor",
+      [
+        {
+          text: "Talk with doctor",
+          onPress: () => {
+            navigation.navigate("ChatGroupsScreen");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
@@ -176,7 +193,7 @@ const MedFormScreen = ({ navigation }, props) => {
               onPress={() => {
                 createGroupHandler();
                 formHandler();
-                navigation.navigate("ChatGroupsScreen");
+                chatGroupsScreenHandler();
               }}
             />
 
@@ -198,10 +215,7 @@ const MedFormScreen = ({ navigation }, props) => {
       keyboardVerticalOffset={50}
       style={{ flex: 1 }}
     >
-      <LinearGradient
-        colors={[Colors.primary, Colors.secondary]}
-        style={styles.gradient}
-      >
+      <View style={styles.gradient}>
         <ScrollView>
           <Card style={styles.cardContainer}>
             <View style={styles.textSymptomContainer}>
@@ -216,77 +230,75 @@ const MedFormScreen = ({ navigation }, props) => {
               <Picker.Item label="Fever" value="fever" />
               <Picker.Item label="Stomachache" value="stomachache" />
             </Picker>
-
-            <View style={styles.otherInfoContainer}>
-              <Text style={styles.otherInfo}>or describe your symptoms</Text>
-            </View>
-            <Input
-              id="otherSymptom"
-              label="other symptom"
-              keyboardType="default"
-              required
-              autoCapitalize="none"
-              errorMessage="Please enter your others symptoms."
-              onInputChange={inputChangeHandler}
-              numeric
-              initialValue=""
-              editable
-              maxLength={200}
-            />
-            <Input
-              id="age"
-              label="age"
-              required
-              autoCapitalize="none"
-              errorMessage="Please enter your age."
-              onInputChange={inputChangeHandler}
-              keyboardType="decimal-pad"
-              initialValue=""
-            />
-            <Input
-              id="scale"
-              label="scale of pain (0-10)"
-              keyboardType="decimal-pad"
-              required
-              autoCapitalize="none"
-              errorMessage="Please enter your scale."
-              onInputChange={inputChangeHandler}
-              numeric
-              initialValue=""
-            />
-            <Input
-              id="increase"
-              label="increase"
-              keyboardType="decimal-pad"
-              required
-              autoCapitalize="none"
-              errorMessage="Please enter your increase."
-              onInputChange={inputChangeHandler}
-              numeric
-              initialValue=""
-            />
-            <View style={styles.buttonsContainer}>
-              <Button
-                style={styles.button}
-                title={isFormDetails ? "Hide details" : " Show details"}
-                onPress={() => {
-                  setIsFormDetails(true);
-                }}
+            <View style={styles.inputsContainer}>
+              <Input
+                id="otherSymptom"
+                label="other symptom"
+                keyboardType="default"
+                required
+                autoCapitalize="none"
+                errorMessage="Please enter your others symptom."
+                onInputChange={inputChangeHandler}
+                numeric
+                initialValue=""
+                editable
+                maxLength={200}
               />
-
-              <Button
-                style={styles.button}
-                title="Back"
-                onPress={() => {
-                  navigation.navigate("Home");
-                  setIsFormDetails(false);
-                }}
+              <Input
+                id="age"
+                label="age"
+                required
+                autoCapitalize="none"
+                errorMessage="Please enter your age."
+                onInputChange={inputChangeHandler}
+                keyboardType="decimal-pad"
+                initialValue=""
               />
+              <Input
+                id="scale"
+                label="scale of pain (0-10)"
+                keyboardType="decimal-pad"
+                required
+                autoCapitalize="none"
+                errorMessage="Please enter your scale."
+                onInputChange={inputChangeHandler}
+                numeric
+                initialValue=""
+              />
+              <Input
+                id="increase"
+                label="increase"
+                keyboardType="decimal-pad"
+                required
+                autoCapitalize="none"
+                errorMessage="Please enter your increase."
+                onInputChange={inputChangeHandler}
+                numeric
+                initialValue=""
+              />
+              <View style={styles.buttonsContainer}>
+                <Button
+                  style={styles.button}
+                  title={isFormDetails ? "Hide details" : " Show details"}
+                  onPress={() => {
+                    setIsFormDetails(!isFormDetails);
+                  }}
+                />
+
+                <Button
+                  style={styles.button}
+                  title="Back"
+                  onPress={() => {
+                    navigation.navigate("Home");
+                    setIsFormDetails(false);
+                  }}
+                />
+              </View>
             </View>
           </Card>
           {detailsDisplay}
         </ScrollView>
-      </LinearGradient>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -299,11 +311,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: Colors.primary,
   },
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "center",
     paddingVertical: 20,
+  },
+  inputsContainer: {
+    paddingTop: 60,
   },
   button: { paddingHorizontal: 6, marginRight: 12 },
   cardContainer: {
@@ -323,16 +339,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform: "uppercase",
     fontFamily: "open-sans-bold",
+    color: Colors.details,
   },
   textSymptomContainer: {
     justifyContent: "center",
     width: "100%",
-    paddingVertical: 10,
+    paddingVertical: 25,
   },
   textSymptom: {
-    fontSize: 10,
+    fontSize: 13,
+    fontFamily: "open-sans-bold",
     textAlign: "center",
     textTransform: "uppercase",
+    color: Colors.secondary,
   },
   otherInfoContainer: {
     justifyContent: "center",
@@ -340,9 +359,11 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   otherInfo: {
-    fontSize: 10,
+    fontSize: 11,
+    fontFamily: "open-sans",
     textAlign: "center",
     textTransform: "uppercase",
+    color: Colors.secondary,
   },
 });
 export default MedFormScreen;

@@ -5,8 +5,9 @@ import {
   Text,
   ActivityIndicator,
   View,
+  Platform,
 } from "react-native";
-import Color from "../constants/Colors";
+import Colors from "../constants/Colors";
 
 const Button = (props) => {
   const {
@@ -43,16 +44,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 5,
-    backgroundColor: Color.secondary,
-    shadowColor: "#rgb(0,0,0)",
-    shadowOpacity: 0.4,
-    shadowOffset: { height: 10, width: 10 },
-    shadowRadius: 20,
+    shadowColor: "#ccc",
+    backgroundColor: Colors.details,
   },
   text: {
     fontSize: 13,
     textTransform: "uppercase",
-    color: Color.white,
+    color: Colors.primary,
   },
 });
 

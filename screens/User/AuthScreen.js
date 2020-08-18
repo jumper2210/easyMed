@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useReducer, useCallback } from "react";
-import {
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  Alert,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, View, ActivityIndicator, Alert } from "react-native";
 import Input from "../../UI/Input";
 import Card from "../../UI/Card";
 import Colors from "../../constants/Colors";
-import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth";
@@ -42,7 +35,7 @@ const formReducer = (state, action) => {
 
 const AuthScreen = (props) => {
   const dispatch = useDispatch();
-  const [didMount, setDidMount] = useState(false);
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -61,11 +54,9 @@ const AuthScreen = (props) => {
   });
 
   useEffect(() => {
-    setDidMount(true);
     if (error) {
       Alert.alert("An error Occurred!", error, [{ text: "Okay" }]);
     }
-    return () => setDidMount(false);
   }, [error]);
 
   const authHandler = async () => {
@@ -87,7 +78,6 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      setIsLoading(false);
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -107,10 +97,7 @@ const AuthScreen = (props) => {
   );
 
   return (
-    <LinearGradient
-      colors={[Colors.primary, Colors.secondary]}
-      style={styles.gradient}
-    >
+    <View style={styles.gradient}>
       <Card style={styles.authContainer}>
         <ScrollView>
           <Input
@@ -149,7 +136,7 @@ const AuthScreen = (props) => {
           />
           <View style={styles.buttonContainer}>
             {isLoading ? (
-              <ActivityIndicator size="small" color={Colors.primary} />
+              <ActivityIndicator size="small" color={Colors.secondary} />
             ) : (
               <Button
                 title={isSignUp ? "Sign Up" : "Login"}
@@ -169,12 +156,12 @@ const AuthScreen = (props) => {
           </View>
         </ScrollView>
       </Card>
-      <View style={styles.authContainer}></View>
-    </LinearGradient>
+      <View style={styles.authContainer} />
+    </View>
   );
 };
 
-export const AuthScreenOptions = {
+export const screenOptions = {
   headerTitle: "Authenticate",
 };
 const styles = StyleSheet.create({
@@ -185,6 +172,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: Colors.primary,
   },
   authContainer: {
     width: "80%",

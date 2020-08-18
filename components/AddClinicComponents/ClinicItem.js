@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../../constants/Colors";
+import constants from "../../constants/Constants";
 
 const ClinicItem = (props) => {
   return (
@@ -8,9 +9,6 @@ const ClinicItem = (props) => {
       <Image style={styles.image} source={{ uri: props.image }} />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{props.title}</Text>
-        <View style={styles.textContainer}>
-          <Text style={styles.address}>{props.address}</Text>
-        </View>
       </View>
     </TouchableOpacity>
   );
@@ -18,39 +16,31 @@ const ClinicItem = (props) => {
 
 const styles = StyleSheet.create({
   placeItem: {
-    borderBottomColor: "#323210",
-    borderBottomWidth: 1,
-    paddingVertical: 35,
-    paddingHorizontal: 20,
-    flexDirection: "row",
+    paddingVertical: 15,
+    flexDirection: "column",
     alignItems: "center",
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: "#ccc",
-    borderColor: Colors.primary,
+    width: constants.screenWidth - 30,
+    height: constants.screenHeight - 200,
+    borderRadius: 10,
+    backgroundColor: Colors.primary,
+    borderColor: Colors.secondary,
     borderWidth: 1,
   },
   infoContainer: {
-    marginLeft: 30,
-    width: 140,
+    width: "100%",
     justifyContent: "center",
-    alignItems: "flex-start",
+    alignItems: "center",
+    paddingTop: 39,
+    paddingVertical: 10,
   },
   title: {
-    color: "black",
+    color: Colors.secondary,
     fontSize: 18,
+    fontFamily: "open-sans-bold",
+    textTransform: "uppercase",
     marginBottom: 2,
-  },
-  address: {
-    color: "#665",
-    fontSize: 15,
-  },
-  textContainer: {
-    marginVertical: 3,
-    marginRight: 2,
   },
 });
 

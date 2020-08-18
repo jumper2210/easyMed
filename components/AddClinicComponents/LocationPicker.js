@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   locationPicker: {
     marginBottom: 15,
   },
+
   mapPreview: {
     marginTop: 10,
     marginBottom: 15,

@@ -3,6 +3,7 @@ import { ScrollView, Image, View, StyleSheet, Text } from "react-native";
 import MapPreview from "../../components/AddClinicComponents/MapPreview";
 import { useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
+import constants from "../../constants/Constants";
 
 const ClinicDetailScreen = (props) => {
   const clinicId = props.route.params.placeId;
@@ -20,7 +21,6 @@ const ClinicDetailScreen = (props) => {
   };
   return (
     <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-      <Image source={{ uri: selectedClinic.imageUri }} style={styles.image} />
       <View style={styles.locationContainer}>
         <View style={styles.addressContainer}>
           <Text style={styles.address}>{selectedClinic.address}</Text>
@@ -40,18 +40,14 @@ export const screenOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    height: "35%",
-    minHeight: 300,
-    width: "100%",
-    backgroundColor: "#ccc",
-  },
   locationContainer: {
+    flex: 1,
     marginVertical: 20,
-    width: "90%",
-    maxWidth: 350,
+    display: "flex",
+    width: constants.screenWidth - 80,
     justifyContent: "center",
     alignItems: "center",
+    height: constants.screenHeight - 200,
     shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
@@ -61,11 +57,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   addressContainer: {
-    padding: 20,
+    padding: 30,
   },
   address: {
-    color: Colors.secondary,
+    color: Colors.details,
     textAlign: "center",
+    textTransform: "uppercase",
   },
   mapPreview: {
     width: "100%",

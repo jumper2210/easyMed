@@ -4,12 +4,12 @@ import {
   createDrawerNavigator,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { Platform, SafeAreaView, View, Button } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import * as authActions from "../store/actions/auth";
 import { useDispatch } from "react-redux";
-
+import Button from "../components/Button";
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
 } from "../screens/clinic/ClinicOverviewScreen";
@@ -31,7 +31,7 @@ import MapScreen, {
 } from "../screens/clinic/MapScreen";
 import AuthScreen, {
   screenOptions as AuthScreenOptions,
-} from "../screens/User/AuthScreen";
+} from "../screens/user/AuthScreen";
 
 import MedForm, {
   screenOptions as medFormScreenOptions,
@@ -46,16 +46,13 @@ import ConversationScreen, {
 } from "../screens/chat/ConversationScreen";
 
 const defaultNavOptions = {
-  headerStyle: {
-    backgroundColor: Platform.OS === "android" ? Colors.primary : "",
-  },
   headerTitleStyle: {
-    fontFamily: "open-sans-bold",
+    fontFamily: "open-sans",
   },
   headerBackTitleStyle: {
     fontFamily: "open-sans",
   },
-  headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
+  headerTintColor: Colors.details,
 };
 
 const HomeStackNavigator = createStackNavigator();
@@ -147,7 +144,10 @@ export const EasyMedNavigator = () => {
               <DrawerItemList {...props} />
               <Button
                 title="Logout"
-                color={Colors.primary}
+                style={{
+                  backgroundColor: Colors.secondary,
+                }}
+                textStyle={{ color: Colors.primary }}
                 onPress={() => {
                   dispatch(authActions.logout());
                 }}
@@ -157,22 +157,10 @@ export const EasyMedNavigator = () => {
         );
       }}
       drawerContentOptions={{
-        activeTintColor: Colors.primary,
+        activeTintColor: Colors.details,
       }}
     >
-      <EasyMedDrawer.Screen
-        name="Home"
-        component={HomeNavigator}
-        options={{
-          drawerIcon: (props) => (
-            <Ionicons
-              name={Platform.OS === "android" ? "md-home" : "ios-home"}
-              size={23}
-              color={props.color}
-            />
-          ),
-        }}
-      />
+      <EasyMedDrawer.Screen name="Home" component={HomeNavigator} />
       <EasyMedDrawer.Screen name="ChatGroupsScreen" component={ChatNavigator} />
       <EasyMedDrawer.Screen name="FormScreen" component={CreateChatNavigator} />
       <EasyMedDrawer.Screen name="ClinicScreen" component={ClinicNavigator} />

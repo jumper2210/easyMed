@@ -3,19 +3,21 @@ export const AUTHENTICATE = "AUTHENTICATE";
 export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 export const LOGOUT = "LOGOUT";
 export const GET_NAME = "GET_NAME";
+export const GET_USER = "GET_USER";
+let timer;
 
-export const authenticate = (userId, token, name, expiryTime) => {
+export const authenticate = (userId, token, name, user, expireTime) => {
   return (dispatch) => {
-    dispatch(setLogoutTimer(expiryTime));
+    dispatch(setLogoutTimer(expireTime));
     dispatch({
       type: AUTHENTICATE,
       userId: userId,
       token: token,
       name: name,
+      user: user,
     });
   };
 };
-let timer;
 export const setDidTryAl = () => {
   return { type: SET_DID_TRY_AL };
 };
@@ -34,12 +36,7 @@ export const signup = (email, password, name) => {
       }),
     });
     if (!response.ok) {
-      const errorResData = await response.json();
-      const errorId = errorResData.error.message;
       let message = "Something went wrong!";
-      if (errorId === "EMAIL_EXISTS") {
-        message = "This email exists already!";
-      }
       throw new Error(message);
     }
 
@@ -47,14 +44,15 @@ export const signup = (email, password, name) => {
 
     dispatch(
       authenticate(
-        resData.userId,
+        resData.userId._id,
         resData.token,
-        resData.name,
+        resData.userId._name,
         resData.expireTime
       )
     );
-    const expirationDate = new Date(new Date().getTime() + resData.expireTime);
-
+    const expirationDate = new Date(
+      new Date().getTime() + parseInt(resData.expireTime) * 1000
+    );
     saveDataToStorage(resData.token, resData.userId, expirationDate);
   };
 };
@@ -72,26 +70,20 @@ export const login = (email, password, name) => {
         name: name,
       }),
     });
-    if (!response.ok) {
-      const errorResData = await response.json();
-      const errorId = errorResData.error.message;
 
-      let message = "Something went wrong";
-
-      if (errorId === "EMAIL_NOT_FOUND") {
-        message = "This email could not be found";
-      } else if (errorId === "INVALID_PASSWORD") {
-        message = "This password is not valid";
-      }
-      throw new Error(message);
-    }
     const resData = await response.json();
+    if (resData.message) {
+      const errorMessage = resData.message;
+
+      throw new Error(errorMessage);
+    }
 
     dispatch(
       authenticate(
         resData.userId,
         resData.token,
         resData.name,
+        resData.user,
         resData.expireTime
       )
     );

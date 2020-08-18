@@ -41,14 +41,14 @@ const ImgPicker = (props) => {
     <View style={styles.imagePicker}>
       <View style={styles.imagePreview}>
         {!pickedImage ? (
-          <Text>Zrób zdjęcie!</Text>
+          <Text>Take a picture!</Text>
         ) : (
           <Image style={styles.image} source={{ uri: pickedImage }} />
         )}
       </View>
       <Button
-        title="Zrób zdjęcie"
-        color={Colors.primary}
+        title="Take a picture"
+        color={Colors.secondary}
         onPress={takeImageHandler}
       />
     </View>

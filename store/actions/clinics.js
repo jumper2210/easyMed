@@ -5,7 +5,6 @@ export const SET_CLINIC = "SET_CLINIC";
 
 export const addClinic = (title, imageUri, location) => {
   return async (dispatch) => {
-    console.log(location.lat, location.lng);
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${location.lat},${location.lng}&key=${ENV.googleApiKey}`
     );

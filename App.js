@@ -13,7 +13,7 @@ import medicalCaseReducer from "./store/reducers/medicalCase";
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
   authState: authReducer,
-  chatGroupsState: chatGroupsReducer,
+  chatState: chatGroupsReducer,
   medicalCaseState: medicalCaseReducer,
 });
 
