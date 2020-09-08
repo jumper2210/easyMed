@@ -12,6 +12,7 @@ I am writing this application in React-native using Expo-package because I want 
 ### Main Technologies 
 - React-native (Expo, React-native-navigation 5+).
 - React (Redux, redux-thunk, Hooks).
+- React-native-gifted-chat.
 - API's (REST-api, Web-socket, Map-handler, Maps Static API, Geocoding API).
 - & others...
 
