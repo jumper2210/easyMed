@@ -37,7 +37,6 @@ const ChatGroupsScreen = (props) => {
     const findConversation = conversations.find(
       (conversation) => conversation.doctorId === doctorId
     );
-    console.log(findConversation + "z find");
     return findConversation;
   };
 

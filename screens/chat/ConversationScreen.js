@@ -7,11 +7,8 @@ import * as messageActions from "../../store/actions/message";
 const ConversationScreen = ({ route }) => {
   const socket = io("http://192.168.1.17:8080");
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.authState.user._id);
-  const userName = useSelector((state) => state.authState.name);
-
+  const user = useSelector((state) => state.authState.user);
   const { doctors, conversation } = route.params;
-  console.log(doctors);
   const messages = useSelector(
     (state) =>
       state.messagesState[state.conversationsState.currentConversationId]
@@ -21,13 +18,13 @@ const ConversationScreen = ({ route }) => {
     dispatch(messageActions.loadMessages(conversation.id));
     return () => {
       socket.emit("disconnect", {
-        senderId: userId,
+        senderId: user._id,
       });
     };
   }, []);
 
   socket.emit("init", {
-    senderId: userId,
+    senderId: user._id,
   });
 
   socket.on("message", (message) => {
@@ -41,7 +38,7 @@ const ConversationScreen = ({ route }) => {
   });
 
   const getConversationDoctor = (id) => {
-    return id === userId ? userName : doctors.name;
+    return id === user._id ? user.name : doctors[0].name;
   };
 
   const getMappedMessages = () => {
@@ -66,7 +63,7 @@ const ConversationScreen = ({ route }) => {
     socket.emit("message", {
       conversationId: conversation.id,
       text: message[0].text,
-      senderId: userId,
+      senderId: user._id,
       receiverId: conversation.doctorId,
       createdAt: new Date(),
       msgId: message[0]._id,
@@ -85,7 +82,7 @@ const ConversationScreen = ({ route }) => {
       messages={getMappedMessages()}
       onSend={onSend}
       user={{
-        _id: userId,
+        _id: user._id,
       }}
     />
   );
