@@ -11,7 +11,6 @@ import Colors from "../../constants/Colors";
 const ClinicOverviewScreen = (props) => {
   const clinics = useSelector((state) => state.clinicsState.clinics);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(clinicsActions.loadClinics());
   }, [dispatch]);

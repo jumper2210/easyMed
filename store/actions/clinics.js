@@ -63,6 +63,7 @@ export const loadClinics = () => {
         return res.json();
       })
       .then((resData) => {
+        console.log(resData);
         dispatch({ type: SET_CLINIC, clinics: resData.clinics });
       });
   };

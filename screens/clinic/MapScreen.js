@@ -4,13 +4,11 @@ import MapView, { Marker } from "react-native-maps";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../../constants/Colors";
 
-const MapScreen = (props) => {
-  const initialLocation = props.navigation.params
-    ? props.navigation.params.initialLocation
+const MapScreen = ({ navigation }) => {
+  const initialLocation = navigation.params
+    ? navigation.params.initialLocation
     : null;
-  const readonly = props.navigation.params
-    ? props.navigation.params.readonly
-    : null;
+  const readonly = navigation.params ? navigation.params.readonly : null;
 
   const [selectedLocation, setSelectedLocation] = useState(initialLocation);
   let markerCoordinates;
@@ -37,13 +35,13 @@ const MapScreen = (props) => {
     if (!selectedLocation) {
       return;
     }
-    props.navigation.navigate("AddClinic", {
+    navigation.navigate("AddClinic", {
       pickedLocation: selectedLocation,
     });
   }, [selectedLocation]);
 
   useEffect(() => {
-    props.navigation.setParams({ saveLocation: savePickedLocationHandler });
+    navigation.setParams({ saveLocation: savePickedLocationHandler });
   }, [savePickedLocationHandler]);
 
   if (selectedLocation) {

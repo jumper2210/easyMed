@@ -1,9 +1,4 @@
-import {
-  AUTHENTICATE,
-  SET_DID_TRY_AL,
-  LOGOUT,
-  GET_USER,
-} from "../actions/auth";
+import { AUTHENTICATE, SET_DID_TRY_AL, LOGOUT } from "../actions/auth";
 
 const initialState = {
   token: null,

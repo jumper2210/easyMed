@@ -7,20 +7,20 @@ import {
   Text,
   Alert,
 } from "react-native";
-
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
+
 import Input from "../../UI/Input";
 import Card from "../../UI/Card";
 import Colors from "../../constants/Colors";
-import { LinearGradient } from "expo-linear-gradient";
 import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import * as medicalCaseActions from "../../store/actions/medicalCase";
 import Button from "../../components/Button";
 import Constants from "../../constants/Constants";
 import * as chatGroupActions from "../../store/actions/chat";
-import Strings from "../../constants/Strings";
+
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
@@ -43,9 +43,9 @@ const formReducer = (state, action) => {
   }
   return state;
 };
-const MedFormScreen = ({ navigation }, props) => {
-  const userName = useSelector((state) => state.authState.name);
+const MedFormScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const userName = useSelector((state) => state.authState.name);
   const [selectedValue, setSelectedValue] = useState("fever");
   const [isFormDetails, setIsFormDetails] = useState(false);
   const [error, setError] = useState();
@@ -100,6 +100,7 @@ const MedFormScreen = ({ navigation }, props) => {
   };
   const createGroupHandler = async () => {
     action = chatGroupActions.createChatGroup(userName);
+
     setError(null);
     setIsLoading(true);
     try {

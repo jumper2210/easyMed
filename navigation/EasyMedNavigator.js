@@ -5,7 +5,6 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { SafeAreaView, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import * as authActions from "../store/actions/auth";
 import { useDispatch } from "react-redux";
@@ -17,7 +16,7 @@ import ClinicScreen, {
 import HomeScreen, {
   screenOptions as HomeScreenOptions,
 } from "../screens/HomeScreen";
-
+import AddDoctorScreen from "../screens/chat/AddDoctorScreen";
 import NewClinicScreen, {
   screenOptions as AddClinicScreenOptions,
 } from "../screens/clinic/NewClinicScreen";
@@ -44,6 +43,8 @@ import ChatGroupScreen, {
 import ConversationScreen, {
   screenOptions as conversationScreenOptions,
 } from "../screens/chat/ConversationScreen";
+import { addDoctor } from "../store/actions/doctors";
+import ChatGroupsScreen from "../screens/chat/ChatGroupsScreen";
 
 const defaultNavOptions = {
   headerTitleStyle: {
@@ -84,6 +85,7 @@ export const ChatNavigator = () => {
         component={ConversationScreen}
         options={conversationScreenOptions}
       />
+      <ChatStackNavigator.Screen name="AddDoctor" component={AddDoctorScreen} />
     </ChatStackNavigator.Navigator>
   );
 };

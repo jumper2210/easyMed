@@ -28,7 +28,7 @@ const StartupScreen = (props) => {
         dispatch(authActions.setDidTryAl());
         return;
       }
-      dispatch(authActions.authenticate(userId, token));
+      dispatch(authActions.authenticate(token));
     };
     tryLogin();
   }, [dispatch]);
