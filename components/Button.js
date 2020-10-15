@@ -5,7 +5,6 @@ import {
   Text,
   ActivityIndicator,
   View,
-  Platform,
 } from "react-native";
 import Colors from "../constants/Colors";
 

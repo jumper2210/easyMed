@@ -87,9 +87,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   label: {
-    fontFamily: "open-sans",
+    fontFamily: "open-sans-bold",
     marginVertical: 8,
-    fontSize: 12,
+    fontSize: 14,
     textTransform: "uppercase",
     color: Colors.details,
   },

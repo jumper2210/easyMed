@@ -9,6 +9,7 @@ import * as clinicsActions from "../../store/actions/clinics";
 import Colors from "../../constants/Colors";
 
 const ClinicOverviewScreen = (props) => {
+  const { navigation } = props;
   const clinics = useSelector((state) => state.clinicsState.clinics);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,7 +28,7 @@ const ClinicOverviewScreen = (props) => {
             title={itemData.item.title}
             address={itemData.item.address}
             onSelect={() => {
-              props.navigation.navigate("ClinicDetail", {
+              navigation.navigate("ClinicDetailsScreen", {
                 clinicTitle: itemData.item.title,
                 placeId: itemData.item._id,
               });
@@ -47,10 +48,12 @@ export const screenOptions = (navData) => {
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
-          title="Menu"
-          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
+          title=""
+          iconName={
+            Platform.OS === "android" ? "md-arrow-back" : "ios-arrow-back"
+          }
           onPress={() => {
-            navData.navigation.toggleDrawer();
+            navData.navigation.goBack();
           }}
         />
       </HeaderButtons>
@@ -61,7 +64,7 @@ export const screenOptions = (navData) => {
           title="AddClinic"
           iconName={Platform.OS === "android" ? "md-add" : "ios-add"}
           onPress={() => {
-            navData.navigation.navigate("AddClinic");
+            navData.navigation.navigate("AddClinicScreen");
           }}
         />
       </HeaderButtons>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, useReducer, useCallback } from "react";
 import {
   StyleSheet,
@@ -8,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Input from "../../UI/Input";
 import Card from "../../UI/Card";
@@ -17,7 +18,6 @@ import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import * as medicalCaseActions from "../../store/actions/medicalCase";
 import Button from "../../components/Button";
 import Constants from "../../constants/Constants";
-import * as chatGroupActions from "../../store/actions/chat";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -43,16 +43,16 @@ const formReducer = (state, action) => {
   }
   return state;
 };
-const MedFormScreen = ({ navigation }) => {
+const MedFormScreen = (props) => {
+  const { navigation } = props;
   const dispatch = useDispatch();
-  const userName = useSelector((state) => state.authState.name);
   const [selectedValue, setSelectedValue] = useState("fever");
   const [isFormDetails, setIsFormDetails] = useState(false);
   const [error, setError] = useState();
   const [selectedImage, setSelectedImage] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
   let action = null;
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       otherSymptom: "",
@@ -79,15 +79,15 @@ const MedFormScreen = ({ navigation }) => {
     }
   }, [error]);
 
-  const chatGroupsScreenHandler = () => {
+  const infoHandler = () => {
     Alert.alert(
       "Create chat",
-      "Thank you for complete the form, now you can talk with your doctor",
+      "Thank you for complete the form, now you have to wait for response from your doctor",
       [
         {
           text: "Talk with doctor",
           onPress: () => {
-            navigation.navigate("ChatGroupsScreen");
+            navigation.navigate("Home");
           },
         },
       ],
@@ -97,19 +97,6 @@ const MedFormScreen = ({ navigation }) => {
 
   const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
-  };
-  const createGroupHandler = async () => {
-    action = chatGroupActions.createChatGroup(userName);
-
-    setError(null);
-    setIsLoading(true);
-    try {
-      await dispatch(action);
-      setIsLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
-    }
   };
 
   const formHandler = async () => {
@@ -192,9 +179,8 @@ const MedFormScreen = ({ navigation }) => {
               style={styles.button}
               title="Create Chat"
               onPress={() => {
-                createGroupHandler();
                 formHandler();
-                chatGroupsScreenHandler();
+                infoHandler();
               }}
             />
 

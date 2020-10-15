@@ -2,15 +2,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
-import {
-  View,
-  Platform,
-  Button,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import CustomHeaderButton from "../../UI/CustomHeaderButton";
+import { View, Button, StyleSheet, ActivityIndicator } from "react-native";
 import * as conversationActions from "../../store/actions/conversation";
 import DoctorItem from "../../components/ChatComponents/DoctorItem";
 import * as doctorsActions from "../../store/actions/doctors";
@@ -54,7 +46,7 @@ const ChatGroupsScreen = (props) => {
               const conversation = findConversationHandler(itemData.item._id);
               if (conversation && conversation.id) {
                 setCurrentConversationId(conversation.id),
-                  navigation.navigate("Conversation", {
+                  navigation.navigate("ConversationScreen", {
                     conversation: conversation,
                     doctors: doctors,
                   });
@@ -78,28 +70,14 @@ const ChatGroupsScreen = (props) => {
       <Button
         title="add doctor"
         onPress={() => {
-          navigation.navigate("AddDoctor");
+          navigation.navigate("AddDoctorScreen");
         }}
       />
       {display}
     </View>
   );
 };
-export const screenOptions = (navData) => {
-  return {
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item
-          title="Menu"
-          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
+export const screenOptions = (navData) => {};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

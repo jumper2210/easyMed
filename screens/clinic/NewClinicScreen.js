@@ -14,6 +14,8 @@ import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import LocationPicker from "../../components/AddClinicComponents/LocationPicker";
 
 const NewClinicScreen = (props) => {
+  const { navigation } = props;
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState();
   const [titleValue, setTitleValue] = useState("");
   const [selectedLocation, setSelectedLocation] = useState();
@@ -21,7 +23,6 @@ const NewClinicScreen = (props) => {
   const titleChangedHandler = (text) => {
     setTitleValue(text);
   };
-  const dispatch = useDispatch();
 
   const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
@@ -31,7 +32,7 @@ const NewClinicScreen = (props) => {
     dispatch(
       clinicsActions.addClinic(titleValue, selectedImage, selectedLocation)
     );
-    props.navigation.goBack();
+    navigation.goBack();
   };
 
   const locationPickerHandler = useCallback((location) => {

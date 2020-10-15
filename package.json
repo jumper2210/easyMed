@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.5",
+    "@react-navigation/bottom-tabs": "^5.9.2",
     "@react-navigation/drawer": "^5.4.0",
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
+    "babel-upgrade": "^1.0.1",
     "expo": "~36.0.0",
     "expo-file-system": "~8.0.0",
     "expo-font": "~8.0.0",
@@ -23,10 +25,10 @@
     "react": "^16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-    "react-native-gesture-handler": "~1.5.0",
+    "react-native-gesture-handler": "^1.5.6",
     "react-native-gifted-chat": "^0.16.3",
     "react-native-maps": "0.26.1",
-    "react-native-reanimated": "~1.4.0",
+    "react-native-reanimated": "^1.4.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "~0.11.7",
@@ -42,7 +44,8 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "babel-preset-expo": "~8.0.0",
-    "jsdoc": "^3.6.4"
+    "jsdoc": "^3.6.4",
+    "typescript": "^4.0.3"
   },
   "private": true
 }

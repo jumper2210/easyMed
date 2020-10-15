@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import * as messageActions from "../../store/actions/message";
 
-const ConversationScreen = ({ route }) => {
+const ConversationScreen = (props) => {
+  const { route } = props;
   const socket = io("http://192.168.1.17:8080");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authState.user);
@@ -52,6 +53,7 @@ const ConversationScreen = ({ route }) => {
               user: {
                 _id: userId,
                 name: getConversationDoctor(userId),
+                avatar: "https://placeimg.com/140/140/any",
               },
             };
           })
@@ -84,6 +86,7 @@ const ConversationScreen = ({ route }) => {
       user={{
         _id: user._id,
       }}
+      isTyping
     />
   );
 };

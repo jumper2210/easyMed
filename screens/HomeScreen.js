@@ -1,9 +1,11 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { View, StyleSheet, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../UI/CustomHeaderButton";
 import NavigationItem from "../components/NavigationItem";
 import { ScrollView } from "react-native-gesture-handler";
+import * as authActions from "../store/actions/auth";
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -36,20 +38,28 @@ const HomeScreen = ({ navigation }) => {
             navigation.navigate("ChatGroupsScreen");
           }}
         />
+        <NavigationItem
+          name={"My account"}
+          iconName={Platform.OS === "android" ? "md-contact" : "ios-contact"}
+          onPress={() => {
+            navigation.navigate("UserAccountScreen");
+          }}
+        />
       </View>
     </ScrollView>
   );
 };
-export const screenOptions = (navData) => {
+export const screenOptions = () => {
+  const dispatch = useDispatch();
   return {
     headerTitle: "Home",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title="Menu"
-          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
+          title=""
+          iconName={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
           onPress={() => {
-            navData.navigation.toggleDrawer();
+            dispatch(authActions.logout());
           }}
         />
       </HeaderButtons>

@@ -30,7 +30,8 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const AddDoctorScreen = ({ navigation }) => {
+const AddDoctorScreen = (props) => {
+  const { navigation } = props;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();

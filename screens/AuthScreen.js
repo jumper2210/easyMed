@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useReducer, useCallback } from "react";
 import { StyleSheet, View, ActivityIndicator, Alert } from "react-native";
-import Input from "../../UI/Input";
-import Card from "../../UI/Card";
-import Colors from "../../constants/Colors";
+import Input from "../UI/Input";
+import Card from "../UI/Card";
+import Colors from "../constants/Colors";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-import * as authActions from "../../store/actions/auth";
-import Button from "../../components/Button";
+import * as authActions from "../store/actions/auth";
+import Button from "../components/Button";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -139,14 +139,15 @@ const AuthScreen = (props) => {
               <ActivityIndicator size="small" color={Colors.secondary} />
             ) : (
               <Button
+                style={{ width: "80%" }}
                 title={isSignUp ? "Sign Up" : "Login"}
                 color={Colors.primary}
                 onPress={authHandler}
               />
             )}
-          </View>
-          <View style={styles.buttonContainer}>
+
             <Button
+              style={{ width: "80%" }}
               title={`Switch to ${isSignUp ? "Login" : "Sign Up"}`}
               color={Colors.accent}
               onPress={() => {
@@ -178,10 +179,12 @@ const styles = StyleSheet.create({
     width: "80%",
     maxWidth: 400,
     maxHeight: 400,
-    padding: 20,
+    padding: 15,
   },
   buttonContainer: {
-    marginTop: 10,
+    marginTop: 25,
+    width: "100%",
+    alignItems: "center",
   },
 });
 export default AuthScreen;

@@ -4,7 +4,8 @@ import MapView, { Marker } from "react-native-maps";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../../constants/Colors";
 
-const MapScreen = ({ navigation }) => {
+const MapScreen = (props) => {
+  const { navigation } = props;
   const initialLocation = navigation.params
     ? navigation.params.initialLocation
     : null;
@@ -35,7 +36,7 @@ const MapScreen = ({ navigation }) => {
     if (!selectedLocation) {
       return;
     }
-    navigation.navigate("AddClinic", {
+    navigation.navigate("AddClinicScreen", {
       pickedLocation: selectedLocation,
     });
   }, [selectedLocation]);

@@ -1,14 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-  createDrawerNavigator,
-  DrawerItemList,
-} from "@react-navigation/drawer";
-import { SafeAreaView, View } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Colors from "../constants/Colors";
-import * as authActions from "../store/actions/auth";
-import { useDispatch } from "react-redux";
-import Button from "../components/Button";
+import { Ionicons } from "@expo/vector-icons";
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
 } from "../screens/clinic/ClinicOverviewScreen";
@@ -21,7 +15,7 @@ import NewClinicScreen, {
   screenOptions as AddClinicScreenOptions,
 } from "../screens/clinic/NewClinicScreen";
 
-import ClinicDetail, {
+import ClinicDetailScreen, {
   screenOptions as clinicDetailOptions,
 } from "../screens/clinic/ClinicDetailScreen";
 
@@ -30,21 +24,25 @@ import MapScreen, {
 } from "../screens/clinic/MapScreen";
 import AuthScreen, {
   screenOptions as AuthScreenOptions,
-} from "../screens/user/AuthScreen";
+} from "../screens/AuthScreen";
 
-import MedForm, {
+import MedFormScreen, {
   screenOptions as medFormScreenOptions,
 } from "../screens/form/MedFormScreen";
 
-import ChatGroupScreen, {
-  screenOptions as chatGroupScreenOptions,
-} from "../screens/chat/ChatGroupsScreen";
+import ChatGroupScreen from "../screens/chat/ChatGroupsScreen";
 
 import ConversationScreen, {
   screenOptions as conversationScreenOptions,
 } from "../screens/chat/ConversationScreen";
-import { addDoctor } from "../store/actions/doctors";
-import ChatGroupsScreen from "../screens/chat/ChatGroupsScreen";
+
+import UserAccountScreen, {
+  screenOptions as UserAccountScreenOptions,
+} from "../screens/user/UserAccountScreen";
+
+import UserMedicalCasesScreen from "../screens/user/UserMedicalCasesScreen";
+
+import UserMedicinesScreen from "../screens/user/UserMedicinesScreen";
 
 const defaultNavOptions = {
   headerTitleStyle: {
@@ -53,120 +51,111 @@ const defaultNavOptions = {
   headerBackTitleStyle: {
     fontFamily: "open-sans",
   },
-  headerTintColor: Colors.details,
+  headerTintColor: Colors.secondary,
+};
+const defaultTabBarOptions = {
+  activeTintColor: Colors.secondary,
+  labelStyle: { fontFamily: "open-sans" },
+};
+const UserManagementBottomTabs = createBottomTabNavigator();
+
+export const UserManagementTabs = () => {
+  return (
+    <UserManagementBottomTabs.Navigator tabBarOptions={defaultTabBarOptions}>
+      <UserManagementBottomTabs.Screen
+        name="UserAccount"
+        component={UserAccountScreen}
+        options={{
+          title: "My account",
+          tabBarIcon: () => {
+            return (
+              <Ionicons name="md-build" size={30} color={Colors.secondary} />
+            );
+          },
+        }}
+      />
+      <UserManagementBottomTabs.Screen
+        name="UserMedicalCasesScreen"
+        component={UserMedicalCasesScreen}
+        options={{
+          title: "Medical Cases",
+          tabBarIcon: () => {
+            return (
+              <Ionicons name="md-list" size={30} color={Colors.secondary} />
+            );
+          },
+        }}
+      />
+      <UserManagementBottomTabs.Screen
+        name="UserMedicinesScreen"
+        component={UserMedicinesScreen}
+        options={{
+          title: "Medicals",
+          tabBarIcon: () => {
+            return (
+              <Ionicons name="md-medical" size={30} color={Colors.secondary} />
+            );
+          },
+        }}
+      />
+    </UserManagementBottomTabs.Navigator>
+  );
 };
 
-const HomeStackNavigator = createStackNavigator();
+const EasyMedStackNavigator = createStackNavigator();
 
-export const HomeNavigator = () => {
+export const EasyMedNavigator = () => {
   return (
-    <HomeStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <HomeStackNavigator.Screen
+    <EasyMedStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <EasyMedStackNavigator.Screen
         name="Home"
         component={HomeScreen}
         options={HomeScreenOptions}
       />
-    </HomeStackNavigator.Navigator>
-  );
-};
-
-const ChatStackNavigator = createStackNavigator();
-
-export const ChatNavigator = () => {
-  return (
-    <ChatStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <ChatStackNavigator.Screen
-        name="ChatGroups"
+      <EasyMedStackNavigator.Screen
+        name="ChatGroupsScreen"
         component={ChatGroupScreen}
-        options={chatGroupScreenOptions}
       />
-      <ChatStackNavigator.Screen
-        name="Conversation"
+      <EasyMedStackNavigator.Screen
+        name="ConversationScreen"
         component={ConversationScreen}
         options={conversationScreenOptions}
       />
-      <ChatStackNavigator.Screen name="AddDoctor" component={AddDoctorScreen} />
-    </ChatStackNavigator.Navigator>
-  );
-};
-
-const CreateChatStackNavigator = createStackNavigator();
-
-export const CreateChatNavigator = () => {
-  return (
-    <CreateChatStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <CreateChatStackNavigator.Screen
-        name="Form"
-        component={MedForm}
+      <EasyMedStackNavigator.Screen
+        name="AddDoctorScreen"
+        component={AddDoctorScreen}
+      />
+      <EasyMedStackNavigator.Screen
+        name="FormScreen"
+        component={MedFormScreen}
         options={medFormScreenOptions}
       />
-    </CreateChatStackNavigator.Navigator>
-  );
-};
-
-const AddPlaceStackNavigator = createStackNavigator();
-
-export const ClinicNavigator = () => {
-  return (
-    <AddPlaceStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <AddPlaceStackNavigator.Screen
-        name="Clinic"
+      <EasyMedStackNavigator.Screen
+        name="ClinicScreen"
         component={ClinicScreen}
         options={clinicScreenOptions}
       />
-      <AddPlaceStackNavigator.Screen
-        name="AddClinic"
+      <EasyMedStackNavigator.Screen
+        name="AddClinicScreen"
         component={NewClinicScreen}
         options={AddClinicScreenOptions}
       />
-      <AddPlaceStackNavigator.Screen
-        name="ClinicDetail"
-        component={ClinicDetail}
+      <EasyMedStackNavigator.Screen
+        name="ClinicDetailsScreen"
+        component={ClinicDetailScreen}
         options={clinicDetailOptions}
       />
-      <AddPlaceStackNavigator.Screen
+      <EasyMedStackNavigator.Screen
         name="MapScreen"
         component={MapScreen}
         options={mapScreenOptions}
       />
-    </AddPlaceStackNavigator.Navigator>
-  );
-};
-
-const EasyMedDrawer = createDrawerNavigator();
-
-export const EasyMedNavigator = () => {
-  const dispatch = useDispatch();
-  return (
-    <EasyMedDrawer.Navigator
-      drawerContent={(props) => {
-        return (
-          <View style={{ flex: 1, paddingTop: 20 }}>
-            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-              <DrawerItemList {...props} />
-              <Button
-                title="Logout"
-                style={{
-                  backgroundColor: Colors.secondary,
-                }}
-                textStyle={{ color: Colors.primary }}
-                onPress={() => {
-                  dispatch(authActions.logout());
-                }}
-              />
-            </SafeAreaView>
-          </View>
-        );
-      }}
-      drawerContentOptions={{
-        activeTintColor: Colors.details,
-      }}
-    >
-      <EasyMedDrawer.Screen name="Home" component={HomeNavigator} />
-      <EasyMedDrawer.Screen name="ChatGroupsScreen" component={ChatNavigator} />
-      <EasyMedDrawer.Screen name="FormScreen" component={CreateChatNavigator} />
-      <EasyMedDrawer.Screen name="ClinicScreen" component={ClinicNavigator} />
-    </EasyMedDrawer.Navigator>
+      <EasyMedStackNavigator.Screen
+        name="UserAccountScreen"
+        component={UserManagementTabs}
+        options={{ headerTitle: null }}
+      />
+    </EasyMedStackNavigator.Navigator>
   );
 };
 const AuthStackNavigator = createStackNavigator();

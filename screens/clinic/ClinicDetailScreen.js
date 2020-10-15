@@ -1,12 +1,14 @@
+// @ts-nocheck
 import React from "react";
-import { ScrollView, Image, View, StyleSheet, Text } from "react-native";
+import { ScrollView, View, StyleSheet, Text } from "react-native";
 import MapPreview from "../../components/AddClinicComponents/MapPreview";
 import { useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
 import constants from "../../constants/Constants";
 
 const ClinicDetailScreen = (props) => {
-  const clinicId = props.route.params.placeId;
+  const { route, navigation } = props;
+  const clinicId = route.params.placeId;
   const selectedClinic = useSelector((state) =>
     state.clinicsState.clinics.find((clinic) => clinic._id === clinicId)
   );
@@ -14,7 +16,7 @@ const ClinicDetailScreen = (props) => {
   const selectedLocation = { lat: selectedClinic.lat, lng: selectedClinic.lng };
 
   const showMapHandler = () => {
-    props.navigation.navigate("MapScreen", {
+    navigation.navigate("MapScreen", {
       readonly: true,
       initialLocation: selectedLocation,
     });
@@ -36,7 +38,7 @@ const ClinicDetailScreen = (props) => {
 };
 
 export const screenOptions = (navData) => {
-  return { headerTitle: navData.route.params.ClinicDetail };
+  return { headerTitle: navData.route.params.ClinicTitle };
 };
 
 const styles = StyleSheet.create({
