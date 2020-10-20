@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-const UserMedicinesScreen = () => {
+const PatientMedicalCasesScreen = () => {
   return (
     <View>
       <Text>Test</Text>
@@ -8,4 +8,4 @@ const UserMedicinesScreen = () => {
   );
 };
 
-export default UserMedicinesScreen;
+export default PatientMedicalCasesScreen;

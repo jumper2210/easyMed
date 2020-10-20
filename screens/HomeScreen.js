@@ -10,9 +10,9 @@ import * as authActions from "../store/actions/auth";
 const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView>
-      <View style={styles.NavItemStyle}>
+      <View style={styles.screen}>
         <NavigationItem
-          name={"Create chat room"}
+          name={"Medical Form"}
           iconName={
             Platform.OS === "android"
               ? "md-add-circle-outline"
@@ -42,7 +42,14 @@ const HomeScreen = ({ navigation }) => {
           name={"My account"}
           iconName={Platform.OS === "android" ? "md-contact" : "ios-contact"}
           onPress={() => {
-            navigation.navigate("UserAccountScreen");
+            navigation.navigate("PatientAccountScreen");
+          }}
+        />
+        <NavigationItem
+          name={"All patients"}
+          iconName={Platform.OS === "android" ? "md-list-box" : "ios-list-box"}
+          onPress={() => {
+            navigation.navigate("AllPatientsScreen");
           }}
         />
       </View>
@@ -68,7 +75,7 @@ export const screenOptions = () => {
 };
 
 const styles = StyleSheet.create({
-  NavItemStyle: {
+  screen: {
     padding: 1,
     flexDirection: "row",
     flex: 1,

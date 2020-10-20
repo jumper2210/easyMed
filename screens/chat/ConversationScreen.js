@@ -3,19 +3,22 @@ import { GiftedChat } from "react-native-gifted-chat";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import * as messageActions from "../../store/actions/message";
+import * as chatMatesActions from "../../store/actions/chatMate";
 
 const ConversationScreen = (props) => {
-  const { route } = props;
-  const socket = io("http://192.168.1.17:8080");
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authState.user);
-  const { doctors, conversation } = route.params;
+  const { route } = props;
+  const { conversation, chatMates, user } = route.params;
+  const socket = io("http://192.168.1.17:8080");
+  console.log(user.name + "z cs");
+  console.log(chatMates[0].name + "z cs 2");
   const messages = useSelector(
     (state) =>
       state.messagesState[state.conversationsState.currentConversationId]
   );
 
   useEffect(() => {
+    dispatch(chatMatesActions.loadChatMates());
     dispatch(messageActions.loadMessages(conversation.id));
     return () => {
       socket.emit("disconnect", {
@@ -39,7 +42,7 @@ const ConversationScreen = (props) => {
   });
 
   const getConversationDoctor = (id) => {
-    return id === user._id ? user.name : doctors[0].name;
+    return id === user._id ? user.name : chatMates[0].name;
   };
 
   const getMappedMessages = () => {
@@ -66,7 +69,7 @@ const ConversationScreen = (props) => {
       conversationId: conversation.id,
       text: message[0].text,
       senderId: user._id,
-      receiverId: conversation.doctorId,
+      receiverId: conversation.chatMateId,
       createdAt: new Date(),
       msgId: message[0]._id,
     });

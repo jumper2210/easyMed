@@ -6,7 +6,7 @@ import Colors from "../constants/Colors";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import * as authActions from "../store/actions/auth";
-import Button from "../components/Button";
+import Button from "../UI/Button";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 

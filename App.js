@@ -8,9 +8,10 @@ import ReduxThunk from "redux-thunk";
 import authReducer from "./store/reducers/auth";
 import messagesReducer from "./store/reducers/message";
 import conversationsReducer from "./store/reducers/conversation";
-import doctorsReducer from "./store/reducers/doctors";
+import chatMatesReducer from "./store/reducers/chatMate";
 import clinicReducer from "./store/reducers/clinics";
 import medicalCaseReducer from "./store/reducers/medicalCase";
+import usersReducer from "./store/reducers/user";
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   medicalCaseState: medicalCaseReducer,
   messagesState: messagesReducer,
   conversationsState: conversationsReducer,
-  doctorsState: doctorsReducer,
+  chatMatesState: chatMatesReducer,
+  usersState: usersReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
@@ -30,9 +32,9 @@ const fetchFonts = () => {
   });
 };
 
-// store.subscribe(() => {
-//   console.log("new state", store.getState());
-// });
+store.subscribe(() => {
+  console.log("new state", store.getState());
+});
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);

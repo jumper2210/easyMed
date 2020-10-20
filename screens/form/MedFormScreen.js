@@ -16,7 +16,7 @@ import Card from "../../UI/Card";
 import Colors from "../../constants/Colors";
 import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import * as medicalCaseActions from "../../store/actions/medicalCase";
-import Button from "../../components/Button";
+import Button from "../../UI/Button";
 import Constants from "../../constants/Constants";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";

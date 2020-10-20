@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import { View, Button, StyleSheet, ActivityIndicator } from "react-native";
 import * as conversationActions from "../../store/actions/conversation";
-import DoctorItem from "../../components/ChatComponents/DoctorItem";
-import * as doctorsActions from "../../store/actions/doctors";
+import ChatMateItem from "../../components/ChatComponents/ChatMateItem";
+import * as chatMateActions from "../../store/actions/chatMate";
 import Colors from "../../constants/Colors";
 
 const ChatGroupsScreen = (props) => {
   const dispatch = useDispatch();
   const { navigation } = props;
-  const doctors = useSelector((state) => state.doctorsState.doctors);
+  const chatMates = useSelector((state) => state.chatMatesState.chatMates);
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
   );
@@ -21,26 +21,26 @@ const ChatGroupsScreen = (props) => {
   };
 
   useEffect(() => {
-    dispatch(doctorsActions.loadDoctors());
+    dispatch(chatMateActions.loadChatMates());
     dispatch(conversationActions.loadConversations());
   }, [dispatch]);
 
-  const findConversationHandler = (doctorId) => {
+  const findConversationHandler = (chatMateId) => {
     const findConversation = conversations.find(
-      (conversation) => conversation.doctorId === doctorId
+      (conversation) => conversation.chatMateId === chatMateId
     );
     return findConversation;
   };
 
   let display = <ActivityIndicator size="large" color={Colors.secondary} />;
 
-  if (doctors) {
+  if (chatMates) {
     display = (
       <FlatList
-        data={doctors}
+        data={chatMates}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
-          <DoctorItem
+          <ChatMateItem
             name={itemData.item.name}
             onSelect={() => {
               const conversation = findConversationHandler(itemData.item._id);
@@ -48,7 +48,7 @@ const ChatGroupsScreen = (props) => {
                 setCurrentConversationId(conversation.id),
                   navigation.navigate("ConversationScreen", {
                     conversation: conversation,
-                    doctors: doctors,
+                    chatMates: chatMates,
                   });
               } else {
                 dispatch(
@@ -68,9 +68,9 @@ const ChatGroupsScreen = (props) => {
   return (
     <View style={styles.container}>
       <Button
-        title="add doctor"
+        title="add your chat mate"
         onPress={() => {
-          navigation.navigate("AddDoctorScreen");
+          navigation.navigate("AddChatMateScreen");
         }}
       />
       {display}

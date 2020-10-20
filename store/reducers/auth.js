@@ -5,7 +5,6 @@ const initialState = {
   userId: null,
   didTryAutoLogin: false,
   name: null,
-  user: null,
 };
 
 export default (state = initialState, action) => {
@@ -15,7 +14,6 @@ export default (state = initialState, action) => {
         token: action.token,
         userId: action.userId,
         name: action.name,
-        user: action.user,
         didTryAutoLogin: true,
       };
     case SET_DID_TRY_AL:

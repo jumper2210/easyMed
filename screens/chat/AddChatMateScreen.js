@@ -1,9 +1,9 @@
 import React, { useCallback, useReducer, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import * as doctorsActions from "../../store/actions/doctors";
+import * as chatMatesActions from "../../store/actions/chatMate";
 import { View, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import Input from "../../UI/Input";
-import Button from "../../components/Button";
+import Button from "../../UI/Button";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -53,7 +53,7 @@ const AddDoctorScreen = (props) => {
 
   const addDoctorHandler = async () => {
     let action;
-    action = doctorsActions.addDoctor(formState.inputValues.email);
+    action = chatMatesActions.addChatMate(formState.inputValues.email);
     setError(null);
     setIsLoading(true);
     try {
@@ -96,7 +96,7 @@ const AddDoctorScreen = (props) => {
       ) : (
         <Button
           style={styles.button}
-          title="add doctor"
+          title="add your chat mate"
           onPress={addDoctorHandler}
         />
       )}

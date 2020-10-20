@@ -6,7 +6,7 @@ export const GET_NAME = "GET_NAME";
 export const GET_USER = "GET_USER";
 let timer;
 
-export const authenticate = (userId, token, name, user, expireTime) => {
+export const authenticate = (userId, token, name, expireTime) => {
   return (dispatch) => {
     dispatch(setLogoutTimer(expireTime));
     dispatch({
@@ -14,7 +14,6 @@ export const authenticate = (userId, token, name, user, expireTime) => {
       userId: userId,
       token: token,
       name: name,
-      user: user,
     });
   };
 };
@@ -83,7 +82,6 @@ export const login = (email, password, name) => {
         resData.userId,
         resData.token,
         resData.name,
-        resData.user,
         resData.expireTime
       )
     );

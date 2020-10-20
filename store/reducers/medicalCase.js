@@ -1,4 +1,7 @@
-import { CREATE_MEDICAL_CASE } from "../actions/medicalCase";
+import {
+  CREATE_MEDICAL_CASE,
+  LOAD_USER_MEDICAL_CASES,
+} from "../actions/medicalCase";
 
 const initialState = {
   medicalCases: [],
@@ -8,7 +11,11 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_MEDICAL_CASE:
       return {
-        medicalCases: action.medicalCase,
+        medicalCases: [{ ...state }, action.medicalCase],
+      };
+    case LOAD_USER_MEDICAL_CASES:
+      return {
+        medicalCases: action.medicalCases,
       };
     default:
       return state;

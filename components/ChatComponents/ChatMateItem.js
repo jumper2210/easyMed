@@ -4,12 +4,11 @@ import Constants from "../../constants/Constants";
 import Colors from "../../constants/Colors";
 import { TouchableOpacity } from "react-native";
 
-const Doctors = (props) => {
-  console.log(props.name);
+const ChatMateItem = (props) => {
   return (
     <TouchableOpacity onPress={props.onSelect} style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.groupTitle}>{props.name}</Text>
+      <View style={styles.nameContainer}>
+        <Text style={styles.name}>{props.name}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -29,13 +28,13 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 1, width: 1 },
     shadowRadius: 2,
   },
-  titleContainer: {
+  nameContainer: {
     justifyContent: "center",
     alignItems: "center",
     margin: 5,
   },
 
-  groupTitle: {
+  name: {
     fontSize: 14,
     fontFamily: "open-sans-bold",
     marginHorizontal: 10,
@@ -43,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Doctors;
+export default ChatMateItem;

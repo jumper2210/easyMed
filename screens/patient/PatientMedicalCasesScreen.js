@@ -1,10 +1,10 @@
 import React from "react";
 import { View } from "react-native";
-const UserMedicalCasesScreen = () => {
+const PatientMedicalCasesScreen = () => {
   return <View></View>;
 };
 
 export const screenOptions = () => {
   return {};
 };
-export default UserMedicalCasesScreen;
+export default PatientMedicalCasesScreen;

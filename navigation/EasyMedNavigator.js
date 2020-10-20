@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
 } from "../screens/clinic/ClinicOverviewScreen";
@@ -10,7 +11,9 @@ import ClinicScreen, {
 import HomeScreen, {
   screenOptions as HomeScreenOptions,
 } from "../screens/HomeScreen";
-import AddDoctorScreen from "../screens/chat/AddDoctorScreen";
+
+import AddChatMateScreen from "../screens/chat/AddChatMateScreen";
+
 import NewClinicScreen, {
   screenOptions as AddClinicScreenOptions,
 } from "../screens/clinic/NewClinicScreen";
@@ -36,13 +39,21 @@ import ConversationScreen, {
   screenOptions as conversationScreenOptions,
 } from "../screens/chat/ConversationScreen";
 
-import UserAccountScreen, {
+import PatientAccountScreen, {
   screenOptions as UserAccountScreenOptions,
-} from "../screens/user/UserAccountScreen";
+} from "../screens/patient/PatientAccountScreen";
 
-import UserMedicalCasesScreen from "../screens/user/UserMedicalCasesScreen";
+import EditPatientDataScreen from "../screens/patient/EditPatientDataScreen";
 
-import UserMedicinesScreen from "../screens/user/UserMedicinesScreen";
+import PatientMedicalCasesScreen from "../screens/patient/PatientMedicalCasesScreen";
+
+import PatientMedicinesScreen from "../screens/patient/PatientMedicinesScreen";
+
+import AllPatientsScreen from "../screens/doctor/AllPatientsScreen";
+
+import PatientDataScreen, {
+  screenOptions as PatientDataScreenOptions,
+} from "../screens/doctor/PatientDataScreen";
 
 const defaultNavOptions = {
   headerTitleStyle: {
@@ -64,36 +75,29 @@ export const UserManagementTabs = () => {
     <UserManagementBottomTabs.Navigator tabBarOptions={defaultTabBarOptions}>
       <UserManagementBottomTabs.Screen
         name="UserAccount"
-        component={UserAccountScreen}
-        options={{
-          title: "My account",
-          tabBarIcon: () => {
-            return (
-              <Ionicons name="md-build" size={30} color={Colors.secondary} />
-            );
-          },
-        }}
+        component={PatientAccountScreen}
+        options={UserAccountScreenOptions}
       />
       <UserManagementBottomTabs.Screen
         name="UserMedicalCasesScreen"
-        component={UserMedicalCasesScreen}
+        component={PatientMedicalCasesScreen}
         options={{
           title: "Medical Cases",
           tabBarIcon: () => {
             return (
-              <Ionicons name="md-list" size={30} color={Colors.secondary} />
+              <Ionicons name="md-list" size={23} color={Colors.secondary} />
             );
           },
         }}
       />
       <UserManagementBottomTabs.Screen
-        name="UserMedicinesScreen"
-        component={UserMedicinesScreen}
+        name="PatientMedicinesScreen"
+        component={PatientMedicinesScreen}
         options={{
           title: "Medicals",
           tabBarIcon: () => {
             return (
-              <Ionicons name="md-medical" size={30} color={Colors.secondary} />
+              <Ionicons name="md-medical" size={23} color={Colors.secondary} />
             );
           },
         }}
@@ -122,8 +126,8 @@ export const EasyMedNavigator = () => {
         options={conversationScreenOptions}
       />
       <EasyMedStackNavigator.Screen
-        name="AddDoctorScreen"
-        component={AddDoctorScreen}
+        name="AddChatMateScreen"
+        component={AddChatMateScreen}
       />
       <EasyMedStackNavigator.Screen
         name="FormScreen"
@@ -151,9 +155,22 @@ export const EasyMedNavigator = () => {
         options={mapScreenOptions}
       />
       <EasyMedStackNavigator.Screen
-        name="UserAccountScreen"
+        name="PatientAccountScreen"
         component={UserManagementTabs}
-        options={{ headerTitle: null }}
+        options={UserAccountScreenOptions}
+      />
+      <EasyMedStackNavigator.Screen
+        name="EditPatientDataScreen"
+        component={EditPatientDataScreen}
+      />
+      <EasyMedStackNavigator.Screen
+        name="AllPatientsScreen"
+        component={AllPatientsScreen}
+      />
+      <EasyMedStackNavigator.Screen
+        name="PatientDataScreen"
+        component={PatientDataScreen}
+        options={PatientDataScreenOptions}
       />
     </EasyMedStackNavigator.Navigator>
   );
