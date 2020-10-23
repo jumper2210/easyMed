@@ -15,7 +15,6 @@ export const loadUserData = () => {
       })
 
       .then((resData) => {
-        console.log(resData.user);
         dispatch({ type: LOAD_USER, selfUser: resData.user });
       });
   };

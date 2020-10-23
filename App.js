@@ -32,9 +32,9 @@ const fetchFonts = () => {
   });
 };
 
-store.subscribe(() => {
-  console.log("new state", store.getState());
-});
+// store.subscribe(() => {
+//   console.log("new state", store.getState());
+// });
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);

@@ -18,7 +18,6 @@ const PatientAccountScreen = () => {
   useEffect(() => {
     dispatch(userActions.loadUserData());
   }, [dispatch]);
-  console.log(selfUser);
   return (
     <View style={styles.screen}>
       <View style={styles.avatarContainer}>

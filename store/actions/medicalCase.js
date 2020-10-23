@@ -1,5 +1,5 @@
 export const CREATE_MEDICAL_CASE = "CREATE_MEDICAL_CASE";
-export const LOAD_USER_MEDICAL_CASES = "LOAD_USER_MEDICAL_CASES";
+export const LOAD_PATIENT_MEDICAL_CASES = "LOAD_PATIENT_MEDICAL_CASES";
 export const createMedicalCase = (
   imageUri,
   pickedSymptom,
@@ -41,10 +41,10 @@ export const createMedicalCase = (
   };
 };
 
-export const loadUserMedicalCase = (patientId) => {
+export const loadPatientMedicalCase = (patientId) => {
   return async (dispatch) => {
     fetch(
-      `http://192.168.1.17:8080/medicalCase/getUserMedicalCases/${patientId}`
+      `http://192.168.1.17:8080/medicalCase/getPatientMedicalCases/${patientId}`
     )
       .then((res) => {
         if (res.status !== 200) {
@@ -54,9 +54,26 @@ export const loadUserMedicalCase = (patientId) => {
       })
       .then((resData) => {
         dispatch({
-          type: LOAD_USER_MEDICAL_CASES,
+          type: LOAD_PATIENT_MEDICAL_CASES,
           medicalCases: resData.medicalCases,
         });
       });
+  };
+};
+
+export const checkMedicalCase = (medicalCaseId) => {
+  return async () => {
+    const response = await fetch(
+      `http://192.168.1.17:8080/medicalCase/checkPatientMedicalCase/${medicalCaseId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      console.log("Something went wrong");
+    }
   };
 };

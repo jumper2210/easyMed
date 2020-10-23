@@ -51,6 +51,10 @@ import PatientMedicinesScreen from "../screens/patient/PatientMedicinesScreen";
 
 import AllPatientsScreen from "../screens/doctor/AllPatientsScreen";
 
+import MedicalCaseDetailsScreen, {
+  screenOptions as MedicalCaseDetailsScreenOptions,
+} from "../screens/medicalCase/medicalCaseDetailsScreen";
+
 import PatientDataScreen, {
   screenOptions as PatientDataScreenOptions,
 } from "../screens/doctor/PatientDataScreen";
@@ -112,7 +116,7 @@ export const EasyMedNavigator = () => {
   return (
     <EasyMedStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <EasyMedStackNavigator.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}
         options={HomeScreenOptions}
       />
@@ -171,6 +175,11 @@ export const EasyMedNavigator = () => {
         name="PatientDataScreen"
         component={PatientDataScreen}
         options={PatientDataScreenOptions}
+      />
+      <EasyMedStackNavigator.Screen
+        name="MedicalCaseDetailsScreen"
+        component={MedicalCaseDetailsScreen}
+        options={MedicalCaseDetailsScreenOptions}
       />
     </EasyMedStackNavigator.Navigator>
   );

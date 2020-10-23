@@ -1,6 +1,6 @@
 import {
   CREATE_MEDICAL_CASE,
-  LOAD_USER_MEDICAL_CASES,
+  LOAD_PATIENT_MEDICAL_CASES,
 } from "../actions/medicalCase";
 
 const initialState = {
@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
       return {
         medicalCases: [{ ...state }, action.medicalCase],
       };
-    case LOAD_USER_MEDICAL_CASES:
+    case LOAD_PATIENT_MEDICAL_CASES:
       return {
         medicalCases: action.medicalCases,
       };
