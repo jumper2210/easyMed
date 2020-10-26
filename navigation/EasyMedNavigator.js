@@ -12,8 +12,6 @@ import HomeScreen, {
   screenOptions as HomeScreenOptions,
 } from "../screens/HomeScreen";
 
-import AddChatMateScreen from "../screens/chat/AddChatMateScreen";
-
 import NewClinicScreen, {
   screenOptions as AddClinicScreenOptions,
 } from "../screens/clinic/NewClinicScreen";
@@ -59,6 +57,10 @@ import PatientDataScreen, {
   screenOptions as PatientDataScreenOptions,
 } from "../screens/doctor/PatientDataScreen";
 
+import AllDoctorsScreen from "../screens/patient/AllDoctorsScreen";
+
+import DoctorDataScreen from "../screens/patient/DoctorDataScreen";
+
 const defaultNavOptions = {
   headerTitleStyle: {
     fontFamily: "open-sans-bold",
@@ -86,7 +88,7 @@ export const UserManagementTabs = () => {
         name="UserMedicalCasesScreen"
         component={PatientMedicalCasesScreen}
         options={{
-          title: "Medical Cases",
+          title: "Medical History",
           tabBarIcon: () => {
             return (
               <Ionicons name="md-list" size={26} color={Colors.secondary} />
@@ -98,7 +100,7 @@ export const UserManagementTabs = () => {
         name="PatientMedicinesScreen"
         component={PatientMedicinesScreen}
         options={{
-          title: "Medicals",
+          title: "My Medicals",
           tabBarIcon: () => {
             return (
               <Ionicons name="md-medical" size={26} color={Colors.secondary} />
@@ -128,10 +130,6 @@ export const EasyMedNavigator = () => {
         name="ConversationScreen"
         component={ConversationScreen}
         options={conversationScreenOptions}
-      />
-      <EasyMedStackNavigator.Screen
-        name="AddChatMateScreen"
-        component={AddChatMateScreen}
       />
       <EasyMedStackNavigator.Screen
         name="FormScreen"
@@ -180,6 +178,14 @@ export const EasyMedNavigator = () => {
         name="MedicalCaseDetailsScreen"
         component={MedicalCaseDetailsScreen}
         options={MedicalCaseDetailsScreenOptions}
+      />
+      <EasyMedStackNavigator.Screen
+        name="AllDoctorsScreen"
+        component={AllDoctorsScreen}
+      />
+      <EasyMedStackNavigator.Screen
+        name="DoctorDataScreen"
+        component={DoctorDataScreen}
       />
     </EasyMedStackNavigator.Navigator>
   );

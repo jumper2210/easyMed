@@ -10,8 +10,7 @@ const ConversationScreen = (props) => {
   const { route } = props;
   const { conversation, chatMates, user } = route.params;
   const socket = io("http://192.168.1.17:8080");
-  console.log(user.name + "z cs");
-  console.log(chatMates[0].name + "z cs 2");
+
   const messages = useSelector(
     (state) =>
       state.messagesState[state.conversationsState.currentConversationId]

@@ -3,7 +3,7 @@ export const createConversationSuccess = (conversation) => ({
   conversation,
 });
 
-export const createConversation = (doctorId, navigation) => {
+export const createConversation = (chatMateId, navigation) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token;
 
@@ -13,13 +13,13 @@ export const createConversation = (doctorId, navigation) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-      body: JSON.stringify({ doctorId }),
+      body: JSON.stringify({ chatMateId }),
     })
       .then((response) => response.json())
       .then((conversation) => {
         if (!conversation.error) {
           dispatch(createConversationSuccess(conversation));
-          navigation.navigate("Conversation", {
+          navigation.navigate("ConversationScreen", {
             params: { conversation },
           });
         }

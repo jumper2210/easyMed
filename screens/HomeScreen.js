@@ -52,6 +52,13 @@ const HomeScreen = ({ navigation }) => {
             navigation.navigate("AllPatientsScreen");
           }}
         />
+        <NavigationItem
+          name={"All doctors"}
+          iconName={Platform.OS === "android" ? "md-list" : "ios-list"}
+          onPress={() => {
+            navigation.navigate("AllDoctorsScreen");
+          }}
+        />
       </View>
     </ScrollView>
   );
