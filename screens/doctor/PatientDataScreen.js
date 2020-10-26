@@ -85,7 +85,6 @@ const PatientDataScreen = ({ route, navigation }) => {
           renderItem={(itemData) => (
             <MedicalCaseItem
               createdAt={itemData.item.createdAt}
-              onSelect={() => {}}
               onPress={() => {
                 navigation.navigate("MedicalCaseDetailsScreen", {
                   name: patientName,

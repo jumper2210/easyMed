@@ -81,13 +81,13 @@ const MedFormScreen = (props) => {
 
   const infoHandler = () => {
     Alert.alert(
-      "Create chat",
+      "Create medical form",
       "Thank you for complete the form, now you have to wait for response from your doctor",
       [
         {
-          text: "Talk with doctor",
+          text: "create medical form",
           onPress: () => {
-            navigation.navigate("Home");
+            navigation.navigate("HomeScreen");
           },
         },
       ],
@@ -188,7 +188,7 @@ const MedFormScreen = (props) => {
               style={styles.button}
               title="Back"
               onPress={() => {
-                navigation.navigate("Home");
+                navigation.navigate("HomeScreen");
               }}
             />
           </View>

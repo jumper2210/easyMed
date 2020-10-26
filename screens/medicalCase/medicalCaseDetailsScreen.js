@@ -28,7 +28,7 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
       "Are you sure, you want to check this medical case?",
       [
         {
-          text: "Check this medical case",
+          text: "Yes, check this!",
           onPress: () => {
             navigation.navigate("HomeScreen");
             dispatch(medicalCaseActions.checkMedicalCase(medicalCaseId));
@@ -43,6 +43,9 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
     );
   };
   const editTextHandler = (data) => {
+    if (data === undefined) {
+      data = "";
+    }
     const valueOfData = data.length;
     let display = data;
 
