@@ -4,31 +4,39 @@ import Colors from "../../constants/Colors";
 import constants from "../../constants/Constants";
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../store/actions/user";
-import PatientAccountInfoItem from "../../components/PatientComponents/PatientAccountInfoItem";
-import CustomButton from "../../UI/Button";
+import UserAccountInfoItem from "../../components/UserAccount/UserAccountInfoItem";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Platform } from "react-native";
 import CustomHeaderButton from "../../UI/CustomHeaderButton";
 import { Ionicons } from "@expo/vector-icons";
 
-const PatientAccountScreen = () => {
+const UserAccountScreen = (props) => {
   const dispatch = useDispatch();
   const selfUser = useSelector((state) => state.usersState.selfUser);
 
   useEffect(() => {
     dispatch(userActions.loadUserData());
-  }, [dispatch]);
+  }, []);
+
   return (
     <View style={styles.screen}>
-      <View style={styles.avatarContainer}>
-        {selfUser.avatar && selfUser.avatar !== undefined ? (
-          <Image style={styles.avatar} source={{ uri: selfUser.avatar }} />
+      <View style={styles.avatarSection}>
+        {selfUser.avatar !== undefined ? (
+          <View style={styles.avatarContainer}>
+            <Image style={styles.avatar} source={{ uri: selfUser.avatar }} />
+          </View>
         ) : (
-          <CustomButton title="add your avatar by taking a picture" />
+          <View style={styles.avatarContainer}>
+            <Image
+              style={styles.avatar}
+              source={require("../../assets/defaultAvatars/patient.png")}
+            />
+          </View>
         )}
       </View>
+
       <View style={styles.infoContainer}>
-        <PatientAccountInfoItem
+        <UserAccountInfoItem
           name={selfUser.name}
           email={selfUser.email}
           phoneNumber={selfUser.phoneNumber}
@@ -46,34 +54,40 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  avatarContainer: {
+  avatarSection: {
     position: "absolute",
     top: 0,
     zIndex: 1,
-    height: constants.screenHeight / 2 - 30,
+    height: constants.screenHeight / 2 + 60,
     width: "100%",
     backgroundColor: Colors.secondary,
     justifyContent: "center",
     alignItems: "center",
   },
+  avatarContainer: {
+    justifyContent: "center",
+    width: constants.screenWidth - 80,
+    height: 230,
+  },
   avatar: {
-    width: constants.screenWidth - 60,
-    height: 100,
     borderRadius: 10,
     borderColor: "transparent",
     borderWidth: 1,
+    resizeMode: "center",
+    height: "100%",
+    width: "100%",
   },
   infoContainer: {
     position: "absolute",
     bottom: 0,
     zIndex: 2,
-    height: constants.screenHeight / 2 - 40,
+    height: constants.screenHeight / 2 - 150,
     width: "100%",
     borderWidth: 1,
     borderColor: "#fff",
     backgroundColor: Colors.primary,
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -81,21 +95,21 @@ const styles = StyleSheet.create({
 
 export const screenOptions = (navData) => {
   return {
-    title: "My account",
+    headerTitle: "My account",
     tabBarIcon: () => {
-      return <Ionicons name="md-build" size={23} color={Colors.secondary} />;
+      return <Ionicons name="md-build" size={26} color={Colors.secondary} />;
     },
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
-          title="EditUser"
+          title="Edit account"
           iconName={Platform.OS === "android" ? "md-build" : "ios-build"}
           onPress={() => {
-            navData.navigation.navigate("EditPatientDataScreen");
+            navData.navigation.navigate("EditUserDataScreen");
           }}
         />
       </HeaderButtons>
     ),
   };
 };
-export default PatientAccountScreen;
+export default UserAccountScreen;

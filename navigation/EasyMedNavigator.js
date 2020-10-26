@@ -39,11 +39,11 @@ import ConversationScreen, {
   screenOptions as conversationScreenOptions,
 } from "../screens/chat/ConversationScreen";
 
-import PatientAccountScreen, {
+import UserAccountScreen, {
   screenOptions as UserAccountScreenOptions,
-} from "../screens/patient/PatientAccountScreen";
+} from "../screens/user/UserAccountScreen";
 
-import EditPatientDataScreen from "../screens/patient/EditPatientDataScreen";
+import EditUserDataScreen from "../screens/user/EditUserDataScreen";
 
 import PatientMedicalCasesScreen from "../screens/patient/PatientMedicalCasesScreen";
 
@@ -61,7 +61,7 @@ import PatientDataScreen, {
 
 const defaultNavOptions = {
   headerTitleStyle: {
-    fontFamily: "open-sans",
+    fontFamily: "open-sans-bold",
   },
   headerBackTitleStyle: {
     fontFamily: "open-sans",
@@ -78,8 +78,8 @@ export const UserManagementTabs = () => {
   return (
     <UserManagementBottomTabs.Navigator tabBarOptions={defaultTabBarOptions}>
       <UserManagementBottomTabs.Screen
-        name="UserAccount"
-        component={PatientAccountScreen}
+        name="UserAccountScreen"
+        component={UserAccountScreen}
         options={UserAccountScreenOptions}
       />
       <UserManagementBottomTabs.Screen
@@ -89,7 +89,7 @@ export const UserManagementTabs = () => {
           title: "Medical Cases",
           tabBarIcon: () => {
             return (
-              <Ionicons name="md-list" size={23} color={Colors.secondary} />
+              <Ionicons name="md-list" size={26} color={Colors.secondary} />
             );
           },
         }}
@@ -101,7 +101,7 @@ export const UserManagementTabs = () => {
           title: "Medicals",
           tabBarIcon: () => {
             return (
-              <Ionicons name="md-medical" size={23} color={Colors.secondary} />
+              <Ionicons name="md-medical" size={26} color={Colors.secondary} />
             );
           },
         }}
@@ -159,13 +159,13 @@ export const EasyMedNavigator = () => {
         options={mapScreenOptions}
       />
       <EasyMedStackNavigator.Screen
-        name="PatientAccountScreen"
+        name="UserAccountScreen"
         component={UserManagementTabs}
         options={UserAccountScreenOptions}
       />
       <EasyMedStackNavigator.Screen
-        name="EditPatientDataScreen"
-        component={EditPatientDataScreen}
+        name="EditUserDataScreen"
+        component={EditUserDataScreen}
       />
       <EasyMedStackNavigator.Screen
         name="AllPatientsScreen"

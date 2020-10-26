@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import MedicalCaseItem from "../../components/MedicalCase/MedicalCaseItem";
 import Colors from "../../constants/Colors";
@@ -26,7 +20,11 @@ const PatientDataScreen = ({ route, navigation }) => {
   } = route.params;
 
   let medicalCasesToCheck = [];
-  let display = <ActivityIndicator size="large" color={Colors.secondary} />;
+  let display = (
+    <Text style={styles.patientInfo}>
+      This paction has not any medical case yet.
+    </Text>
+  );
 
   useEffect(() => {
     dispatch(medicalCaseActions.loadPatientMedicalCase(patientId));
@@ -113,11 +111,13 @@ const PatientDataScreen = ({ route, navigation }) => {
   return (
     <View style={styles.screen}>
       <View style={styles.patientInfoContainer}>
-        <Text>{patientName}</Text>
-        <Text>{patientMail}</Text>
-        <Text>{patientPhoneNumber}</Text>
+        <Text style={styles.label}>{patientMail}</Text>
+        <Text style={styles.label}>{patientPhoneNumber}</Text>
       </View>
-      {display}
+      <View style={styles.medicalCaseInfoContainer}>
+        <Text style={styles.medicalCaseInfo}>Medical cases</Text>
+      </View>
+      <View style={styles.scrollViewStyled}>{display}</View>
       <Button
         title="Make a conversation"
         onPress={() => {
@@ -142,11 +142,34 @@ const PatientDataScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-
-  patientInfoContainer: {
     justifyContent: "center",
-    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: Colors.secondary,
+  },
+  scrollViewStyled: {
+    height: 200,
+  },
+  patientInfoContainer: {
+    marginVertical: 40,
+  },
+  label: {
+    color: Colors.primary,
+    fontFamily: "open-sans-bold",
+    fontSize: 20,
+  },
+  patientInfo: {
+    color: Colors.primary,
+    fontFamily: "open-sans-bold",
+    fontSize: 10,
+    textTransform: "uppercase",
+  },
+  medicalCaseInfoContainer: {
+    marginVertical: 20,
+  },
+  medicalCaseInfo: {
+    fontFamily: "open-sans",
+    fontSize: 15,
+    color: Colors.primary,
   },
 });
 

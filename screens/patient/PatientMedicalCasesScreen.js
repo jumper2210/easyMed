@@ -1,10 +1,11 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 const PatientMedicalCasesScreen = () => {
-  return <View></View>;
+  return (
+    <View>
+      <Text>medical case</Text>
+    </View>
+  );
 };
 
-export const screenOptions = () => {
-  return {};
-};
 export default PatientMedicalCasesScreen;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native";
-import PatientDetailsForDoctors from "../../components/PatientComponents/DetailsForDoctorItem";
+import PatientDetailsItem from "../../components/PatientComponents/PatientDetailsItem";
 import * as usersActions from "../../store/actions/user";
 import Colors from "../../constants/Colors";
 
@@ -23,7 +23,7 @@ const AllPatientsScreen = (props) => {
         data={patients}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
-          <PatientDetailsForDoctors
+          <PatientDetailsItem
             avatar={itemData.item.avatar}
             name={itemData.item.name}
             onPress={() => {

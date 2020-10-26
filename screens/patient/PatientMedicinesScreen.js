@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 const PatientMedicalCasesScreen = () => {
   return (
     <View>
-      <Text>Test</Text>
+      <Text>Medicines</Text>
     </View>
   );
 };

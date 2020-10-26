@@ -1,8 +1,12 @@
 import React from "react";
-import Card from "../../UI/Card";
+import { View, Text } from "react-native";
 
 const EditPatientDataScreen = () => {
-  return <Card></Card>;
+  return (
+    <View>
+      <Text>edit</Text>
+    </View>
+  );
 };
 
 export default EditPatientDataScreen;

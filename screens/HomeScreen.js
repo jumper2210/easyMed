@@ -42,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
           name={"My account"}
           iconName={Platform.OS === "android" ? "md-contact" : "ios-contact"}
           onPress={() => {
-            navigation.navigate("PatientAccountScreen");
+            navigation.navigate("UserAccountScreen");
           }}
         />
         <NavigationItem

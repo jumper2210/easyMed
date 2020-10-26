@@ -4,7 +4,7 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import Colors from "../../constants/Colors";
 import constants from "../../constants/Constants";
 
-const DetailsForDoctorItem = (props) => {
+const PatientDetailsItem = (props) => {
   const { avatar, name, onPress } = props;
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
   },
 });
-export default DetailsForDoctorItem;
+export default PatientDetailsItem;
