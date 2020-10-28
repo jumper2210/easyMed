@@ -34,3 +34,26 @@ export const loadAllPatients = () => {
       });
   };
 };
+
+export const editUser = (name, phoneNumber, selectedImage) => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
+    fetch("http://192.168.1.17:8080/user/editUser", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        phoneNumber,
+        name,
+        selectedImage,
+      }),
+    }).then((res) => {
+      if (res.status !== 200) {
+        throw new Error("Failed to edit user data");
+      }
+      return res.json();
+    });
+  };
+};

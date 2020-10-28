@@ -51,3 +51,16 @@ export const loadPatientMedicines = () => {
       });
   };
 };
+
+export const deleteMedicine = (medicineId) => {
+  return async (dispatch, getState) => {
+    fetch(`http://192.168.1.17:8080/medicine/deleteMedicine/${medicineId}`, {
+      method: "DELETE",
+    }).then((res) => {
+      if (res.status !== 200) {
+        throw new Error("Failed to delete medicine");
+      }
+      return res.json();
+    });
+  };
+};
