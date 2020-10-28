@@ -117,24 +117,35 @@ const PatientDataScreen = ({ route, navigation }) => {
         <Text style={styles.medicalCaseInfo}>Medical cases</Text>
       </View>
       <View style={styles.scrollViewStyled}>{display}</View>
-      <Button
-        title="Make a conversation"
-        onPress={() => {
-          const conversation = findConversationHandler(patientId);
-          if (conversation && conversation.id) {
-            setCurrentConversationId(conversation.id);
-            navigation.navigate("ConversationScreen", {
-              conversation: conversation,
-              chatMates: chatMates,
-              user: selfUser,
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Make a conversation"
+          onPress={() => {
+            const conversation = findConversationHandler(patientId);
+            if (conversation && conversation.id) {
+              setCurrentConversationId(conversation.id);
+              navigation.navigate("ConversationScreen", {
+                conversation: conversation,
+                chatMates: chatMates,
+                user: selfUser,
+              });
+            } else {
+              dispatch(
+                conversationActions.createConversation(patientId, navigation)
+              );
+            }
+          }}
+        />
+        <Button
+          title="Assign medicines"
+          onPress={() => {
+            navigation.navigate("AssignMedicineScreen", {
+              patientId: patientId,
+              patientName: patientName,
             });
-          } else {
-            dispatch(
-              conversationActions.createConversation(patientId, navigation)
-            );
-          }
-        }}
-      />
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -169,6 +180,10 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
     fontSize: 15,
     color: Colors.primary,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 

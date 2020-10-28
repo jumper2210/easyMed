@@ -141,7 +141,6 @@ const AuthScreen = (props) => {
               <Button
                 style={{ width: "80%" }}
                 title={isSignUp ? "Sign Up" : "Login"}
-                color={Colors.primary}
                 onPress={authHandler}
               />
             )}
@@ -149,7 +148,6 @@ const AuthScreen = (props) => {
             <Button
               style={{ width: "80%" }}
               title={`Switch to ${isSignUp ? "Login" : "Sign Up"}`}
-              color={Colors.accent}
               onPress={() => {
                 setIsSignUp((prevState) => !prevState);
               }}
@@ -157,7 +155,6 @@ const AuthScreen = (props) => {
           </View>
         </ScrollView>
       </Card>
-      <View style={styles.authContainer} />
     </View>
   );
 };
@@ -166,9 +163,6 @@ export const screenOptions = {
   headerTitle: "Authenticate",
 };
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
   gradient: {
     flex: 1,
     justifyContent: "center",

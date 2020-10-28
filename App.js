@@ -12,6 +12,7 @@ import chatMatesReducer from "./store/reducers/chatMate";
 import clinicReducer from "./store/reducers/clinics";
 import medicalCaseReducer from "./store/reducers/medicalCase";
 import usersReducer from "./store/reducers/user";
+import medicinesReducer from "./store/reducers/medicine";
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   conversationsState: conversationsReducer,
   chatMatesState: chatMatesReducer,
   usersState: usersReducer,
+  medicinesState: medicinesReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

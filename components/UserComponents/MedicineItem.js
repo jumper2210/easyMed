@@ -1,0 +1,99 @@
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import Colors from "../../constants/Colors";
+import constants from "../../constants/Constants";
+import Button from "../../UI/Button";
+
+const MedicineItem = (props) => {
+  const { name, quantity, timeOfTaking, onDelete, onSetNotification } = props;
+
+  return (
+    <View style={styles.item}>
+      <View style={styles.touchable}>
+        <View style={styles.data}>
+          <View style={styles.nameContainer}>
+            <Text style={styles.name}>{name}</Text>
+          </View>
+          <View>
+            <View style={styles.details}>
+              <Text style={styles.description}>quantity:</Text>
+              <Text style={styles.quantity}>{quantity}</Text>
+            </View>
+            <View style={styles.details}>
+              <Text style={styles.description}>time of taking:</Text>
+              <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button onPress={onDelete} title="Drop the medicine" />
+        <Button onPress={onSetNotification} title="Set the notification" />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  item: {
+    shadowColor: "black",
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 5,
+    borderRadius: 10,
+    backgroundColor: Colors.primary,
+    margin: 30,
+    height: constants.screenHeight / 2 - 65,
+    justifyContent: "space-between",
+  },
+  touchable: {
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+  },
+  details: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+  },
+  data: {
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+  },
+  nameContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 20,
+  },
+  name: {
+    fontFamily: "open-sans-bold",
+    fontSize: 25,
+    marginVertical: 10,
+    color: Colors.details,
+    textTransform: "uppercase",
+  },
+  timeOfTaking: {
+    fontFamily: "open-sans-bold",
+    fontSize: 18,
+    marginVertical: 2,
+    color: Colors.details,
+  },
+  quantity: {
+    fontFamily: "open-sans-bold",
+    fontSize: 18,
+    marginVertical: 2,
+    color: Colors.details,
+  },
+  description: {
+    fontSize: 19,
+    color: Colors.secondary,
+    fontFamily: "open-sans",
+  },
+});
+
+export default MedicineItem;

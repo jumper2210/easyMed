@@ -17,7 +17,7 @@ const PatientMedicalCasesScreen = (props) => {
 
   useEffect(() => {
     dispatch(medicalCaseActions.loadPatientMedicalCase(userId));
-  });
+  }, []);
 
   medicalCases.map((mc) => {
     if (mc.resolved === true) {

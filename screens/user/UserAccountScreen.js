@@ -16,7 +16,7 @@ const UserAccountScreen = (props) => {
 
   useEffect(() => {
     dispatch(userActions.loadUserData());
-  }, []);
+  }, [dispatch]);
 
   return (
     <View style={styles.screen}>

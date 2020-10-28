@@ -61,6 +61,10 @@ import AllDoctorsScreen from "../screens/patient/AllDoctorsScreen";
 
 import DoctorDataScreen from "../screens/patient/DoctorDataScreen";
 
+import AssignMedicineScreen, {
+  screenOptions as AssignMedicineScreenOptions,
+} from "../screens/medicine/AssignMedicineScreen";
+
 const defaultNavOptions = {
   headerTitleStyle: {
     fontFamily: "open-sans-bold",
@@ -74,6 +78,7 @@ const defaultTabBarOptions = {
   activeTintColor: Colors.secondary,
   labelStyle: { fontFamily: "open-sans" },
 };
+
 const UserManagementBottomTabs = createBottomTabNavigator();
 
 export const UserManagementTabs = () => {
@@ -186,6 +191,11 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="DoctorDataScreen"
         component={DoctorDataScreen}
+      />
+      <EasyMedStackNavigator.Screen
+        name="AssignMedicineScreen"
+        component={AssignMedicineScreen}
+        options={AssignMedicineScreenOptions}
       />
     </EasyMedStackNavigator.Navigator>
   );

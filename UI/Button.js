@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
     shadowColor: "#ccc",
-    backgroundColor: Colors.details,
+    backgroundColor: Colors.secondary,
   },
   text: {
     fontSize: 13,
