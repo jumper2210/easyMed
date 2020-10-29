@@ -13,28 +13,23 @@ import { Ionicons } from "@expo/vector-icons";
 const UserAccountScreen = (props) => {
   const dispatch = useDispatch();
   const selfUser = useSelector((state) => state.usersState.selfUser);
-
   useEffect(() => {
     dispatch(userActions.loadUserData());
   }, [dispatch]);
 
+  let avatar = (
+    <Image
+      style={styles.avatar}
+      source={require("../../assets/defaultAvatars/patient.png")}
+    />
+  );
+
+  if (selfUser.avatar !== undefined) {
+    avatar = <Image style={styles.avatar} source={{ uri: selfUser.avatar }} />;
+  }
   return (
     <View style={styles.screen}>
-      <View style={styles.avatarSection}>
-        {selfUser.avatar !== undefined ? (
-          <View style={styles.avatarContainer}>
-            <Image style={styles.avatar} source={{ uri: selfUser.avatar }} />
-          </View>
-        ) : (
-          <View style={styles.avatarContainer}>
-            <Image
-              style={styles.avatar}
-              source={require("../../assets/defaultAvatars/patient.png")}
-            />
-          </View>
-        )}
-      </View>
-
+      <View style={styles.avatarSection}>{avatar}</View>
       <View style={styles.infoContainer}>
         <UserAccountInfoItem
           name={selfUser.name}
@@ -64,24 +59,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  avatarContainer: {
-    justifyContent: "center",
-    width: constants.screenWidth - 80,
-    height: 230,
-  },
+
   avatar: {
     borderRadius: 10,
     borderColor: "transparent",
     borderWidth: 1,
-    resizeMode: "center",
-    height: "100%",
-    width: "100%",
+    height: constants.screenHeight / 2 - 150,
+    width: 300,
+    marginBottom: 60,
   },
   infoContainer: {
     position: "absolute",
     bottom: 0,
     zIndex: 2,
-    height: constants.screenHeight / 2 - 150,
+    height: constants.screenHeight / 2 - 120,
     width: "100%",
     borderWidth: 1,
     borderColor: "#fff",

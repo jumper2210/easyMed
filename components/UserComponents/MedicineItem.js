@@ -5,7 +5,13 @@ import constants from "../../constants/Constants";
 import Button from "../../UI/Button";
 
 const MedicineItem = (props) => {
-  const { name, quantity, timeOfTaking, onDelete, onSetNotification } = props;
+  const {
+    name,
+    quantity,
+    timeOfTaking,
+    onDelete,
+    onTriggerNotification,
+  } = props;
 
   return (
     <View style={styles.item}>
@@ -27,8 +33,18 @@ const MedicineItem = (props) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Button onPress={onDelete} title="Drop the medicine" />
-        <Button onPress={onSetNotification} title="Set the notification" />
+        <Button
+          style={{ backgroundColor: Colors.primary }}
+          textStyle={{ color: Colors.details }}
+          onPress={onDelete}
+          title="Drop medicine"
+        />
+        <Button
+          style={{ backgroundColor: Colors.primary }}
+          textStyle={{ color: Colors.details }}
+          onPress={onTriggerNotification}
+          title="Set notification"
+        />
       </View>
     </View>
   );
@@ -53,8 +69,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 20,
+    justifyContent: "space-around",
+    padding: 10,
   },
   details: {
     flexDirection: "row",

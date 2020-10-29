@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
-import { View, Button, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import * as conversationActions from "../../store/actions/conversation";
 import ChatMateItem from "../../components/ChatComponents/ChatMateItem";
 import * as chatMateActions from "../../store/actions/chatMate";
@@ -32,9 +32,11 @@ const ChatGroupsScreen = (props) => {
     return findConversation;
   };
 
-  let display = <ActivityIndicator size="large" color={Colors.secondary} />;
+  let display = (
+    <Text style={styles.info}>You don't have conversation yet.</Text>
+  );
 
-  if (chatMates) {
+  if (chatMates.length >= 1) {
     display = (
       <FlatList
         data={chatMates}
@@ -65,17 +67,7 @@ const ChatGroupsScreen = (props) => {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <Button
-        title="add your chat mate"
-        onPress={() => {
-          navigation.navigate("AddChatMateScreen");
-        }}
-      />
-      {display}
-    </View>
-  );
+  return <View style={styles.container}>{display}</View>;
 };
 export const screenOptions = (navData) => {};
 const styles = StyleSheet.create({
@@ -85,10 +77,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.primary,
   },
-  text: {
-    color: "#101010",
-    fontSize: 24,
-    fontWeight: "bold",
+  info: {
+    color: Colors.details,
+    fontSize: 15,
+    fontFamily: "open-sans-bold",
+    textAlign: "center",
   },
 });
 export default ChatGroupsScreen;

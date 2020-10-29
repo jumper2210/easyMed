@@ -4,6 +4,7 @@ import Colors from "../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import * as medicineActions from "../../store/actions/medicine";
 import MedicineItem from "../../components/UserComponents/MedicineItem";
+import * as Notifications from "expo-notifications";
 
 const PatientMedicalCasesScreen = (props) => {
   const { navigation } = props;
@@ -17,8 +18,19 @@ const PatientMedicalCasesScreen = (props) => {
     dispatch(medicineActions.loadPatientMedicines());
   }, [dispatch]);
 
+  const triggerNotificationHandler = (medicineName) => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Medicine reminder",
+        body: `It's time to take ${medicineName}!`,
+      },
+      trigger: {
+        seconds: 4,
+      },
+    });
+  };
+
   const infoHandler = (medicineId) => {
-    console.log(medicineId + "__________");
     Alert.alert(
       "remove medical",
       `Are you sure you want to remove this medical?`,
@@ -50,7 +62,9 @@ const PatientMedicalCasesScreen = (props) => {
             quantity={itemData.item.quantity}
             timeOfTaking={itemData.item.timeOfTaking}
             onDelete={() => infoHandler(itemData.item._id)}
-            onSetNotification={() => {}}
+            onTriggerNotification={triggerNotificationHandler(
+              itemData.item.name
+            )}
           />
         )}
       />

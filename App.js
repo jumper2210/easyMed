@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
@@ -37,7 +37,6 @@ const fetchFonts = () => {
 // store.subscribe(() => {
 //   console.log("new state", store.getState());
 // });
-
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 

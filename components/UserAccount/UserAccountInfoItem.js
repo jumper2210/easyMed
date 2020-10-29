@@ -7,8 +7,8 @@ const UserAccountInfoItem = (props) => {
   return (
     <View style={styles.item}>
       <Text style={styles.name}>{name}</Text>
-      <Text style={styles.email}>{email}</Text>
       <Text style={styles.phoneNumber}>{phoneNumber}</Text>
+      <Text style={styles.email}>{email}</Text>
     </View>
   );
 };
@@ -17,8 +17,7 @@ const styles = StyleSheet.create({
   item: {
     width: "100%",
     alignItems: "center",
-    justifyContent: "space-around",
-    marginTop: 20,
+    justifyContent: "space-evenly",
     height: 200,
   },
   name: { fontFamily: "open-sans", color: Colors.secondary, fontSize: 25 },
