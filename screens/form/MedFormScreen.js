@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useEffect, useReducer, useCallback } from "react";
 import {
   StyleSheet,
@@ -9,8 +8,8 @@ import {
   Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import SendPushNotificationToServer from "../../helpers/sendPushNotificationToServer";
 import Input from "../../UI/Input";
 import Card from "../../UI/Card";
 import Colors from "../../constants/Colors";
@@ -18,6 +17,8 @@ import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
 import * as medicalCaseActions from "../../store/actions/medicalCase";
 import Button from "../../UI/Button";
 import Constants from "../../constants/Constants";
+import RegisterForPushNotifications from "../../helpers/registerForPushNotifications";
+import * as userActions from "../../store/actions/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -52,6 +53,7 @@ const MedFormScreen = (props) => {
   const [selectedImage, setSelectedImage] = useState();
   const [isLoading, setIsLoading] = useState(false);
   let action = null;
+  const patientName = useSelector((state) => state.usersState.selfUser.name);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -74,12 +76,17 @@ const MedFormScreen = (props) => {
   });
 
   useEffect(() => {
+    dispatch(userActions.loadUserData());
+    RegisterForPushNotifications();
+  }, []);
+
+  useEffect(() => {
     if (error) {
       Alert.alert("An error Occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
 
-  const infoHandler = () => {
+  const infoHandler = (patientName) => {
     Alert.alert(
       "Create medical form",
       "Thank you for complete the form, now you have to wait for response from your doctor",
@@ -87,7 +94,8 @@ const MedFormScreen = (props) => {
         {
           text: "create medical form",
           onPress: () => {
-            navigation.navigate("HomeScreen");
+            navigation.navigate("ChatGroupsScreen");
+            SendPushNotificationToServer(patientName);
           },
         },
       ],
@@ -163,7 +171,7 @@ const MedFormScreen = (props) => {
           />
           <Input
             id="radiance"
-            label="Pain radiation. *If relevant"
+            label="Pain radiation. *if relevant"
             keyboardType="default"
             autoCapitalize="none"
             errorMessage="determine of pain radiation. *if relevant."
@@ -177,10 +185,10 @@ const MedFormScreen = (props) => {
           <View style={styles.buttonsContainer}>
             <Button
               style={styles.button}
-              title="Create Chat"
+              title="Create medical case"
               onPress={() => {
                 formHandler();
-                infoHandler();
+                infoHandler(patientName);
               }}
             />
 

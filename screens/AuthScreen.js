@@ -7,8 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import * as authActions from "../store/actions/auth";
 import Button from "../UI/Button";
-import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
+
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
@@ -35,47 +34,6 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = (props) => {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => {
-      return {
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-      };
-    },
-  });
-  useEffect(() => {
-    Permissions.getAsync(Permissions.NOTIFICATIONS)
-      .then((statusObj) => {
-        if (statusObj.status !== "granted") {
-          return Permissions.askAsync(Permissions.NOTIFICATIONS);
-        }
-        return statusObj;
-      })
-      .then((statusObj) => {
-        if (statusObj.status !== "granted") {
-          return;
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
-        console.log(response);
-      }
-    );
-    const foregroundSubscription = Notifications.addNotificationReceivedListener(
-      (notification) => {
-        console.log(notification);
-      }
-    );
-    return () => {
-      backgroundSubscription.remove();
-      foregroundSubscription.remove();
-    };
-  }, []);
-
   const dispatch = useDispatch();
 
   const [isSignUp, setIsSignUp] = useState(false);

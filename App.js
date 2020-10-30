@@ -13,6 +13,8 @@ import clinicReducer from "./store/reducers/clinics";
 import medicalCaseReducer from "./store/reducers/medicalCase";
 import usersReducer from "./store/reducers/user";
 import medicinesReducer from "./store/reducers/medicine";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
@@ -39,6 +41,50 @@ const fetchFonts = () => {
 // });
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
+
+  useEffect(() => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => {
+        return {
+          shouldShowAlert: true,
+          shouldPlaySound: true,
+          shouldSetBadge: false,
+        };
+      },
+    });
+    Permissions.getAsync(Permissions.NOTIFICATIONS)
+      .then((statusObj) => {
+        if (statusObj.status !== "granted") {
+          return Permissions.askAsync(Permissions.NOTIFICATIONS);
+        }
+        return statusObj;
+      })
+      .then((statusObj) => {
+        if (statusObj.status !== "granted") {
+          throw new Error("Permissions not granted.");
+        }
+      })
+      .catch((err) => {
+        return null;
+      });
+  }, []);
+
+  useEffect(() => {
+    const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(response);
+      }
+    );
+    const foregroundSubscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log(notification);
+      }
+    );
+    return () => {
+      backgroundSubscription.remove();
+      foregroundSubscription.remove();
+    };
+  }, []);
 
   if (!fontLoaded) {
     return (
