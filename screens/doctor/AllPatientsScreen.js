@@ -22,21 +22,23 @@ const AllPatientsScreen = (props) => {
         contentContainerStyle={styles.list}
         data={patients}
         keyExtractor={(item) => item._id}
-        renderItem={(itemData) => (
-          <UserDetailsItem
-            avatar={itemData.item.avatar}
-            name={itemData.item.name}
-            onPress={() => {
-              navigation.navigate("PatientDataScreen", {
-                patientName: itemData.item.name,
-                patientMail: itemData.item.email,
-                patientId: itemData.item._id,
-                patientPhoneNumber: itemData.item.phoneNumber,
-                medicalCases: itemData.item.medicalCases,
-              });
-            }}
-          />
-        )}
+        renderItem={(itemData) =>
+          itemData.item.role == "PATIENT" ? (
+            <UserDetailsItem
+              avatar={itemData.item.avatar}
+              name={itemData.item.name}
+              onPress={() => {
+                navigation.navigate("PatientDataScreen", {
+                  patientName: itemData.item.name,
+                  patientMail: itemData.item.email,
+                  patientId: itemData.item._id,
+                  patientPhoneNumber: itemData.item.phoneNumber,
+                  medicalCases: itemData.item.medicalCases,
+                });
+              }}
+            />
+          ) : null
+        }
       />
     );
   }

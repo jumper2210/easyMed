@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { View, StyleSheet, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../UI/CustomHeaderButton";
@@ -8,25 +8,19 @@ import { ScrollView } from "react-native-gesture-handler";
 import * as authActions from "../store/actions/auth";
 
 const HomeScreen = ({ navigation }) => {
+  const userRole = useSelector((state) => state.authState.role);
+  const [isAdmin, setIsAdmin] = useState(false);
+  if (userRole == "ADMIN") {
+    setIsAdmin(true);
+  }
   return (
     <ScrollView>
       <View style={styles.screen}>
         <NavigationItem
-          name={"Medical Form"}
-          iconName={
-            Platform.OS === "android"
-              ? "md-add-circle-outline"
-              : "ios-add-circle-outline"
-          }
-          onPress={() => {
-            navigation.navigate("FormScreen");
-          }}
-        />
-        <NavigationItem
           name={"Clinic"}
           iconName={Platform.OS === "android" ? "md-medical" : "ios-medical"}
           onPress={() => {
-            navigation.navigate("ClinicScreen");
+            navigation.navigate("ClinicScreen", { isAdmin });
           }}
         />
         <NavigationItem
@@ -45,20 +39,39 @@ const HomeScreen = ({ navigation }) => {
             navigation.navigate("UserAccountScreen");
           }}
         />
-        <NavigationItem
-          name={"All patients"}
-          iconName={Platform.OS === "android" ? "md-list-box" : "ios-list-box"}
-          onPress={() => {
-            navigation.navigate("AllPatientsScreen");
-          }}
-        />
-        <NavigationItem
-          name={"All doctors"}
-          iconName={Platform.OS === "android" ? "md-list" : "ios-list"}
-          onPress={() => {
-            navigation.navigate("AllDoctorsScreen");
-          }}
-        />
+        {userRole == "PATIENT" ? (
+          <View>
+            <NavigationItem
+              name={"Medical Form"}
+              iconName={
+                Platform.OS === "android"
+                  ? "md-add-circle-outline"
+                  : "ios-add-circle-outline"
+              }
+              onPress={() => {
+                navigation.navigate("FormScreen");
+              }}
+            />
+            <NavigationItem
+              name={"All doctors"}
+              iconName={Platform.OS === "android" ? "md-list" : "ios-list"}
+              onPress={() => {
+                navigation.navigate("AllDoctorsScreen");
+              }}
+            />
+          </View>
+        ) : null}
+        {userRole == "DOCTOR" ? (
+          <NavigationItem
+            name={"All patients"}
+            iconName={
+              Platform.OS === "android" ? "md-list-box" : "ios-list-box"
+            }
+            onPress={() => {
+              navigation.navigate("AllPatientsScreen");
+            }}
+          />
+        ) : null}
       </View>
     </ScrollView>
   );

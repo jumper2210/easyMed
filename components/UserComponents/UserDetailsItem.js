@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 5,
     borderColor: Colors.secondary,
-    borderWidth: 1,
+    borderWidth: 0.6,
     height: 230,
     marginHorizontal: 5,
   },
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height: 140,
     width: 140,
     borderRadius: 140,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.details,
   },
   nameContainer: {
     marginVertical: 10,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "open-sans-bold",
-    fontSize: 25,
+    fontSize: 15,
     textAlign: "center",
     textTransform: "uppercase",
     color: Colors.secondary,

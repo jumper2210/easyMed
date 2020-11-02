@@ -1,8 +1,8 @@
-import Patient from "../../models/patient";
+import User from "../../models/user";
 import { LOAD_USER, SET_PATIENT } from "../actions/user";
 
 const initialState = {
-  patients: [],
+  users: [],
   selfUser: [],
 };
 
@@ -14,15 +14,16 @@ export default (state = initialState, action) => {
       };
     case SET_PATIENT:
       return {
-        patients: action.patients.map(
+        users: action.patients.map(
           (pt) =>
-            new Patient(
+            new User(
               pt._id.toString(),
               pt.name,
               pt.medicalCases,
               pt.email,
               pt.phoneNumber,
-              pt.avatar
+              pt.avatar,
+              pt.role
             )
         ),
       };

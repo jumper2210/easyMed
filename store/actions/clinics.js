@@ -4,7 +4,8 @@ export const ADD_CLINIC = "ADD_CLINIC";
 export const SET_CLINIC = "SET_CLINIC";
 
 export const addClinic = (title, imageUri, location) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${location.lat},${location.lng}&key=${ENV.googleApiKey}`
     );
@@ -23,6 +24,7 @@ export const addClinic = (title, imageUri, location) => {
       method: method,
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         title: title,
@@ -54,8 +56,11 @@ export const addClinic = (title, imageUri, location) => {
   };
 };
 export const loadClinics = () => {
-  return async (dispatch) => {
-    fetch("http://192.168.1.17:8080/clinicFeed/getClinics")
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
+    fetch("http://192.168.1.17:8080/clinicFeed/getClinics", {
+      headers: { Authorization: "Bearer " + token },
+    })
       .then((res) => {
         if (res.status !== 200) {
           throw new Error("Failed to fetch Clinic");

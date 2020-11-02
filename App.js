@@ -36,9 +36,9 @@ const fetchFonts = () => {
   });
 };
 
-// store.subscribe(() => {
-//   console.log("new state", store.getState());
-// });
+store.subscribe(() => {
+  console.log("new state", store.getState());
+});
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
@@ -71,14 +71,10 @@ export default function App() {
 
   useEffect(() => {
     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
-        console.log(response);
-      }
+      (response) => {}
     );
     const foregroundSubscription = Notifications.addNotificationReceivedListener(
-      (notification) => {
-        console.log(notification);
-      }
+      (notification) => {}
     );
     return () => {
       backgroundSubscription.remove();

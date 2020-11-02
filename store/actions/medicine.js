@@ -35,8 +35,16 @@ export const assignMedicine = (
 
 export const loadPatientMedicines = () => {
   return async (dispatch, getState) => {
+    const token = getState().authState.token;
     const patientId = getState().authState.userId;
-    fetch(`http://192.168.1.17:8080/medicine/loadPatientMedicines/${patientId}`)
+    fetch(
+      `http://192.168.1.17:8080/medicine/loadPatientMedicines/${patientId}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
       .then((res) => {
         if (res.status !== 201) {
           throw new Error("Failed to fetch patient medicines");
@@ -53,9 +61,13 @@ export const loadPatientMedicines = () => {
 };
 
 export const deleteMedicine = (medicineId) => {
-  return async (dispatch, getState) => {
+  return async (getState) => {
+    const token = getState().authState.token;
     fetch(`http://192.168.1.17:8080/medicine/deleteMedicine/${medicineId}`, {
       method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
     }).then((res) => {
       if (res.status !== 200) {
         throw new Error("Failed to delete medicine");

@@ -42,9 +42,16 @@ export const createMedicalCase = (
 };
 
 export const loadPatientMedicalCase = (patientId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
     fetch(
-      `http://192.168.1.17:8080/medicalCase/getPatientMedicalCases/${patientId}`
+      `http://192.168.1.17:8080/medicalCase/getPatientMedicalCases/${patientId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
     )
       .then((res) => {
         if (res.status !== 200) {
@@ -62,13 +69,15 @@ export const loadPatientMedicalCase = (patientId) => {
 };
 
 export const checkMedicalCase = (medicalCaseId) => {
-  return async () => {
+  return async (getState) => {
+    const token = getState().authState.token;
     const response = await fetch(
       `http://192.168.1.17:8080/medicalCase/checkPatientMedicalCase/${medicalCaseId}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
       }
     );

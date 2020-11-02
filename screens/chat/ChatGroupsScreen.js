@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
@@ -7,6 +6,7 @@ import * as conversationActions from "../../store/actions/conversation";
 import ChatMateItem from "../../components/ChatComponents/ChatMateItem";
 import * as chatMateActions from "../../store/actions/chatMate";
 import Colors from "../../constants/Colors";
+import * as userActions from "../../store/actions/user";
 
 const ChatGroupsScreen = (props) => {
   const dispatch = useDispatch();
@@ -15,14 +15,13 @@ const ChatGroupsScreen = (props) => {
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
   );
-
-  const setCurrentConversationId = (conversationId) => {
-    dispatch(conversationActions.setCurrentConversation(conversationId));
-  };
+  const selfUser = useSelector((state) => state.usersState.selfUser);
+  console.log(conversations);
 
   useEffect(() => {
     dispatch(chatMateActions.loadChatMates());
     dispatch(conversationActions.loadConversations());
+    dispatch(userActions.loadUserData());
   }, [dispatch]);
 
   const findConversationHandler = (chatMateId) => {
@@ -36,30 +35,23 @@ const ChatGroupsScreen = (props) => {
     <Text style={styles.info}>You don't have conversation yet.</Text>
   );
 
-  if (chatMates.length >= 1) {
+  if (conversations.length >= 1) {
     display = (
       <FlatList
-        data={chatMates}
-        keyExtractor={(item) => item._id}
+        data={conversations}
+        keyExtractor={(item) => item.id}
         renderItem={(itemData) => (
           <ChatMateItem
-            name={itemData.item.name}
+            chatMateId={itemData.item.chatMateId}
             onSelect={() => {
-              const conversation = findConversationHandler(itemData.item._id);
-              if (conversation && conversation.id) {
-                setCurrentConversationId(conversation.id),
-                  navigation.navigate("ConversationScreen", {
-                    conversation: conversation,
-                    chatMates: chatMates,
-                  });
-              } else {
-                dispatch(
-                  conversationActions.createConversation(
-                    itemData.item._id,
-                    navigation
-                  )
-                );
-              }
+              const conversation = findConversationHandler(
+                itemData.item.chatMateId
+              );
+              navigation.navigate("ConversationScreen", {
+                conversation: conversation,
+                chatMates: chatMates,
+                user: selfUser,
+              });
             }}
           />
         )}

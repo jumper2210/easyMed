@@ -43,6 +43,8 @@ const ClinicOverviewScreen = (props) => {
 };
 
 export const screenOptions = (navData) => {
+  const { isAdmin } = navData.route.params;
+
   return {
     headerTitle: "Clinics",
     headerLeft: () => (
@@ -58,15 +60,18 @@ export const screenOptions = (navData) => {
         />
       </HeaderButtons>
     ),
+
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item
-          title="AddClinic"
-          iconName={Platform.OS === "android" ? "md-add" : "ios-add"}
-          onPress={() => {
-            navData.navigation.navigate("AddClinicScreen");
-          }}
-        />
+        {isAdmin == true ? (
+          <Item
+            title="AddClinic"
+            iconName={Platform.OS === "android" ? "md-add" : "ios-add"}
+            onPress={() => {
+              navData.navigation.navigate("AddClinicScreen");
+            }}
+          />
+        ) : null}
       </HeaderButtons>
     ),
   };

@@ -94,7 +94,7 @@ const MedFormScreen = (props) => {
         {
           text: "create medical form",
           onPress: () => {
-            navigation.navigate("ChatGroupsScreen");
+            navigation.navigate("HomeScreen");
             SendPushNotificationToServer(patientName);
           },
         },

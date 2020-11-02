@@ -9,8 +9,11 @@ export const loadMessagesFailure = () => ({
 });
 
 export const loadMessages = (conversationId) => {
-  return async (dispatch) => {
-    fetch(`http://192.168.1.17:8080/message/getMessage/${conversationId}`, {})
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
+    fetch(`http://192.168.1.17:8080/message/getMessage/${conversationId}`, {
+      headers: { Authorization: "Bearer " + token },
+    })
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Failed to fetch messages");

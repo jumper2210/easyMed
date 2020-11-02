@@ -8,7 +8,7 @@ const ChatMateItem = (props) => {
   return (
     <TouchableOpacity onPress={props.onSelect} style={styles.container}>
       <View style={styles.nameContainer}>
-        <Text style={styles.name}>{props.name}</Text>
+        <Text style={styles.name}>{props.chatMateId}</Text>
       </View>
     </TouchableOpacity>
   );

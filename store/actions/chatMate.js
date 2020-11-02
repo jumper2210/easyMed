@@ -24,10 +24,12 @@ export const loadChatMates = () => {
 export const addChatMate = (chatMateEmail) => {
   return async (dispatch, getState) => {
     const ownEmail = getState().authState.user.email;
+    const token = getState().authState.token;
     fetch("http://192.168.1.17:8080/chatMates/addChatMate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({ chatMateEmail, ownEmail }),
     })

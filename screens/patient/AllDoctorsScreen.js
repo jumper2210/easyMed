@@ -9,14 +9,13 @@ const AllDoctorsScreen = (props) => {
   const { navigation } = props;
   const dispatch = useDispatch();
 
-  // for now loadAllPatients(), later loadAllDoctors()
   useEffect(() => {
-    dispatch(usersActions.loadAllPatients());
+    dispatch(usersActions.loadAllUsers());
   }, []);
 
-  // for now .patients, later .doctors
-  const doctors = useSelector((state) => state.usersState.patients);
+  const doctors = useSelector((state) => state.usersState.users);
   let display = <ActivityIndicator size="large" color={Colors.secondary} />;
+
   if (doctors) {
     display = (
       <FlatList
@@ -24,20 +23,22 @@ const AllDoctorsScreen = (props) => {
         contentContainerStyle={styles.list}
         data={doctors}
         keyExtractor={(item) => item._id}
-        renderItem={(itemData) => (
-          <DoctorDetailsItem
-            avatar={itemData.item.avatar}
-            name={itemData.item.name}
-            onPress={() => {
-              navigation.navigate("DoctorDataScreen", {
-                doctorName: itemData.item.name,
-                doctorMail: itemData.item.email,
-                doctorId: itemData.item._id,
-                doctorPhoneNumber: itemData.item.phoneNumber,
-              });
-            }}
-          />
-        )}
+        renderItem={(itemData) =>
+          itemData.item.role === "DOCTOR" ? (
+            <DoctorDetailsItem
+              avatar={itemData.item.avatar}
+              name={itemData.item.name}
+              onPress={() => {
+                navigation.navigate("DoctorDataScreen", {
+                  doctorName: itemData.item.name,
+                  doctorMail: itemData.item.email,
+                  doctorId: itemData.item._id,
+                  doctorPhoneNumber: itemData.item.phoneNumber,
+                });
+              }}
+            />
+          ) : null
+        }
       />
     );
   }
@@ -48,6 +49,7 @@ const AllDoctorsScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    paddingTop: 20,
   },
   list: {
     justifyContent: "space-evenly",
