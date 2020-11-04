@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
 import Button from "../../UI/Button";
@@ -14,12 +14,29 @@ const DoctorDataScreen = ({ route, navigation }) => {
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
   );
+  const isChatMateExist = useSelector(
+    (state) => state.chatMatesState.isChatMateExist
+  );
 
   const setCurrentConversationId = (conversationId) => {
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
   const { doctorMail, doctorPhoneNumber, doctorId } = route.params;
 
+  const infoHandler = () => {
+    Alert.alert(
+      "Talk with your chat mate",
+      "Now you can write to your chat mate",
+      [
+        {
+          text: "add this patient to your chat mates",
+          onPress: () => {
+            navigation.navigate("ChatGroupsScreen");
+          },
+        },
+      ]
+    );
+  };
   useEffect(() => {
     dispatch(conversationActions.loadConversations());
     dispatch(chatMateActions.loadChatMates());
@@ -33,31 +50,48 @@ const DoctorDataScreen = ({ route, navigation }) => {
     return findConversation;
   };
 
+  let buttonDisplay = (
+    <Button
+      title={"Add chat mate"}
+      onPress={() => {
+        dispatch(chatMateActions.addChatMate(doctorMail));
+        infoHandler();
+      }}
+    />
+  );
+
+  if (isChatMateExist) {
+    if (isChatMateExist == true) {
+      buttonDisplay = (
+        <Button
+          title="Write a message"
+          onPress={() => {
+            const conversation = findConversationHandler(doctorId);
+            if (conversation && conversation.id) {
+              setCurrentConversationId(conversation.id);
+              navigation.navigate("ConversationScreen", {
+                conversation: conversation,
+                chatMates: chatMates,
+                user: selfUser,
+              });
+            } else {
+              dispatch(
+                conversationActions.createConversation(doctorId, navigation)
+              );
+            }
+          }}
+        />
+      );
+    }
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.doctorInfoContainer}>
         <Text style={styles.label}>{doctorMail}</Text>
         <Text style={styles.label}>{doctorPhoneNumber}</Text>
       </View>
-
-      <Button
-        title="Make a conversation"
-        onPress={() => {
-          const conversation = findConversationHandler(doctorId);
-          if (conversation && conversation.id) {
-            setCurrentConversationId(conversation.id);
-            navigation.navigate("ConversationScreen", {
-              conversation: conversation,
-              chatMates: chatMates,
-              user: selfUser,
-            });
-          } else {
-            dispatch(
-              conversationActions.createConversation(doctorId, navigation)
-            );
-          }
-        }}
-      />
+      {buttonDisplay}
     </View>
   );
 };

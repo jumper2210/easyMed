@@ -1,5 +1,7 @@
 export const LOAD_CHAT_MATES = "LOAD_DOCTORS";
 export const ADD_CHAT_MATE = "ADD_CHAT_MATE";
+export const SET_EXIST = "SET_EXIST";
+export const SET_NOT_EXIST = "SET_NOT_EXIST";
 
 export const loadChatMates = () => {
   return async (dispatch, getState) => {
@@ -23,7 +25,7 @@ export const loadChatMates = () => {
 
 export const addChatMate = (chatMateEmail) => {
   return async (dispatch, getState) => {
-    const ownEmail = getState().authState.user.email;
+    const ownEmail = getState().usersState.selfUser.email;
     const token = getState().authState.token;
     fetch("http://192.168.1.17:8080/chatMates/addChatMate", {
       method: "POST",
@@ -42,5 +44,21 @@ export const addChatMate = (chatMateEmail) => {
       .then((response) => {
         dispatch({ type: ADD_CHAT_MATE, chatMate: { ...response.chatMate } });
       });
+  };
+};
+
+export const isMyChatMate = (chatMates, candidateChatMateId) => {
+  return async (dispatch, getState) => {
+    const exist = !!getState().chatMatesState.isChatMateExist;
+    chatMates.map((cm) => {
+      if (cm._id == candidateChatMateId) {
+        dispatch({
+          type: SET_EXIST,
+        });
+      }
+    });
+    if (exist === true) {
+      dispatch({ type: SET_NOT_EXIST });
+    }
   };
 };

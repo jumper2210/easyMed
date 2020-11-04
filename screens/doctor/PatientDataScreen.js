@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Text, FlatList } from "react-native";
+import { View, StyleSheet, Text, FlatList, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import MedicalCaseItem from "../../components/MedicalCase/MedicalCaseItem";
 import Colors from "../../constants/Colors";
@@ -12,28 +12,19 @@ import Button from "../../UI/Button";
 
 const PatientDataScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  let medicalCasesToCheck = [];
+  let medicalCaseDisplay = (
+    <Text style={styles.patientInfo}>
+      This paction has not any medical case yet.
+    </Text>
+  );
   const {
     patientName,
     patientMail,
     patientPhoneNumber,
     patientId,
+    chatMates,
   } = route.params;
-
-  let medicalCasesToCheck = [];
-  let display = (
-    <Text style={styles.patientInfo}>
-      This paction has not any medical case yet.
-    </Text>
-  );
-
-  useEffect(() => {
-    dispatch(medicalCaseActions.loadPatientMedicalCase(patientId));
-    dispatch(conversationActions.loadConversations());
-    dispatch(chatMateActions.loadChatMates());
-    dispatch(userAction.loadUserData());
-  }, [dispatch]);
-
-  const chatMates = useSelector((state) => state.chatMatesState.chatMates);
   const selfUser = useSelector((state) => state.usersState.selfUser);
 
   const medicalCases = useSelector(
@@ -42,10 +33,55 @@ const PatientDataScreen = ({ route, navigation }) => {
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
   );
+  const isChatMateExist = useSelector(
+    (state) => state.chatMatesState.isChatMateExist
+  );
+
+  useEffect(() => {
+    dispatch(medicalCaseActions.loadPatientMedicalCase(patientId));
+    dispatch(conversationActions.loadConversations());
+    dispatch(userAction.loadUserData());
+    dispatch(chatMateActions.loadChatMates());
+  }, []);
 
   const setCurrentConversationId = (conversationId) => {
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
+
+  let buttonDisplay = (
+    <Button
+      title={"Add chat mate"}
+      onPress={() => {
+        dispatch(chatMateActions.addChatMate(patientMail));
+        infoHandler();
+      }}
+    />
+  );
+
+  if (isChatMateExist) {
+    if (isChatMateExist == true) {
+      buttonDisplay = (
+        <Button
+          title="Write a message"
+          onPress={() => {
+            const conversation = findConversationHandler(patientId);
+            if (conversation && conversation.id) {
+              setCurrentConversationId(conversation.id);
+              navigation.navigate("ConversationScreen", {
+                conversation: conversation,
+                chatMates: chatMates,
+                user: selfUser,
+              });
+            } else {
+              dispatch(
+                conversationActions.createConversation(patientId, navigation)
+              );
+            }
+          }}
+        />
+      );
+    }
+  }
 
   medicalCases.map((mc) => {
     if (mc.resolved === false) {
@@ -69,6 +105,21 @@ const PatientDataScreen = ({ route, navigation }) => {
     }
   });
 
+  const infoHandler = () => {
+    Alert.alert(
+      "Talk with your chat mate",
+      "Now you can write to your chat mate",
+      [
+        {
+          text: "add this patient to your chat mates",
+          onPress: () => {
+            navigation.navigate("ChatGroupsScreen");
+          },
+        },
+      ]
+    );
+  };
+
   const findConversationHandler = (patientId) => {
     const findConversation = conversations.find(
       (conversation) => conversation.chatMateId === patientId
@@ -77,33 +128,31 @@ const PatientDataScreen = ({ route, navigation }) => {
   };
 
   if (medicalCasesToCheck) {
-    display = (
-      <View>
-        <FlatList
-          data={medicalCasesToCheck}
-          keyExtractor={(item) => item._id}
-          renderItem={(itemData) => (
-            <MedicalCaseItem
-              createdAt={itemData.item.createdAt}
-              onPress={() => {
-                navigation.navigate("MedicalCaseDetailsScreen", {
-                  name: patientName,
-                  medicalCaseId: itemData.item._id,
-                  age: itemData.item.age,
-                  increase: itemData.item.increase,
-                  locationOfPain: itemData.item.locationOfPain,
-                  otherSymptom: itemData.item.otherSymptom,
-                  pickedSymptom: itemData.item.pickedSymptom,
-                  radiance: itemData.item.radiance,
-                  scale: itemData.item.scale,
-                  createdAt: itemData.item.createdAt,
-                  imageUri: itemData.item.imageUri,
-                });
-              }}
-            />
-          )}
-        />
-      </View>
+    medicalCaseDisplay = (
+      <FlatList
+        data={medicalCasesToCheck}
+        keyExtractor={(item) => item._id}
+        renderItem={(itemData) => (
+          <MedicalCaseItem
+            createdAt={itemData.item.createdAt}
+            onPress={() => {
+              navigation.navigate("MedicalCaseDetailsScreen", {
+                name: patientName,
+                medicalCaseId: itemData.item._id,
+                age: itemData.item.age,
+                increase: itemData.item.increase,
+                locationOfPain: itemData.item.locationOfPain,
+                otherSymptom: itemData.item.otherSymptom,
+                pickedSymptom: itemData.item.pickedSymptom,
+                radiance: itemData.item.radiance,
+                scale: itemData.item.scale,
+                createdAt: itemData.item.createdAt,
+                imageUri: itemData.item.imageUri,
+              });
+            }}
+          />
+        )}
+      />
     );
   }
 
@@ -116,26 +165,9 @@ const PatientDataScreen = ({ route, navigation }) => {
       <View style={styles.medicalCaseInfoContainer}>
         <Text style={styles.medicalCaseInfo}>Medical cases</Text>
       </View>
-      <View style={styles.scrollViewStyled}>{display}</View>
+      <View style={styles.scrollViewStyled}>{medicalCaseDisplay}</View>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Make a conversation"
-          onPress={() => {
-            const conversation = findConversationHandler(patientId);
-            if (conversation && conversation.id) {
-              setCurrentConversationId(conversation.id);
-              navigation.navigate("ConversationScreen", {
-                conversation: conversation,
-                chatMates: chatMates,
-                user: selfUser,
-              });
-            } else {
-              dispatch(
-                conversationActions.createConversation(patientId, navigation)
-              );
-            }
-          }}
-        />
+        {buttonDisplay}
         <Button
           title="Assign medicines"
           onPress={() => {

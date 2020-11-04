@@ -16,8 +16,10 @@ const ChatGroupsScreen = (props) => {
     (state) => state.conversationsState.conversations
   );
   const selfUser = useSelector((state) => state.usersState.selfUser);
-  console.log(conversations);
 
+  const setCurrentConversationId = (conversationId) => {
+    dispatch(conversationActions.setCurrentConversation(conversationId));
+  };
   useEffect(() => {
     dispatch(chatMateActions.loadChatMates());
     dispatch(conversationActions.loadConversations());
@@ -34,24 +36,31 @@ const ChatGroupsScreen = (props) => {
   let display = (
     <Text style={styles.info}>You don't have conversation yet.</Text>
   );
-
-  if (conversations.length >= 1) {
+  if (chatMates) {
     display = (
       <FlatList
-        data={conversations}
-        keyExtractor={(item) => item.id}
+        data={chatMates}
+        keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
           <ChatMateItem
-            chatMateId={itemData.item.chatMateId}
+            name={itemData.item.name}
             onSelect={() => {
-              const conversation = findConversationHandler(
-                itemData.item.chatMateId
-              );
-              navigation.navigate("ConversationScreen", {
-                conversation: conversation,
-                chatMates: chatMates,
-                user: selfUser,
-              });
+              const conversation = findConversationHandler(itemData.item._id);
+              if (conversation && conversation.id) {
+                setCurrentConversationId(conversation.id);
+                navigation.navigate("ConversationScreen", {
+                  conversation: conversation,
+                  chatMates: chatMates,
+                  user: selfUser,
+                });
+              } else {
+                dispatch(
+                  conversationActions.createConversation(
+                    itemData.item._id,
+                    navigation
+                  )
+                );
+              }
             }}
           />
         )}
@@ -61,7 +70,11 @@ const ChatGroupsScreen = (props) => {
 
   return <View style={styles.container}>{display}</View>;
 };
-export const screenOptions = (navData) => {};
+export const screenOptions = (navData) => {
+  return {
+    headerTitle: "Your chat mates",
+  };
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

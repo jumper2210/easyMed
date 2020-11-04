@@ -5,10 +5,11 @@ import Colors from "../../constants/Colors";
 import { TouchableOpacity } from "react-native";
 
 const ChatMateItem = (props) => {
+  const { name, onSelect } = props;
   return (
-    <TouchableOpacity onPress={props.onSelect} style={styles.container}>
+    <TouchableOpacity onPress={onSelect} style={styles.container}>
       <View style={styles.nameContainer}>
-        <Text style={styles.name}>{props.chatMateId}</Text>
+        <Text style={styles.name}>{name}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans-bold",
     marginHorizontal: 10,
     color: Colors.details,
+    textAlign: "center",
   },
 });
 

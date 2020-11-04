@@ -31,7 +31,9 @@ import MedFormScreen, {
   screenOptions as medFormScreenOptions,
 } from "../screens/form/MedFormScreen";
 
-import ChatGroupScreen from "../screens/chat/ChatGroupsScreen";
+import ChatGroupScreen, {
+  screenOptions as ChatGroupsScreenOptions,
+} from "../screens/chat/ChatGroupsScreen";
 
 import ConversationScreen, {
   screenOptions as conversationScreenOptions,
@@ -130,6 +132,7 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="ChatGroupsScreen"
         component={ChatGroupScreen}
+        options={ChatGroupsScreenOptions}
       />
       <EasyMedStackNavigator.Screen
         name="ConversationScreen"

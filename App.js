@@ -36,9 +36,9 @@ const fetchFonts = () => {
   });
 };
 
-store.subscribe(() => {
-  console.log("new state", store.getState());
-});
+// store.subscribe(() => {
+//   console.log("new state", store.getState().chatMatesState);
+// });
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 

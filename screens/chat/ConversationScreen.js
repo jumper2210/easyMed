@@ -3,12 +3,11 @@ import { GiftedChat } from "react-native-gifted-chat";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import * as messageActions from "../../store/actions/message";
-import * as chatMatesActions from "../../store/actions/chatMate";
 
 const ConversationScreen = (props) => {
   const dispatch = useDispatch();
   const { route } = props;
-  const { conversation, chatMates, user } = route.params;
+  const { conversation, user, chatMates } = route.params;
   const socket = io("http://192.168.1.17:8080");
 
   const messages = useSelector(
@@ -17,7 +16,6 @@ const ConversationScreen = (props) => {
   );
 
   useEffect(() => {
-    dispatch(chatMatesActions.loadChatMates());
     dispatch(messageActions.loadMessages(conversation.id));
     return () => {
       socket.emit("disconnect", {

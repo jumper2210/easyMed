@@ -3,14 +3,14 @@ import { LOAD_USER, SET_PATIENT } from "../actions/user";
 
 const initialState = {
   users: [],
-  selfUser: [],
+  selfUser: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_USER:
       return {
-        selfUser: action.selfUser,
+        selfUser: { ...action.selfUser },
       };
     case SET_PATIENT:
       return {
