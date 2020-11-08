@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     height: 200,
   },
-  name: { fontFamily: "open-sans", color: Colors.secondary, fontSize: 25 },
-  email: { fontFamily: "open-sans", color: Colors.secondary, fontSize: 25 },
+  name: { fontFamily: "open-sans-bold", color: Colors.secondary, fontSize: 17 },
+  email: { fontFamily: "open-sans", color: Colors.secondary, fontSize: 20 },
   phoneNumber: {
     fontFamily: "open-sans",
     color: Colors.secondary,

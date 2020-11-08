@@ -13,10 +13,10 @@ const PatientMedicalCasesScreen = (props) => {
   const medicalCases = useSelector(
     (state) => state.medicalCaseState.medicalCases
   );
-  const userId = useSelector((state) => state.usersState.selfUser._id);
+  const { _id, role } = useSelector((state) => state.usersState.selfUser);
 
   useEffect(() => {
-    dispatch(medicalCaseActions.loadPatientMedicalCase(userId));
+    dispatch(medicalCaseActions.loadPatientMedicalCase(_id));
   }, []);
 
   medicalCases.map((mc) => {
@@ -62,6 +62,7 @@ const PatientMedicalCasesScreen = (props) => {
                 scale: itemData.item.scale,
                 createdAt: itemData.item.createdAt,
                 imageUri: itemData.item.imageUri,
+                role: role,
               });
             }}
           />
@@ -80,11 +81,5 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-export const screenOptions = () => {
-  return {
-    headerTitle: "Medical history",
-  };
-};
 
 export default PatientMedicalCasesScreen;

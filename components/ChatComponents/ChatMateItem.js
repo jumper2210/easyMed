@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import Constants from "../../constants/Constants";
 import Colors from "../../constants/Colors";
 import { TouchableOpacity } from "react-native";
@@ -8,9 +8,7 @@ const ChatMateItem = (props) => {
   const { name, onSelect } = props;
   return (
     <TouchableOpacity onPress={onSelect} style={styles.container}>
-      <View style={styles.nameContainer}>
-        <Text style={styles.name}>{name}</Text>
-      </View>
+      <Text style={styles.name}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -21,24 +19,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 80,
     width: Constants.screenWidth - 80,
-    borderBottomColor: "rgb(0,0,0)",
-    borderBottomWidth: 0.2,
+    borderBottomColor: Colors.details,
+    borderBottomWidth: 1,
     backgroundColor: Colors.primary,
     borderRadius: 15,
     shadowColor: "#ccc",
-    shadowOffset: { height: 1, width: 1 },
-    shadowRadius: 2,
-  },
-  nameContainer: {
     justifyContent: "center",
     alignItems: "center",
-    margin: 5,
+    paddingTop: 15,
   },
 
   name: {
-    fontSize: 14,
+    fontSize: 18,
     fontFamily: "open-sans-bold",
-    marginHorizontal: 10,
+    marginHorizontal: 14,
     color: Colors.details,
     textAlign: "center",
   },

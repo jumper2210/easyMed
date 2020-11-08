@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
@@ -84,6 +85,8 @@ const defaultTabBarOptions = {
 const UserManagementBottomTabs = createBottomTabNavigator();
 
 export const UserManagementTabs = () => {
+  const userRole = useSelector((state) => state.authState.role);
+
   return (
     <UserManagementBottomTabs.Navigator tabBarOptions={defaultTabBarOptions}>
       <UserManagementBottomTabs.Screen
@@ -91,30 +94,38 @@ export const UserManagementTabs = () => {
         component={UserAccountScreen}
         options={UserAccountScreenOptions}
       />
-      <UserManagementBottomTabs.Screen
-        name="UserMedicalCasesScreen"
-        component={PatientMedicalCasesScreen}
-        options={{
-          title: "Medical History",
-          tabBarIcon: () => {
-            return (
-              <Ionicons name="md-list" size={26} color={Colors.secondary} />
-            );
-          },
-        }}
-      />
-      <UserManagementBottomTabs.Screen
-        name="PatientMedicinesScreen"
-        component={PatientMedicinesScreen}
-        options={{
-          title: "My Medicals",
-          tabBarIcon: () => {
-            return (
-              <Ionicons name="md-medical" size={26} color={Colors.secondary} />
-            );
-          },
-        }}
-      />
+      {userRole == "PATIENT" && (
+        <UserManagementBottomTabs.Screen
+          name="UserMedicalCasesScreen"
+          component={PatientMedicalCasesScreen}
+          options={{
+            title: "Medical History",
+            tabBarIcon: () => {
+              return (
+                <Ionicons name="md-list" size={26} color={Colors.secondary} />
+              );
+            },
+          }}
+        />
+      )}
+      {userRole == "PATIENT" && (
+        <UserManagementBottomTabs.Screen
+          name="PatientMedicinesScreen"
+          component={PatientMedicinesScreen}
+          options={{
+            title: "My Medicals",
+            tabBarIcon: () => {
+              return (
+                <Ionicons
+                  name="md-medical"
+                  size={26}
+                  color={Colors.secondary}
+                />
+              );
+            },
+          }}
+        />
+      )}
     </UserManagementBottomTabs.Navigator>
   );
 };
