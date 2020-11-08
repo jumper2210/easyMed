@@ -17,19 +17,21 @@ const UserAccountScreen = (props) => {
     dispatch(userActions.loadUserData());
   }, [dispatch]);
 
-  let avatar = (
+  let avatarDisplay = (
     <Image
       style={styles.avatar}
       source={require("../../assets/defaultAvatars/patient.png")}
     />
   );
 
-  if (selfUser.avatar !== undefined) {
-    avatar = <Image style={styles.avatar} source={{ uri: selfUser.avatar }} />;
+  if (selfUser.avatar) {
+    avatarDisplay = (
+      <Image style={styles.avatar} source={{ uri: selfUser.avatar }} />
+    );
   }
   return (
     <View style={styles.screen}>
-      <View style={styles.avatarSection}>{avatar}</View>
+      <View style={styles.avatarSection}>{avatarDisplay}</View>
       <View style={styles.infoContainer}>
         <UserAccountInfoItem
           name={selfUser.name}
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
 
   avatar: {
     borderRadius: 10,
-    borderColor: "transparent",
+    borderColor: Colors.primary,
     borderWidth: 1,
     height: constants.screenHeight / 2 - 150,
     width: 300,
