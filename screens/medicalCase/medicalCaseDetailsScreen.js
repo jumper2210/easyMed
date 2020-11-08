@@ -19,6 +19,7 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
     createdAt,
     imageUri,
     medicalCaseId,
+    role,
   } = route.params;
   const dispatch = useDispatch();
 
@@ -104,11 +105,12 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
           <Image style={styles.image} source={{ uri: imageUri }} />
         ) : null}
       </ScrollView>
-
-      <Button
-        title="check this medical case"
-        onPress={() => checkMedicalCaseHandler(medicalCaseId)}
-      />
+      {role == "DOCTOR" ? (
+        <Button
+          title="check this medical case"
+          onPress={() => checkMedicalCaseHandler(medicalCaseId)}
+        />
+      ) : null}
     </View>
   );
 };
@@ -118,25 +120,26 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     justifyContent: "center",
     alignItems: "center",
+    padding: 40,
   },
   scrollView: {
     backgroundColor: Colors.primary,
   },
   labelContainer: {
-    marginVertical: 25,
+    padding: 20,
     flexDirection: "row",
     borderBottomWidth: 0.4,
     borderBottomColor: Colors.secondary,
   },
   labelTitle: {
     color: Colors.secondary,
-    fontSize: 15,
+    fontSize: 13,
     fontFamily: "open-sans-bold",
     textTransform: "uppercase",
   },
   labelContent: {
     color: Colors.details,
-    fontSize: 15,
+    fontSize: 13,
     fontFamily: "open-sans-bold",
     textTransform: "uppercase",
   },
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
 });
 export const screenOptions = (navData) => {
   return {
-    title: "DETAILS",
+    title: "Details",
   };
 };
 export default medicalCaseDetailsScreen;
