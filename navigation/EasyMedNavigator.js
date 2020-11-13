@@ -1,72 +1,74 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Colors from "../constants/Colors";
-import { Ionicons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import React from "react"
+import { createStackNavigator } from "@react-navigation/stack"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import Colors from "../constants/Colors"
+import { Ionicons } from "@expo/vector-icons"
+import { useSelector } from "react-redux"
 
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
-} from "../screens/clinic/ClinicOverviewScreen";
+} from "../screens/clinic/ClinicOverviewScreen"
 
 import HomeScreen, {
   screenOptions as HomeScreenOptions,
-} from "../screens/HomeScreen";
+} from "../screens/HomeScreen"
 
 import NewClinicScreen, {
   screenOptions as AddClinicScreenOptions,
-} from "../screens/clinic/NewClinicScreen";
+} from "../screens/clinic/NewClinicScreen"
 
 import ClinicDetailScreen, {
   screenOptions as clinicDetailOptions,
-} from "../screens/clinic/ClinicDetailScreen";
+} from "../screens/clinic/ClinicDetailScreen"
 
 import MapScreen, {
   screenOptions as mapScreenOptions,
-} from "../screens/clinic/MapScreen";
+} from "../screens/clinic/MapScreen"
 import AuthScreen, {
   screenOptions as AuthScreenOptions,
-} from "../screens/AuthScreen";
+} from "../screens/AuthScreen"
 
 import MedFormScreen, {
   screenOptions as medFormScreenOptions,
-} from "../screens/form/MedFormScreen";
+} from "../screens/form/MedFormScreen"
 
 import ChatGroupScreen, {
   screenOptions as ChatGroupsScreenOptions,
-} from "../screens/chat/ChatGroupsScreen";
+} from "../screens/chat/ChatGroupsScreen"
 
 import ConversationScreen, {
   screenOptions as conversationScreenOptions,
-} from "../screens/chat/ConversationScreen";
+} from "../screens/chat/ConversationScreen"
 
 import UserAccountScreen, {
   screenOptions as UserAccountScreenOptions,
-} from "../screens/user/UserAccountScreen";
+} from "../screens/user/UserAccountScreen"
 
-import EditUserDataScreen from "../screens/user/EditUserDataScreen";
+import EditUserDataScreen from "../screens/user/EditUserDataScreen"
 
-import PatientMedicalCasesScreen from "../screens/patient/PatientMedicalCasesScreen";
+import PatientMedicalCasesScreen from "../screens/patient/PatientMedicalCasesScreen"
 
-import PatientMedicinesScreen from "../screens/patient/PatientMedicinesScreen";
+import PatientMedicinesScreen from "../screens/patient/PatientMedicinesScreen"
 
-import AllPatientsScreen from "../screens/doctor/AllPatientsScreen";
+import AllPatientsScreen from "../screens/doctor/AllPatientsScreen"
 
 import MedicalCaseDetailsScreen, {
   screenOptions as MedicalCaseDetailsScreenOptions,
-} from "../screens/medicalCase/medicalCaseDetailsScreen";
+} from "../screens/medicalCase/medicalCaseDetailsScreen"
 
 import PatientDataScreen, {
   screenOptions as PatientDataScreenOptions,
-} from "../screens/doctor/PatientDataScreen";
+} from "../screens/doctor/PatientDataScreen"
 
-import AllDoctorsScreen from "../screens/patient/AllDoctorsScreen";
+import AllDoctorsScreen from "../screens/patient/AllDoctorsScreen"
 
-import DoctorDataScreen from "../screens/patient/DoctorDataScreen";
+import DoctorDataScreen, {
+  screenOptions as DoctorDataScreenOptions,
+} from "../screens/patient/DoctorDataScreen"
 
 import AssignMedicineScreen, {
   screenOptions as AssignMedicineScreenOptions,
-} from "../screens/medicine/AssignMedicineScreen";
+} from "../screens/medicine/AssignMedicineScreen"
 
 const defaultNavOptions = {
   headerTitleStyle: {
@@ -76,16 +78,16 @@ const defaultNavOptions = {
     fontFamily: "open-sans",
   },
   headerTintColor: Colors.secondary,
-};
+}
 const defaultTabBarOptions = {
   activeTintColor: Colors.secondary,
   labelStyle: { fontFamily: "open-sans" },
-};
+}
 
-const UserManagementBottomTabs = createBottomTabNavigator();
+const UserManagementBottomTabs = createBottomTabNavigator()
 
 export const UserManagementTabs = () => {
-  const userRole = useSelector((state) => state.authState.role);
+  const userRole = useSelector((state) => state.authState.role)
 
   return (
     <UserManagementBottomTabs.Navigator tabBarOptions={defaultTabBarOptions}>
@@ -103,7 +105,7 @@ export const UserManagementTabs = () => {
             tabBarIcon: () => {
               return (
                 <Ionicons name="md-list" size={26} color={Colors.secondary} />
-              );
+              )
             },
           }}
         />
@@ -121,16 +123,16 @@ export const UserManagementTabs = () => {
                   size={26}
                   color={Colors.secondary}
                 />
-              );
+              )
             },
           }}
         />
       )}
     </UserManagementBottomTabs.Navigator>
-  );
-};
+  )
+}
 
-const EasyMedStackNavigator = createStackNavigator();
+const EasyMedStackNavigator = createStackNavigator()
 
 export const EasyMedNavigator = () => {
   return (
@@ -187,6 +189,7 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="AllPatientsScreen"
         component={AllPatientsScreen}
+        options={{ headerTitle: "Your patients" }}
       />
       <EasyMedStackNavigator.Screen
         name="PatientDataScreen"
@@ -201,10 +204,12 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="AllDoctorsScreen"
         component={AllDoctorsScreen}
+        options={{ headerTitle: "Your doctors" }}
       />
       <EasyMedStackNavigator.Screen
         name="DoctorDataScreen"
         component={DoctorDataScreen}
+        options={DoctorDataScreenOptions}
       />
       <EasyMedStackNavigator.Screen
         name="AssignMedicineScreen"
@@ -212,9 +217,9 @@ export const EasyMedNavigator = () => {
         options={AssignMedicineScreenOptions}
       />
     </EasyMedStackNavigator.Navigator>
-  );
-};
-const AuthStackNavigator = createStackNavigator();
+  )
+}
+const AuthStackNavigator = createStackNavigator()
 
 export const AuthNavigator = () => {
   return (
@@ -225,5 +230,5 @@ export const AuthNavigator = () => {
         options={AuthScreenOptions}
       />
     </AuthStackNavigator.Navigator>
-  );
-};
+  )
+}

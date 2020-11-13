@@ -1,5 +1,6 @@
-export const CREATE_MEDICAL_CASE = "CREATE_MEDICAL_CASE";
-export const LOAD_PATIENT_MEDICAL_CASES = "LOAD_PATIENT_MEDICAL_CASES";
+export const CREATE_MEDICAL_CASE = "CREATE_MEDICAL_CASE"
+export const LOAD_PATIENT_MEDICAL_CASES = "LOAD_PATIENT_MEDICAL_CASES"
+
 export const createMedicalCase = (
   imageUri,
   pickedSymptom,
@@ -11,7 +12,7 @@ export const createMedicalCase = (
   radiance
 ) => {
   return async (dispatch, getState) => {
-    const token = getState().authState.token;
+    const token = getState().authState.token
     const response = await fetch(
       "http://192.168.1.17:8080/medicalCase/createMedicalCase",
       {
@@ -31,19 +32,19 @@ export const createMedicalCase = (
           radiance: radiance,
         }),
       }
-    );
+    )
     if (!response.ok) {
-      console.log("Something went wrong");
+      console.log("Something went wrong")
     }
-    const medicalCase = await response.json();
+    const medicalCase = await response.json()
 
-    dispatch({ type: CREATE_MEDICAL_CASE, medicalCase: medicalCase });
-  };
-};
+    dispatch({ type: CREATE_MEDICAL_CASE, medicalCase: medicalCase })
+  }
+}
 
 export const loadPatientMedicalCase = (patientId) => {
   return async (dispatch, getState) => {
-    const token = getState().authState.token;
+    const token = getState().authState.token
     fetch(
       `http://192.168.1.17:8080/medicalCase/getPatientMedicalCases/${patientId}`,
       {
@@ -55,22 +56,22 @@ export const loadPatientMedicalCase = (patientId) => {
     )
       .then((res) => {
         if (res.status !== 200) {
-          throw new Error("Failed to fetch Medical Case");
+          throw new Error("Failed to fetch Medical Case")
         }
-        return res.json();
+        return res.json()
       })
       .then((resData) => {
         dispatch({
           type: LOAD_PATIENT_MEDICAL_CASES,
           medicalCases: resData.medicalCases,
-        });
-      });
-  };
-};
+        })
+      })
+  }
+}
 
 export const checkMedicalCase = (medicalCaseId) => {
-  return async (getState) => {
-    const token = getState().authState.token;
+  return async (dispatch, getState) => {
+    const token = getState().authState.token
     const response = await fetch(
       `http://192.168.1.17:8080/medicalCase/checkPatientMedicalCase/${medicalCaseId}`,
       {
@@ -80,9 +81,9 @@ export const checkMedicalCase = (medicalCaseId) => {
           Authorization: "Bearer " + token,
         },
       }
-    );
+    )
     if (!response.ok) {
-      console.log("Something went wrong");
+      console.log("Something went wrong")
     }
-  };
-};
+  }
+}

@@ -1,47 +1,55 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, Image } from "react-native";
-import Colors from "../../constants/Colors";
-import constants from "../../constants/Constants";
-import { useDispatch, useSelector } from "react-redux";
-import * as userActions from "../../store/actions/user";
-import UserAccountInfoItem from "../../components/UserAccount/UserAccountInfoItem";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { Platform } from "react-native";
-import CustomHeaderButton from "../../UI/CustomHeaderButton";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect } from "react"
+import { View, StyleSheet, Image } from "react-native"
+import Colors from "../../constants/Colors"
+import constants from "../../constants/Constants"
+import { useDispatch, useSelector } from "react-redux"
+import * as userActions from "../../store/actions/user"
+import UserAccountInfoItem from "../../components/UserAccount/UserAccountInfoItem"
+import { HeaderButtons, Item } from "react-navigation-header-buttons"
+import { Platform } from "react-native"
+import CustomHeaderButton from "../../UI/CustomHeaderButton"
+import { Ionicons } from "@expo/vector-icons"
+import AvatarDisplay from "../../components/UserComponents/AvatarDisplayItem"
 
 const UserAccountScreen = (props) => {
-  const dispatch = useDispatch();
-  const selfUser = useSelector((state) => state.usersState.selfUser);
+  const dispatch = useDispatch()
+  const selfUser = useSelector((state) => state.usersState.selfUser)
+  const { avatar, name, email, phoneNumber, role } = selfUser
+
   useEffect(() => {
-    dispatch(userActions.loadUserData());
-  }, [dispatch]);
+    dispatch(userActions.loadUserData())
+  }, [])
 
-  let avatarDisplay = (
-    <Image
-      style={styles.avatar}
-      source={require("../../assets/defaultAvatars/patient.png")}
-    />
-  );
-
-  if (selfUser.avatar) {
-    avatarDisplay = (
-      <Image style={styles.avatar} source={{ uri: selfUser.avatar }} />
-    );
-  }
   return (
     <View style={styles.screen}>
-      <View style={styles.avatarSection}>{avatarDisplay}</View>
+      <View style={styles.avatarSection}>
+        <AvatarDisplay
+          role={role}
+          avatar={avatar}
+          style={{
+            borderRadius: 10,
+            borderColor: Colors.primary,
+            borderWidth: 1,
+            height: constants.screenHeight / 2 - 150,
+            width: 300,
+            marginBottom: 60,
+          }}
+          imgStyle={{
+            height: "100%",
+            width: "100%",
+          }}
+        />
+      </View>
       <View style={styles.infoContainer}>
         <UserAccountInfoItem
-          name={selfUser.name}
-          email={selfUser.email}
-          phoneNumber={selfUser.phoneNumber}
+          name={name}
+          email={email}
+          phoneNumber={phoneNumber}
         />
       </View>
     </View>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   screen: {
     position: "absolute",
@@ -61,15 +69,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-  avatar: {
-    borderRadius: 10,
-    borderColor: Colors.primary,
-    borderWidth: 1,
-    height: constants.screenHeight / 2 - 150,
-    width: 300,
-    marginBottom: 60,
-  },
   infoContainer: {
     position: "absolute",
     bottom: 0,
@@ -84,13 +83,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-});
+})
 
 export const screenOptions = (navData) => {
   return {
     headerTitle: "My account",
     tabBarIcon: () => {
-      return <Ionicons name="md-build" size={26} color={Colors.secondary} />;
+      return <Ionicons name="md-build" size={26} color={Colors.secondary} />
     },
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
@@ -98,11 +97,11 @@ export const screenOptions = (navData) => {
           title="Edit account"
           iconName={Platform.OS === "android" ? "md-build" : "ios-build"}
           onPress={() => {
-            navData.navigation.navigate("EditUserDataScreen");
+            navData.navigation.navigate("EditUserDataScreen")
           }}
         />
       </HeaderButtons>
     ),
-  };
-};
-export default UserAccountScreen;
+  }
+}
+export default UserAccountScreen

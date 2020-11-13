@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native";
-import DoctorDetailsItem from "../../components/UserComponents/UserDetailsItem";
-import * as usersActions from "../../store/actions/user";
-import * as chatMateActions from "../../store/actions/chatMate";
-import Colors from "../../constants/Colors";
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native"
+import UserDetailsItem from "../../components/UserComponents/UserDetailsItem"
+import * as usersActions from "../../store/actions/user"
+import * as chatMateActions from "../../store/actions/chatMate"
+import Colors from "../../constants/Colors"
 
 const AllDoctorsScreen = (props) => {
-  const { navigation } = props;
-  const dispatch = useDispatch();
-  const chatMates = useSelector((state) => state.chatMatesState.chatMates);
+  const { navigation } = props
+  const dispatch = useDispatch()
+  const chatMates = useSelector((state) => state.chatMatesState.chatMates)
 
   useEffect(() => {
-    dispatch(usersActions.loadAllUsers());
-    dispatch(chatMateActions.loadChatMates());
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      dispatch(usersActions.loadAllUsers())
+      dispatch(chatMateActions.loadChatMates())
+    })
+    return unsubscribe
+  }, [navigation])
 
-  const doctors = useSelector((state) => state.usersState.users);
-  let display = <ActivityIndicator size="large" color={Colors.secondary} />;
+  const doctors = useSelector((state) => state.usersState.users)
+  let display = <ActivityIndicator size="large" color={Colors.secondary} />
 
   if (doctors) {
     display = (
@@ -28,40 +31,43 @@ const AllDoctorsScreen = (props) => {
         keyExtractor={(item) => item._id}
         renderItem={(itemData) =>
           itemData.item.role === "DOCTOR" ? (
-            <DoctorDetailsItem
+            <UserDetailsItem
               avatar={itemData.item.avatar}
               name={itemData.item.name}
               onPress={() => {
                 dispatch(
                   chatMateActions.isMyChatMate(chatMates, itemData.item._id)
-                );
+                )
                 navigation.navigate("DoctorDataScreen", {
+                  avatar: itemData.item.avatar,
                   doctorName: itemData.item.name,
                   doctorMail: itemData.item.email,
                   doctorId: itemData.item._id,
                   doctorPhoneNumber: itemData.item.phoneNumber,
-                });
+                  role: itemData.item.role,
+                })
               }}
             />
           ) : null
         }
       />
-    );
+    )
   }
 
-  return <View style={styles.screen}>{display}</View>;
-};
+  return <View style={styles.screen}>{display}</View>
+}
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    paddingTop: 20,
+    backgroundColor: Colors.primary,
   },
   list: {
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 15,
+    padding: 20,
     flexDirection: "row",
   },
-});
-export default AllDoctorsScreen;
+})
+export default AllDoctorsScreen

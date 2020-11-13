@@ -1,32 +1,27 @@
-import React from "react";
-import { StyleSheet, Text } from "react-native";
-import Constants from "../../constants/Constants";
-import Colors from "../../constants/Colors";
-import { TouchableOpacity } from "react-native";
-
+import React from "react"
+import { StyleSheet, Text } from "react-native"
+import Colors from "../../constants/Colors"
+import { TouchableOpacity } from "react-native"
+import Card from "../../UI/Card"
 const ChatMateItem = (props) => {
-  const { name, onSelect } = props;
+  const { name, onSelect } = props
   return (
     <TouchableOpacity onPress={onSelect} style={styles.container}>
-      <Text style={styles.name}>{name}</Text>
+      <Card style={{ height: 50 }}>
+        <Text style={styles.name}>{name}</Text>
+      </Card>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    height: 80,
-    width: Constants.screenWidth - 80,
-    borderBottomColor: Colors.details,
-    borderBottomWidth: 1,
     backgroundColor: Colors.primary,
-    borderRadius: 15,
-    shadowColor: "#ccc",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 15,
+    padding: 20,
   },
 
   name: {
@@ -36,6 +31,6 @@ const styles = StyleSheet.create({
     color: Colors.details,
     textAlign: "center",
   },
-});
+})
 
-export default ChatMateItem;
+export default ChatMateItem

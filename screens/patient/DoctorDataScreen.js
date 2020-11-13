@@ -1,27 +1,30 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, Text, Alert } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import Colors from "../../constants/Colors";
-import Button from "../../UI/Button";
-import * as conversationActions from "../../store/actions/conversation";
-import * as chatMateActions from "../../store/actions/chatMate";
-import * as userAction from "../../store/actions/user";
+import React, { useEffect } from "react"
+import { View, StyleSheet, Text, Alert } from "react-native"
+import { useDispatch, useSelector } from "react-redux"
+import Colors from "../../constants/Colors"
+import Button from "../../UI/Button"
+import * as conversationActions from "../../store/actions/conversation"
+import * as chatMateActions from "../../store/actions/chatMate"
+import * as userAction from "../../store/actions/user"
+import constants from "../../constants/Constants"
+import Card from "../../UI/Card"
+import AvatarDisplay from "../../components/UserComponents/AvatarDisplayItem"
 
 const DoctorDataScreen = ({ route, navigation }) => {
-  const dispatch = useDispatch();
-  const chatMates = useSelector((state) => state.chatMatesState.chatMates);
-  const selfUser = useSelector((state) => state.usersState.selfUser);
+  const dispatch = useDispatch()
+  const chatMates = useSelector((state) => state.chatMatesState.chatMates)
+  const selfUser = useSelector((state) => state.usersState.selfUser)
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
-  );
+  )
   const isChatMateExist = useSelector(
     (state) => state.chatMatesState.isChatMateExist
-  );
+  )
 
   const setCurrentConversationId = (conversationId) => {
-    dispatch(conversationActions.setCurrentConversation(conversationId));
-  };
-  const { doctorMail, doctorPhoneNumber, doctorId } = route.params;
+    dispatch(conversationActions.setCurrentConversation(conversationId))
+  }
+  const { doctorMail, doctorPhoneNumber, doctorId, avatar } = route.params
 
   const infoHandler = () => {
     Alert.alert(
@@ -31,108 +34,127 @@ const DoctorDataScreen = ({ route, navigation }) => {
         {
           text: "add this patient to your chat mates",
           onPress: () => {
-            navigation.navigate("ChatGroupsScreen");
+            navigation.navigate("ChatGroupsScreen")
           },
         },
       ]
-    );
-  };
+    )
+  }
   useEffect(() => {
-    dispatch(conversationActions.loadConversations());
-    dispatch(chatMateActions.loadChatMates());
-    dispatch(userAction.loadUserData());
-  }, [dispatch]);
+    dispatch(conversationActions.loadConversations())
+    dispatch(chatMateActions.loadChatMates())
+    dispatch(userAction.loadUserData())
+  }, [dispatch])
 
   const findConversationHandler = (patientId) => {
     const findConversation = conversations.find(
       (conversation) => conversation.chatMateId === patientId
-    );
-    return findConversation;
-  };
+    )
+    return findConversation
+  }
 
   let buttonDisplay = (
     <Button
       title={"Add chat mate"}
       onPress={() => {
-        dispatch(chatMateActions.addChatMate(doctorMail));
-        infoHandler();
+        dispatch(chatMateActions.addChatMate(doctorMail))
+        infoHandler()
       }}
     />
-  );
+  )
 
   if (isChatMateExist) {
     if (isChatMateExist == true) {
       buttonDisplay = (
         <Button
+          style={{ backgroundColor: Colors.primary }}
+          textStyle={{ color: Colors.details }}
           title="Write a message"
           onPress={() => {
-            const conversation = findConversationHandler(doctorId);
+            const conversation = findConversationHandler(doctorId)
             if (conversation && conversation.id) {
-              setCurrentConversationId(conversation.id);
+              setCurrentConversationId(conversation.id)
               navigation.navigate("ConversationScreen", {
                 conversation: conversation,
                 chatMates: chatMates,
                 user: selfUser,
-              });
+              })
             } else {
               dispatch(
                 conversationActions.createConversation(doctorId, navigation)
-              );
+              )
             }
           }}
         />
-      );
+      )
     }
   }
 
   return (
     <View style={styles.screen}>
-      <View style={styles.doctorInfoContainer}>
-        <Text style={styles.label}>{doctorMail}</Text>
-        <Text style={styles.label}>{doctorPhoneNumber}</Text>
-      </View>
+      <Card style={styles.doctorDataCard}>
+        <AvatarDisplay avatar={avatar} role={"DOCTOR"} />
+        <View style={styles.details}>
+          <Text style={styles.label}>E-mail:</Text>
+          <Text style={styles.label}>{doctorMail}</Text>
+        </View>
+        <View style={styles.details}>
+          <Text style={styles.label}>Phone number:</Text>
+          <Text style={styles.label}>
+            {doctorPhoneNumber && doctorPhoneNumber.length > 0
+              ? doctorPhoneNumber
+              : "no data"}
+          </Text>
+        </View>
+      </Card>
       {buttonDisplay}
     </View>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: Colors.secondary,
   },
-  scrollViewStyled: {
-    height: 200,
+
+  avatar: {
+    height: 100,
+    width: 100,
+    borderRadius: 20,
+    backgroundColor: Colors.secondary,
   },
-  doctorInfoContainer: {
-    marginVertical: 40,
+  data: {
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+  },
+  details: {
+    flexDirection: "row",
+    paddingLeft: 10,
+    flexWrap: "wrap",
+  },
+  doctorDataCard: {
+    borderRadius: 10,
+    width: constants.screenWidth - 40,
+    height: constants.screenHeight / 2 - 90,
+    justifyContent: "space-around",
   },
   label: {
-    color: Colors.primary,
+    color: Colors.details,
     fontFamily: "open-sans-bold",
-    fontSize: 20,
+    fontSize: 14,
+    textAlign: "center",
+    paddingLeft: 10,
   },
-  doctorInfo: {
-    color: Colors.primary,
-    fontFamily: "open-sans-bold",
-    fontSize: 10,
-    textTransform: "uppercase",
-  },
-  medicalCaseInfoContainer: {
-    marginVertical: 20,
-  },
-  medicalCaseInfo: {
-    fontFamily: "open-sans",
-    fontSize: 15,
-    color: Colors.primary,
-  },
-});
+})
 
 export const screenOptions = (navData) => {
   return {
     title: navData.route.params.doctorName,
-  };
-};
+    headerTintColor: Colors.primary,
+    headerStyle: { backgroundColor: Colors.secondary },
+  }
+}
 
-export default DoctorDataScreen;
+export default DoctorDataScreen

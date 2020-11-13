@@ -1,10 +1,10 @@
-import React from "react";
-import { Image } from "react-native";
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
-import { useDispatch } from "react-redux";
-import Colors from "../../constants/Colors";
-import * as medicalCaseActions from "../../store/actions/medicalCase";
-import Button from "../../UI/Button";
+import React from "react"
+import { Image } from "react-native"
+import { View, Text, StyleSheet, ScrollView, Alert } from "react-native"
+import { useDispatch } from "react-redux"
+import Colors from "../../constants/Colors"
+import * as medicalCaseActions from "../../store/actions/medicalCase"
+import Button from "../../UI/Button"
 
 const medicalCaseDetailsScreen = ({ route, navigation }) => {
   const {
@@ -20,8 +20,8 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
     imageUri,
     medicalCaseId,
     role,
-  } = route.params;
-  const dispatch = useDispatch();
+  } = route.params
+  const dispatch = useDispatch()
 
   const checkMedicalCaseHandler = (medicalCaseId) => {
     Alert.alert(
@@ -31,8 +31,8 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
         {
           text: "Yes, check this!",
           onPress: () => {
-            navigation.navigate("HomeScreen");
-            dispatch(medicalCaseActions.checkMedicalCase(medicalCaseId));
+            navigation.navigate("HomeScreen")
+            dispatch(medicalCaseActions.checkMedicalCase(medicalCaseId))
           },
         },
         {
@@ -41,20 +41,20 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
         },
       ],
       { cancelable: false }
-    );
-  };
+    )
+  }
   const editTextHandler = (data) => {
     if (data === undefined) {
-      data = "";
+      data = ""
     }
-    const valueOfData = data.length;
-    let display = data;
+    const valueOfData = data.length
+    let display = data
 
     if (valueOfData == 0) {
-      display = <Text>no data</Text>;
+      display = <Text>no data</Text>
     }
-    return display;
-  };
+    return display
+  }
 
   return (
     <View style={styles.screen}>
@@ -105,15 +105,17 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
           <Image style={styles.image} source={{ uri: imageUri }} />
         ) : null}
       </ScrollView>
-      {role == "DOCTOR" ? (
+      {role === "DOCTOR" ? (
         <Button
           title="check this medical case"
-          onPress={() => checkMedicalCaseHandler(medicalCaseId)}
+          onPress={() => {
+            checkMedicalCaseHandler(medicalCaseId)
+          }}
         />
       ) : null}
     </View>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -147,10 +149,10 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
   },
-});
+})
 export const screenOptions = (navData) => {
   return {
     title: "Details",
-  };
-};
-export default medicalCaseDetailsScreen;
+  }
+}
+export default medicalCaseDetailsScreen

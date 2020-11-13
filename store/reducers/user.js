@@ -1,17 +1,17 @@
-import User from "../../models/user";
-import { LOAD_USER, SET_PATIENT } from "../actions/user";
+import User from "../../models/user"
+import { LOAD_USER, SET_PATIENT } from "../actions/user"
 
 const initialState = {
   users: [],
   selfUser: {},
-};
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_USER:
       return {
-        selfUser: { ...action.selfUser },
-      };
+        selfUser: { ...state.selfUser, ...action.selfUser },
+      }
     case SET_PATIENT:
       return {
         users: action.patients.map(
@@ -26,8 +26,9 @@ export default (state = initialState, action) => {
               pt.role
             )
         ),
-      };
+        selfUser: { ...state.selfUser },
+      }
     default:
-      return state;
+      return state
   }
-};
+}
