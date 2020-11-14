@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, FlatList, Text } from "react-native";
-import Colors from "../../constants/Colors";
-import { useSelector, useDispatch } from "react-redux";
-import MedicalCase from "../../models/medicalCase";
-import * as medicalCaseActions from "../../store/actions/medicalCase";
-import MedicalCaseItem from "../../components/MedicalCase/MedicalCaseItem";
+import React, { useEffect } from "react"
+import { View, StyleSheet, FlatList, Text } from "react-native"
+import Colors from "../../constants/Colors"
+import { useSelector, useDispatch } from "react-redux"
+import MedicalCase from "../../models/medicalCase"
+import * as medicalCaseActions from "../../store/actions/medicalCase"
+import MedicalCaseItem from "../../components/MedicalCaseComponents/MedicalCaseItem"
 
 const PatientMedicalCasesScreen = (props) => {
-  const { navigation } = props;
-  const dispatch = useDispatch();
-  let medicalHistory = [];
+  const { navigation } = props
+  const dispatch = useDispatch()
+  let medicalHistory = []
   const medicalCases = useSelector(
     (state) => state.medicalCaseState.medicalCases
-  );
-  const { _id, role } = useSelector((state) => state.usersState.selfUser);
+  )
+  const { _id, role } = useSelector((state) => state.usersState.selfUser)
 
   useEffect(() => {
-    dispatch(medicalCaseActions.loadPatientMedicalCase(_id));
-  }, []);
+    dispatch(medicalCaseActions.loadPatientMedicalCase(_id))
+  }, [])
 
   medicalCases.map((mc) => {
     if (mc.resolved === true) {
@@ -35,13 +35,13 @@ const PatientMedicalCasesScreen = (props) => {
           mc.createdAt,
           mc.imageUri
         )
-      );
-      return medicalHistory;
+      )
+      return medicalHistory
     }
-  });
+  })
   let display = (
     <Text style={styles.info}>You have not any medical history yet.</Text>
-  );
+  )
 
   if (medicalHistory.length >= 1) {
     display = (
@@ -63,15 +63,15 @@ const PatientMedicalCasesScreen = (props) => {
                 createdAt: itemData.item.createdAt,
                 imageUri: itemData.item.imageUri,
                 role: role,
-              });
+              })
             }}
           />
         )}
       />
-    );
+    )
   }
-  return <View style={styles.screen}>{display}</View>;
-};
+  return <View style={styles.screen}>{display}</View>
+}
 export const styles = StyleSheet.create({
   screen: { flex: 1, justifyContent: "center", alignItems: "center" },
   info: {
@@ -80,6 +80,6 @@ export const styles = StyleSheet.create({
     color: Colors.secondary,
     textAlign: "center",
   },
-});
+})
 
-export default PatientMedicalCasesScreen;
+export default PatientMedicalCasesScreen

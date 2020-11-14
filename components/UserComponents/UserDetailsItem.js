@@ -3,14 +3,14 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { StyleSheet, View, Text } from "react-native"
 import Colors from "../../constants/Colors"
 import constants from "../../constants/Constants"
-import AvatarDisplay from "../../components/UserComponents/AvatarDisplayItem"
+import UserAvatarItem from "./UserAvatarItem"
 
 const UserDetailsItem = (props) => {
   const { avatar, name, onPress, role } = props
 
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
-      <AvatarDisplay role={role} avatar={avatar} />
+      <UserAvatarItem role={role} avatar={avatar} />
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{name}</Text>
       </View>
@@ -19,7 +19,7 @@ const UserDetailsItem = (props) => {
 }
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 5,
+    marginVertical: 20,
     display: "flex",
     flexDirection: "row",
     height: 120,

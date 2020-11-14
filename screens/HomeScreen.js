@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { View, StyleSheet, Platform } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import HeaderButton from "../UI/CustomHeaderButton";
-import NavigationItem from "../components/NavigationItem";
-import { ScrollView } from "react-native-gesture-handler";
-import * as authActions from "../store/actions/auth";
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { View, StyleSheet, Platform } from "react-native"
+import { HeaderButtons, Item } from "react-navigation-header-buttons"
+import HeaderButton from "../UI/CustomHeaderButton"
+import NavigationItem from "../components/NavigationItem"
+import { ScrollView } from "react-native-gesture-handler"
+import * as authActions from "../store/actions/auth"
 
 const HomeScreen = ({ navigation }) => {
-  const userRole = useSelector((state) => state.authState.role);
-  const [isAdmin, setIsAdmin] = useState(false);
-  if (userRole == "ADMIN") {
-    setIsAdmin(true);
-  }
+  const userRole = useSelector((state) => state.authState.role)
+
   return (
     <ScrollView>
       <View style={styles.screen}>
@@ -20,7 +17,7 @@ const HomeScreen = ({ navigation }) => {
           name={"Clinic"}
           iconName={Platform.OS === "android" ? "md-medical" : "ios-medical"}
           onPress={() => {
-            navigation.navigate("ClinicScreen", { isAdmin });
+            navigation.navigate("ClinicScreen", { userRole: userRole })
           }}
         />
         <NavigationItem
@@ -29,17 +26,17 @@ const HomeScreen = ({ navigation }) => {
             Platform.OS === "android" ? "md-chatboxes" : "ios-chatboxes"
           }
           onPress={() => {
-            navigation.navigate("ChatGroupsScreen");
+            navigation.navigate("ChatGroupsScreen")
           }}
         />
         <NavigationItem
           name={"My account"}
           iconName={Platform.OS === "android" ? "md-contact" : "ios-contact"}
           onPress={() => {
-            navigation.navigate("UserAccountScreen");
+            navigation.navigate("UserAccountScreen")
           }}
         />
-        {userRole == "PATIENT" ? (
+        {userRole === "PATIENT" ? (
           <View>
             <NavigationItem
               name={"Medical Form"}
@@ -49,35 +46,45 @@ const HomeScreen = ({ navigation }) => {
                   : "ios-add-circle-outline"
               }
               onPress={() => {
-                navigation.navigate("FormScreen");
+                navigation.navigate("FormScreen")
               }}
             />
             <NavigationItem
               name={"All doctors"}
               iconName={Platform.OS === "android" ? "md-list" : "ios-list"}
               onPress={() => {
-                navigation.navigate("AllDoctorsScreen");
+                navigation.navigate("AllDoctorsScreen")
               }}
             />
           </View>
         ) : null}
-        {userRole == "DOCTOR" ? (
+        {userRole === "DOCTOR" ? (
           <NavigationItem
             name={"All patients"}
             iconName={
               Platform.OS === "android" ? "md-list-box" : "ios-list-box"
             }
             onPress={() => {
-              navigation.navigate("AllPatientsScreen");
+              navigation.navigate("AllPatientsScreen")
+            }}
+          />
+        ) : null}
+
+        {userRole === "ADMIN" ? (
+          <NavigationItem
+            name={"All users"}
+            iconName={Platform.OS === "android" ? "md-list" : "ios-list"}
+            onPress={() => {
+              navigation.navigate("SetDoctorRoleScreen")
             }}
           />
         ) : null}
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 export const screenOptions = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   return {
     headerTitle: "Home",
     headerLeft: () => (
@@ -86,13 +93,13 @@ export const screenOptions = () => {
           title=""
           iconName={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
           onPress={() => {
-            dispatch(authActions.logout());
+            dispatch(authActions.logout())
           }}
         />
       </HeaderButtons>
     ),
-  };
-};
+  }
+}
 
 const styles = StyleSheet.create({
   screen: {
@@ -101,6 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: "wrap",
   },
-});
+})
 
-export default HomeScreen;
+export default HomeScreen

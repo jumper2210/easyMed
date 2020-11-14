@@ -47,7 +47,7 @@ const formReducer = (state, action) => {
 const MedFormScreen = (props) => {
   const { navigation } = props
   const dispatch = useDispatch()
-  const [selectedValue, setSelectedValue] = useState("fever")
+  const [selectedValue, setSelectedValue] = useState("")
   const [isFormDetails, setIsFormDetails] = useState(false)
   const [error, setError] = useState()
   const [selectedImage, setSelectedImage] = useState()

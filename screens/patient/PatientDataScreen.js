@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { View, StyleSheet, Text, FlatList, Alert, Image } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import MedicalCaseItem from "../../components/MedicalCase/MedicalCaseItem"
+import MedicalCaseItem from "../../components/MedicalCaseComponents/MedicalCaseItem"
 import Colors from "../../constants/Colors"
 import * as conversationActions from "../../store/actions/conversation"
 import * as chatMateActions from "../../store/actions/chatMate"
@@ -11,7 +11,7 @@ import MedicalCase from "../../models/medicalCase"
 import Button from "../../UI/Button"
 import Card from "../../UI/Card"
 import constants from "../../constants/Constants"
-import AvatarDisplay from "../../components/UserComponents/AvatarDisplayItem"
+import UserAvatarItem from "../../components/UserComponents/UserAvatarItem"
 
 const PatientDataScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
@@ -172,7 +172,7 @@ const PatientDataScreen = ({ route, navigation }) => {
   return (
     <View style={styles.screen}>
       <Card style={styles.patientDataCard}>
-        <AvatarDisplay avatar={avatar} role={"PATIENT"} />
+        <UserAvatarItem avatar={avatar} role={"PATIENT"} />
         <View style={styles.details}>
           <Text style={styles.label}>E-mail:</Text>
           <Text style={styles.label}>{patientMail}</Text>

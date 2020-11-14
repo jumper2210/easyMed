@@ -8,7 +8,7 @@ import * as chatMateActions from "../../store/actions/chatMate"
 import * as userAction from "../../store/actions/user"
 import constants from "../../constants/Constants"
 import Card from "../../UI/Card"
-import AvatarDisplay from "../../components/UserComponents/AvatarDisplayItem"
+import UserAvatarItem from "../../components/UserComponents/UserAvatarItem"
 
 const DoctorDataScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
@@ -93,7 +93,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
   return (
     <View style={styles.screen}>
       <Card style={styles.doctorDataCard}>
-        <AvatarDisplay avatar={avatar} role={"DOCTOR"} />
+        <UserAvatarItem avatar={avatar} role={"DOCTOR"} />
         <View style={styles.details}>
           <Text style={styles.label}>E-mail:</Text>
           <Text style={styles.label}>{doctorMail}</Text>

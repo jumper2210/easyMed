@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
-import Colors from "../../constants/Colors";
-import { useDispatch, useSelector } from "react-redux";
-import * as medicineActions from "../../store/actions/medicine";
-import MedicineItem from "../../components/UserComponents/MedicineItem";
-import * as Notifications from "expo-notifications";
+import React, { useEffect } from "react"
+import { View, Text, StyleSheet, FlatList, Alert } from "react-native"
+import Colors from "../../constants/Colors"
+import { useDispatch, useSelector } from "react-redux"
+import * as medicineActions from "../../store/actions/medicine"
+import MedicineItem from "../../components/MedicineComponents/MedicineItem"
+import * as Notifications from "expo-notifications"
 
 const PatientMedicalCasesScreen = (props) => {
-  const { navigation } = props;
-  const dispatch = useDispatch();
-  const medicines = useSelector((state) => state.medicinesState.medicines);
+  const { navigation } = props
+  const dispatch = useDispatch()
+  const medicines = useSelector((state) => state.medicinesState.medicines)
   let display = (
     <Text style={styles.info}>You don't have any assigned medicines</Text>
-  );
+  )
 
   useEffect(() => {
-    dispatch(medicineActions.loadPatientMedicines());
-  }, [dispatch]);
+    dispatch(medicineActions.loadPatientMedicines())
+  }, [dispatch])
 
   const triggerNotificationHandler = (medicineName) => {
     Notifications.scheduleNotificationAsync({
@@ -27,8 +27,8 @@ const PatientMedicalCasesScreen = (props) => {
       trigger: {
         seconds: 4,
       },
-    });
-  };
+    })
+  }
 
   const infoHandler = (medicineId) => {
     Alert.alert(
@@ -38,8 +38,8 @@ const PatientMedicalCasesScreen = (props) => {
         {
           text: "remove medical",
           onPress: () => {
-            dispatch(medicineActions.deleteMedicine(medicineId));
-            navigation.navigate("HomeScreen");
+            dispatch(medicineActions.deleteMedicine(medicineId))
+            navigation.navigate("HomeScreen")
           },
         },
         {
@@ -48,8 +48,8 @@ const PatientMedicalCasesScreen = (props) => {
         },
       ],
       { cancelable: false }
-    );
-  };
+    )
+  }
 
   if (medicines !== undefined || medicines.length >= 1) {
     display = (
@@ -68,11 +68,11 @@ const PatientMedicalCasesScreen = (props) => {
           />
         )}
       />
-    );
+    )
   }
 
-  return <View style={styles.screen}>{display}</View>;
-};
+  return <View style={styles.screen}>{display}</View>
+}
 
 const styles = StyleSheet.create({
   screen: {
@@ -84,6 +84,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.secondary,
   },
-});
+})
 
-export default PatientMedicalCasesScreen;
+export default PatientMedicalCasesScreen

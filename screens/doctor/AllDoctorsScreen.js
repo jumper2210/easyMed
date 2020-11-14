@@ -6,13 +6,10 @@ import * as usersActions from "../../store/actions/user"
 import * as chatMateActions from "../../store/actions/chatMate"
 import Colors from "../../constants/Colors"
 
-const AllPatientsScreen = (props) => {
+const AllDoctorsScreen = (props) => {
   const { navigation } = props
   const dispatch = useDispatch()
-  const patients = useSelector((state) => state.usersState.users)
   const chatMates = useSelector((state) => state.chatMatesState.chatMates)
-
-  let display = <ActivityIndicator size="large" color={Colors.secondary} />
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -22,30 +19,31 @@ const AllPatientsScreen = (props) => {
     return unsubscribe
   }, [navigation])
 
-  if (patients) {
+  const doctors = useSelector((state) => state.usersState.users)
+  let display = <ActivityIndicator size="large" color={Colors.secondary} />
+
+  if (doctors) {
     display = (
       <FlatList
-        numColumns={1}
         contentContainerStyle={styles.list}
-        data={patients}
+        data={doctors}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) =>
-          itemData.item.role == "PATIENT" ? (
+          itemData.item.role === "DOCTOR" ? (
             <UserDetailsItem
               avatar={itemData.item.avatar}
               name={itemData.item.name}
-              role={itemData.item.role}
               onPress={() => {
                 dispatch(
                   chatMateActions.isMyChatMate(chatMates, itemData.item._id)
                 )
-                navigation.navigate("PatientDataScreen", {
+                navigation.navigate("DoctorDataScreen", {
                   avatar: itemData.item.avatar,
-                  chatMates: chatMates,
-                  patientName: itemData.item.name,
-                  patientMail: itemData.item.email,
-                  patientId: itemData.item._id,
-                  patientPhoneNumber: itemData.item.phoneNumber,
+                  doctorName: itemData.item.name,
+                  doctorMail: itemData.item.email,
+                  doctorId: itemData.item._id,
+                  doctorPhoneNumber: itemData.item.phoneNumber,
+                  role: itemData.item.role,
                 })
               }}
             />
@@ -57,6 +55,7 @@ const AllPatientsScreen = (props) => {
 
   return <View style={styles.screen}>{display}</View>
 }
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 15,
     padding: 20,
-    flexDirection: "row",
   },
 })
-export default AllPatientsScreen
+export default AllDoctorsScreen

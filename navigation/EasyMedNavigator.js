@@ -44,31 +44,39 @@ import UserAccountScreen, {
   screenOptions as UserAccountScreenOptions,
 } from "../screens/user/UserAccountScreen"
 
-import EditUserDataScreen from "../screens/user/EditUserDataScreen"
-
-import PatientMedicalCasesScreen from "../screens/patient/PatientMedicalCasesScreen"
-
-import PatientMedicinesScreen from "../screens/patient/PatientMedicinesScreen"
-
-import AllPatientsScreen from "../screens/doctor/AllPatientsScreen"
-
 import MedicalCaseDetailsScreen, {
   screenOptions as MedicalCaseDetailsScreenOptions,
 } from "../screens/medicalCase/medicalCaseDetailsScreen"
 
 import PatientDataScreen, {
   screenOptions as PatientDataScreenOptions,
-} from "../screens/doctor/PatientDataScreen"
+} from "../screens/patient/PatientDataScreen"
 
-import AllDoctorsScreen from "../screens/patient/AllDoctorsScreen"
+import AllDoctorsScreen from "../screens/doctor/AllDoctorsScreen"
 
 import DoctorDataScreen, {
   screenOptions as DoctorDataScreenOptions,
-} from "../screens/patient/DoctorDataScreen"
+} from "../screens/doctor/DoctorDataScreen"
 
 import AssignMedicineScreen, {
   screenOptions as AssignMedicineScreenOptions,
 } from "../screens/medicine/AssignMedicineScreen"
+
+import SetDoctorRoleScreen, {
+  screenOptions as SetDoctorRoleScreenOptions,
+} from "../screens/admin/SetDoctorRoleScreen"
+
+import UserDataScreen, {
+  screenOptions as UserDataScreenOptions,
+} from "../screens/user/UserDataScreen"
+
+import EditUserDataScreen from "../screens/user/EditUserDataScreen"
+
+import PatientMedicalCasesScreen from "../screens/patient/PatientMedicalCasesScreen"
+
+import PatientMedicinesScreen from "../screens/patient/PatientMedicinesScreen"
+
+import AllPatientsScreen from "../screens/patient/AllPatientsScreen"
 
 const defaultNavOptions = {
   headerTitleStyle: {
@@ -215,6 +223,16 @@ export const EasyMedNavigator = () => {
         name="AssignMedicineScreen"
         component={AssignMedicineScreen}
         options={AssignMedicineScreenOptions}
+      />
+      <EasyMedStackNavigator.Screen
+        name="SetDoctorRoleScreen"
+        component={SetDoctorRoleScreen}
+        options={SetDoctorRoleScreenOptions}
+      />
+      <EasyMedStackNavigator.Screen
+        name="UserDataScreen"
+        component={UserDataScreen}
+        options={UserDataScreenOptions}
       />
     </EasyMedStackNavigator.Navigator>
   )

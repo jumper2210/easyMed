@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
-import { View, StyleSheet, Image } from "react-native"
+import { View, StyleSheet } from "react-native"
 import Colors from "../../constants/Colors"
 import constants from "../../constants/Constants"
 import { useDispatch, useSelector } from "react-redux"
 import * as userActions from "../../store/actions/user"
-import UserAccountInfoItem from "../../components/UserAccount/UserAccountInfoItem"
+import UserAccountInfoItem from "../../components/UserComponents/UserAccountInfoItem"
 import { HeaderButtons, Item } from "react-navigation-header-buttons"
 import { Platform } from "react-native"
 import CustomHeaderButton from "../../UI/CustomHeaderButton"
 import { Ionicons } from "@expo/vector-icons"
-import AvatarDisplay from "../../components/UserComponents/AvatarDisplayItem"
+import UserAvatarItem from "../../components/UserComponents/UserAvatarItem"
 
 const UserAccountScreen = (props) => {
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const UserAccountScreen = (props) => {
   return (
     <View style={styles.screen}>
       <View style={styles.avatarSection}>
-        <AvatarDisplay
+        <UserAvatarItem
           role={role}
           avatar={avatar}
           style={{
