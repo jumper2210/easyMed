@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { View, StyleSheet, Platform } from "react-native"
 import { HeaderButtons, Item } from "react-navigation-header-buttons"
@@ -6,9 +6,14 @@ import HeaderButton from "../UI/CustomHeaderButton"
 import NavigationItem from "../components/NavigationItem"
 import { ScrollView } from "react-native-gesture-handler"
 import * as authActions from "../store/actions/auth"
-
+import RegisterForPushNotifications from "../helpers/registerForPushNotifications"
 const HomeScreen = ({ navigation }) => {
   const userRole = useSelector((state) => state.authState.role)
+  useEffect(() => {
+    if (userRole === "DOCTOR") {
+      RegisterForPushNotifications()
+    }
+  }, [])
 
   return (
     <ScrollView>

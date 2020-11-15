@@ -17,7 +17,6 @@ import ImgPicker from "../../components/AddClinicComponents/ImgPicker"
 import * as medicalCaseActions from "../../store/actions/medicalCase"
 import Button from "../../UI/Button"
 import Constants from "../../constants/Constants"
-import RegisterForPushNotifications from "../../helpers/registerForPushNotifications"
 import * as userActions from "../../store/actions/user"
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE"
@@ -77,7 +76,7 @@ const MedFormScreen = (props) => {
 
   useEffect(() => {
     dispatch(userActions.loadUserData())
-    RegisterForPushNotifications()
+    ///
   }, [])
 
   useEffect(() => {
@@ -222,6 +221,7 @@ const MedFormScreen = (props) => {
                 setSelectedValue(itemValue)
               }
             >
+              <Picker.Item label="Pick your symptom" value="" />
               <Picker.Item label="Fever" value="fever" />
               <Picker.Item label="Stomachache" value="stomachache" />
             </Picker>

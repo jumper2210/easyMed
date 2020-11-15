@@ -1,22 +1,21 @@
-import React, { useEffect } from "react";
-import { Platform, ActivityIndicator, View } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import CustomHeaderButton from "../../UI/CustomHeaderButton";
-import { FlatList } from "react-native-gesture-handler";
-import { useSelector, useDispatch } from "react-redux";
-import ClinicItem from "../../components/AddClinicComponents/ClinicItem";
-import * as clinicsActions from "../../store/actions/clinics";
-import Colors from "../../constants/Colors";
+import React, { useEffect } from "react"
+import { Platform, ActivityIndicator, View } from "react-native"
+import { HeaderButtons, Item } from "react-navigation-header-buttons"
+import CustomHeaderButton from "../../UI/CustomHeaderButton"
+import { FlatList } from "react-native-gesture-handler"
+import { useSelector, useDispatch } from "react-redux"
+import ClinicItem from "../../components/AddClinicComponents/ClinicItem"
+import * as clinicsActions from "../../store/actions/clinics"
+import Colors from "../../constants/Colors"
 
-const ClinicOverviewScreen = (props) => {
-  const { navigation } = props;
-  const clinics = useSelector((state) => state.clinicsState.clinics);
-  const dispatch = useDispatch();
+const ClinicOverviewScreen = ({ navigation }) => {
+  const clinics = useSelector((state) => state.clinicsState.clinics)
+  const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(clinicsActions.loadClinics());
-  }, [dispatch]);
+    dispatch(clinicsActions.loadClinics())
+  }, [dispatch])
 
-  let display = <ActivityIndicator size="large" color={Colors.secondary} />;
+  let display = <ActivityIndicator size="large" color={Colors.secondary} />
   if (clinics) {
     display = (
       <FlatList
@@ -31,19 +30,19 @@ const ClinicOverviewScreen = (props) => {
               navigation.navigate("ClinicDetailsScreen", {
                 clinicTitle: itemData.item.title,
                 placeId: itemData.item._id,
-              });
+              })
             }}
           />
         )}
       />
-    );
+    )
   }
 
-  return <View>{display}</View>;
-};
+  return <View>{display}</View>
+}
 
 export const screenOptions = (navData) => {
-  const { isAdmin } = navData.route.params;
+  const { userRole } = navData.route.params
 
   return {
     headerTitle: "Clinics",
@@ -55,7 +54,7 @@ export const screenOptions = (navData) => {
             Platform.OS === "android" ? "md-arrow-back" : "ios-arrow-back"
           }
           onPress={() => {
-            navData.navigation.goBack();
+            navData.navigation.goBack()
           }}
         />
       </HeaderButtons>
@@ -63,17 +62,17 @@ export const screenOptions = (navData) => {
 
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        {isAdmin == true ? (
+        {userRole === "ADMIN" ? (
           <Item
             title="AddClinic"
             iconName={Platform.OS === "android" ? "md-add" : "ios-add"}
             onPress={() => {
-              navData.navigation.navigate("AddClinicScreen");
+              navData.navigation.navigate("AddClinicScreen")
             }}
           />
         ) : null}
       </HeaderButtons>
     ),
-  };
-};
-export default ClinicOverviewScreen;
+  }
+}
+export default ClinicOverviewScreen
