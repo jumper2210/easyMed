@@ -43,7 +43,7 @@ const UserDataScreen = ({ route, navigation }) => {
   return (
     <View style={styles.screen}>
       <Card style={styles.patientDataCard}>
-        <UserAvatarItem avatar={avatar} role={"PATIENT"} />
+        <UserAvatarItem avatar={avatar} role={role} />
         <View style={styles.details}>
           <Text style={styles.label}>E-mail:</Text>
           <Text style={styles.label}>{userMail}</Text>

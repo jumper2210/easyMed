@@ -1,18 +1,18 @@
-import React from "react";
-import { StyleSheet, View, Button, Text, Alert } from "react-native";
-import { Formik } from "formik";
-import { useDispatch } from "react-redux";
-import InputFormik from "../../UI/InputFormik";
-import * as Yup from "yup";
-import Colors from "../../constants/Colors";
-import Card from "../../UI/Card";
-import * as medicineActions from "../../store/actions/medicine";
+import React from "react"
+import { StyleSheet, View, Button, Text, Alert } from "react-native"
+import { Formik } from "formik"
+import { useDispatch } from "react-redux"
+import InputFormik from "../../UI/InputFormik"
+import * as Yup from "yup"
+import Colors from "../../constants/Colors"
+import Card from "../../UI/Card"
+import * as medicineActions from "../../store/actions/medicine"
 
 const AssignMedicineScreen = ({ route, navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const infoHandler = (medicineName, quantity, timeOfTaking) => {
-    const { patientId, patientName } = route.params;
+    const { patientId, patientName } = route.params
     Alert.alert(
       "Assign medical",
       `Are you sure you want to assign this medical to ${patientName}?`,
@@ -27,8 +27,8 @@ const AssignMedicineScreen = ({ route, navigation }) => {
                 timeOfTaking,
                 patientId
               )
-            );
-            navigation.navigate("HomeScreen");
+            )
+            navigation.navigate("HomeScreen")
           },
         },
         {
@@ -37,15 +37,15 @@ const AssignMedicineScreen = ({ route, navigation }) => {
         },
       ],
       { cancelable: false }
-    );
-  };
+    )
+  }
 
   return (
     <Formik
       initialValues={{ medicineName: "", quantity: "", timeOfTaking: "" }}
       onSubmit={(values) => {
-        const { medicineName, quantity, timeOfTaking } = values;
-        infoHandler(medicineName, quantity, timeOfTaking);
+        const { medicineName, quantity, timeOfTaking } = values
+        infoHandler(medicineName, quantity, timeOfTaking)
       }}
       validationSchema={Yup.object().shape({
         medicineName: Yup.string().min(3).required(),
@@ -109,8 +109,8 @@ const AssignMedicineScreen = ({ route, navigation }) => {
         </View>
       )}
     </Formik>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   screen: {
@@ -131,11 +131,11 @@ const styles = StyleSheet.create({
     maxHeight: 400,
     padding: 15,
   },
-});
+})
 
 export const screenOptions = (navData) => {
   return {
     headerTitle: `Assign medicine`,
-  };
-};
-export default AssignMedicineScreen;
+  }
+}
+export default AssignMedicineScreen

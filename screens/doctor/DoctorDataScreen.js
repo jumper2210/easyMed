@@ -56,6 +56,8 @@ const DoctorDataScreen = ({ route, navigation }) => {
   let buttonDisplay = (
     <Button
       title={"Add chat mate"}
+      style={{ backgroundColor: Colors.primary }}
+      textStyle={{ color: Colors.details }}
       onPress={() => {
         dispatch(chatMateActions.addChatMate(doctorMail))
         infoHandler()

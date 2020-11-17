@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform: "uppercase",
     fontFamily: "open-sans-bold",
-    fontSize: 25,
+    fontSize: 18,
     flexWrap: "wrap",
   },
   mapPreview: {

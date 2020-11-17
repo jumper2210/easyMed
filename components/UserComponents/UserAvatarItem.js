@@ -5,18 +5,18 @@ import Colors from "../../constants/Colors"
 const AvatarDisplayItem = (props) => {
   const { role, avatar, style, imgStyle } = props
   let avatarDisplay
-  if (avatar !== "") {
+  if (avatar && avatar.length > 0) {
     avatarDisplay = (
       <Image style={[styles.avatar, imgStyle]} source={{ uri: avatar }} />
     )
-  } else if (avatar === "" && role === "PATIENT") {
+  } else if (avatar == undefined && role === "PATIENT") {
     avatarDisplay = (
       <Image
         style={[styles.avatar, imgStyle]}
         source={require("../../assets/defaultAvatars/patient.png")}
       />
     )
-  } else if (avatar === "" && role === "DOCTOR") {
+  } else if ((avatar == undefined && role === "DOCTOR") || "ADMIN") {
     avatarDisplay = (
       <Image
         style={[styles.avatar, imgStyle]}
@@ -33,10 +33,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatar: {
-    height: 100,
+    height: 130,
     width: 100,
     borderRadius: 20,
-    backgroundColor: Colors.secondary,
   },
 })
 

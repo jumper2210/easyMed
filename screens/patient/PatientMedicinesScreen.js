@@ -51,7 +51,7 @@ const PatientMedicalCasesScreen = (props) => {
     )
   }
 
-  if (medicines !== undefined || medicines.length >= 1) {
+  if (medicines || medicines.length >= 1) {
     display = (
       <FlatList
         data={medicines}
@@ -62,9 +62,9 @@ const PatientMedicalCasesScreen = (props) => {
             quantity={itemData.item.quantity}
             timeOfTaking={itemData.item.timeOfTaking}
             onDelete={() => infoHandler(itemData.item._id)}
-            onTriggerNotification={triggerNotificationHandler(
-              itemData.item.name
-            )}
+            onTriggerNotification={() =>
+              triggerNotificationHandler(itemData.item.name)
+            }
           />
         )}
       />

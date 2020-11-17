@@ -1,32 +1,33 @@
-import React, { useEffect } from "react";
-import { GiftedChat } from "react-native-gifted-chat";
-import { useDispatch, useSelector } from "react-redux";
-import io from "socket.io-client";
-import * as messageActions from "../../store/actions/message";
+import React, { useEffect } from "react"
+import { GiftedChat } from "react-native-gifted-chat"
+import { useDispatch, useSelector } from "react-redux"
+import io from "socket.io-client"
+import * as messageActions from "../../store/actions/message"
 
 const ConversationScreen = (props) => {
-  const dispatch = useDispatch();
-  const { route } = props;
-  const { conversation, user, chatMates } = route.params;
-  const socket = io("http://192.168.1.17:8080");
+  const dispatch = useDispatch()
+  const { route } = props
+  const { conversation, user, chatMates } = route.params
+  const socket = io("http://192.168.1.17:8080")
 
   const messages = useSelector(
     (state) =>
       state.messagesState[state.conversationsState.currentConversationId]
-  );
+  )
 
   useEffect(() => {
-    dispatch(messageActions.loadMessages(conversation.id));
+    dispatch(messageActions.loadMessages(conversation.id))
     return () => {
       socket.emit("disconnect", {
-        senderId: user._id,
-      });
-    };
-  }, []);
-
-  socket.emit("init", {
-    senderId: user._id,
-  });
+        senderId: user ? user._id : null,
+      })
+    }
+  }, [])
+  if (user) {
+    socket.emit("init", {
+      senderId: user._id,
+    })
+  }
 
   socket.on("message", (message) => {
     const newMessage = {
@@ -34,14 +35,18 @@ const ConversationScreen = (props) => {
       text: message.text,
       userId: message.senderId,
       _id: message.msgId,
-    };
-    dispatch(messageActions.sendMessage(message.conversationId, newMessage));
-  });
+    }
+    dispatch(messageActions.sendMessage(message.conversationId, newMessage))
+  })
 
   const getConversationDoctor = (id) => {
-    return id === user._id ? user.name : chatMates[0].name;
-  };
-
+    return id === user._id ? user.name : chatMates[0].name
+  }
+  const getAvatar = () => {
+    return user.avatar
+      ? user.avatar
+      : require("../../assets/defaultAvatars/patient.png")
+  }
   const getMappedMessages = () => {
     return messages
       ? messages
@@ -53,13 +58,13 @@ const ConversationScreen = (props) => {
               user: {
                 _id: userId,
                 name: getConversationDoctor(userId),
-                avatar: "https://placeimg.com/140/140/any",
+                avatar: getAvatar(),
               },
-            };
+            }
           })
           .reverse()
-      : [];
-  };
+      : []
+  }
 
   const onSend = (message) => {
     socket.emit("message", {
@@ -69,15 +74,15 @@ const ConversationScreen = (props) => {
       receiverId: conversation.chatMateId,
       createdAt: new Date(),
       msgId: message[0]._id,
-    });
+    })
     const newMessage = {
       createdAt: message[0].createdAt,
       text: message[0].text,
       userId: message[0].user._id,
       _id: message[0]._id,
-    };
-    dispatch(messageActions.sendMessage(conversation.id, newMessage));
-  };
+    }
+    dispatch(messageActions.sendMessage(conversation.id, newMessage))
+  }
   return (
     <GiftedChat
       renderUsernameOnMessage
@@ -88,6 +93,6 @@ const ConversationScreen = (props) => {
       }}
       isTyping
     />
-  );
-};
-export default ConversationScreen;
+  )
+}
+export default ConversationScreen

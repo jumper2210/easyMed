@@ -1,8 +1,8 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Colors from "../../constants/Colors";
-import constants from "../../constants/Constants";
-import Button from "../../UI/Button";
+import React from "react"
+import { View, Text, StyleSheet } from "react-native"
+import Colors from "../../constants/Colors"
+import constants from "../../constants/Constants"
+import Button from "../../UI/Button"
 
 const MedicineItem = (props) => {
   const {
@@ -11,7 +11,7 @@ const MedicineItem = (props) => {
     timeOfTaking,
     onDelete,
     onTriggerNotification,
-  } = props;
+  } = props
 
   return (
     <View style={styles.item}>
@@ -47,8 +47,8 @@ const MedicineItem = (props) => {
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   item: {
@@ -97,19 +97,19 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans-bold",
     fontSize: 18,
     marginVertical: 2,
-    color: Colors.details,
+    color: Colors.secondary,
   },
   quantity: {
     fontFamily: "open-sans-bold",
     fontSize: 18,
     marginVertical: 2,
-    color: Colors.details,
+    color: Colors.secondary,
   },
   description: {
     fontSize: 19,
     color: Colors.secondary,
     fontFamily: "open-sans",
   },
-});
+})
 
-export default MedicineItem;
+export default MedicineItem

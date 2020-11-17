@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => {
     if (userRole === "DOCTOR") {
       RegisterForPushNotifications()
     }
-  }, [])
+  }, [userRole])
 
   return (
     <ScrollView>

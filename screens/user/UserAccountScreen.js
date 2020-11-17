@@ -28,15 +28,14 @@ const UserAccountScreen = (props) => {
           avatar={avatar}
           style={{
             borderRadius: 10,
-            borderColor: Colors.primary,
-            borderWidth: 1,
-            height: constants.screenHeight / 2 - 150,
+            height: constants.screenHeight / 2 - 100,
             width: 300,
             marginBottom: 60,
           }}
           imgStyle={{
             height: "100%",
             width: "100%",
+            resizeMode: "contain",
           }}
         />
       </View>

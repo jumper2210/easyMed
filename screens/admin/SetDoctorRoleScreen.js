@@ -28,6 +28,7 @@ const SetDoctorRoleScreen = (props) => {
           <UserDetailsItem
             avatar={itemData.item.avatar}
             name={itemData.item.name}
+            role={itemData.item.role}
             onPress={() => {
               navigation.navigate("UserDataScreen", {
                 userMail: itemData.item.email,

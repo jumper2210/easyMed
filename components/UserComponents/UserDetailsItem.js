@@ -7,7 +7,7 @@ import UserAvatarItem from "./UserAvatarItem"
 
 const UserDetailsItem = (props) => {
   const { avatar, name, onPress, role } = props
-
+  console.log(avatar)
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
       <UserAvatarItem role={role} avatar={avatar} />
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     display: "flex",
     flexDirection: "row",
-    height: 120,
+    height: 140,
     width: constants.screenWidth - 40,
     backgroundColor: Colors.primary,
     shadowColor: "#000",
