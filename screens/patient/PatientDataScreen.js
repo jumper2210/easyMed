@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { View, StyleSheet, Text, FlatList, Alert, Image } from "react-native"
+import { View, StyleSheet, Text, FlatList, Alert } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import MedicalCaseItem from "../../components/MedicalCaseComponents/MedicalCaseItem"
 import Colors from "../../constants/Colors"
@@ -12,6 +12,7 @@ import Button from "../../UI/Button"
 import Card from "../../UI/Card"
 import constants from "../../constants/Constants"
 import UserAvatarItem from "../../components/UserComponents/UserAvatarItem"
+import ListOfMedicines from "../../components/MedicineComponents/ListOfMedicnes"
 
 const PatientDataScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
@@ -187,6 +188,10 @@ const PatientDataScreen = ({ route, navigation }) => {
         </View>
       </Card>
       <View style={styles.scrollViewStyled}>{medicalCaseDisplay}</View>
+      <View style={{ height: 100, width: "70%" }}>
+        <ListOfMedicines patientId={patientId} />
+      </View>
+
       <View style={styles.buttonContainer}>
         {buttonDisplay}
         <Button
@@ -207,14 +212,14 @@ const PatientDataScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.secondary,
   },
   patientDataCard: {
     borderRadius: 10,
-    width: constants.screenWidth - 40,
-    height: constants.screenHeight / 2 - 90,
+    width: constants.screenWidth - 60,
+    height: constants.screenHeight / 2 - 110,
     justifyContent: "space-around",
   },
   scrollViewStyled: {

@@ -2,9 +2,16 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import Colors from "../../constants/Colors"
 import constants from "../../constants/Constants"
+import Button from "../../UI/Button"
 
 const MedicineControlItem = (props) => {
-  const { name, quantity, timeOfTaking } = props
+  const {
+    name,
+    quantity,
+    timeOfTaking,
+    onDelete,
+    onTriggerNotification,
+  } = props
 
   return (
     <View style={styles.item}>
@@ -24,6 +31,20 @@ const MedicineControlItem = (props) => {
             </View>
           </View>
         </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          style={{ backgroundColor: Colors.primary }}
+          textStyle={{ color: Colors.details }}
+          onPress={onDelete}
+          title="Drop medicine"
+        />
+        <Button
+          style={{ backgroundColor: Colors.primary }}
+          textStyle={{ color: Colors.details }}
+          onPress={onTriggerNotification}
+          title="Set notification"
+        />
       </View>
     </View>
   )

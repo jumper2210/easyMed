@@ -33,10 +33,9 @@ export const assignMedicine = (
   }
 }
 
-export const loadPatientMedicines = () => {
+export const loadPatientMedicines = (patientId) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    const patientId = getState().authState.userId
     fetch(
       `http://192.168.1.17:8080/medicine/loadPatientMedicines/${patientId}`,
       {

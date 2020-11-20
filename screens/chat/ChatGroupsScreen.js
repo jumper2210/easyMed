@@ -36,7 +36,6 @@ const ChatGroupsScreen = (props) => {
   let display = (
     <Text style={styles.info}>You don't have conversation yet.</Text>
   )
-  console.log(selfUser._id)
   if (chatMates) {
     display = (
       <FlatList

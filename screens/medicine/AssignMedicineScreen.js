@@ -12,10 +12,10 @@ const AssignMedicineScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
 
   const infoHandler = (medicineName, quantity, timeOfTaking) => {
-    const { patientId, patientName } = route.params
+    const { patientId } = route.params
     Alert.alert(
       "Assign medical",
-      `Are you sure you want to assign this medical to ${patientName}?`,
+      `The medical has been successfully assigned`,
       [
         {
           text: "assign medical",

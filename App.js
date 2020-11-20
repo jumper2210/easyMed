@@ -35,7 +35,6 @@ const fetchFonts = () => {
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   })
 }
-
 // store.subscribe(() => {
 //   console.log("new state", store.getState())
 // })
