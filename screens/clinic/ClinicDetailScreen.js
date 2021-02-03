@@ -1,10 +1,10 @@
 // @ts-nocheck
-import React from "react"
-import { ScrollView, View, StyleSheet, Text } from "react-native"
-import MapPreview from "../../components/AddClinicComponents/MapPreview"
-import { useSelector } from "react-redux"
-import Colors from "../../constants/Colors"
-import constants from "../../constants/Constants"
+import React from 'react'
+import { ScrollView, View, StyleSheet, Text } from 'react-native'
+import MapPreview from '../../components/AddClinicComponents/MapPreview'
+import { useSelector } from 'react-redux'
+import Colors from '../../constants/Colors'
+import constants from '../../constants/Constants'
 
 const ClinicDetailScreen = (props) => {
   const { route, navigation } = props
@@ -16,13 +16,13 @@ const ClinicDetailScreen = (props) => {
   const selectedLocation = { lat: selectedClinic.lat, lng: selectedClinic.lng }
 
   const showMapHandler = () => {
-    navigation.navigate("MapScreen", {
+    navigation.navigate('MapScreen', {
       readonly: true,
       initialLocation: selectedLocation,
     })
   }
   return (
-    <ScrollView contentContainerStyle={{ alignItems: "center" }}>
+    <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
       <View style={styles.locationContainer}>
         <View style={styles.addressContainer}>
           <Text style={styles.address}>{selectedClinic.address}</Text>
@@ -38,40 +38,40 @@ const ClinicDetailScreen = (props) => {
 }
 
 export const screenOptions = (navData) => {
-  return { headerTitle: navData.route.params.ClinicTitle }
+  return { title: navData.route.params.clinicTitle }
 }
 
 const styles = StyleSheet.create({
   locationContainer: {
     flex: 1,
-    display: "flex",
-    width: constants.screenWidth - 80,
-    justifyContent: "space-around",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     height: constants.screenHeight - 100,
-    shadowColor: "black",
-    width: "100%",
+    shadowColor: 'black',
+    width: '100%',
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     elevation: 5,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 10,
   },
   addressContainer: {
-    flexDirection: "column",
+    flexDirection: 'column',
     marginVertical: 10,
+    marginHorizontal: 10,
   },
   address: {
     color: Colors.details,
-    textAlign: "center",
-    textTransform: "uppercase",
-    fontFamily: "open-sans-bold",
-    fontSize: 18,
-    flexWrap: "wrap",
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontFamily: 'open-sans-bold',
+    fontSize: 14,
+    flexWrap: 'wrap',
   },
   mapPreview: {
-    width: "90%",
+    width: '90%',
     maxWidth: 350,
     height: 350,
   },

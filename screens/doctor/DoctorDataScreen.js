@@ -27,18 +27,14 @@ const DoctorDataScreen = ({ route, navigation }) => {
   const { doctorMail, doctorPhoneNumber, doctorId, avatar } = route.params
 
   const infoHandler = () => {
-    Alert.alert(
-      "Talk with your chat mate",
-      "Now you can write to your chat mate",
-      [
-        {
-          text: "add this patient to your chat mates",
-          onPress: () => {
-            navigation.navigate("ChatGroupsScreen")
-          },
+    Alert.alert("Chcesz dodać tego pacjenta do listy znajomych?", "", [
+      {
+        text: "dodaj",
+        onPress: () => {
+          navigation.navigate("ChatGroupsScreen")
         },
-      ]
-    )
+      },
+    ])
   }
   useEffect(() => {
     dispatch(conversationActions.loadConversations())
@@ -71,7 +67,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title="Write a message"
+          title="Napisz wiadomość"
           onPress={() => {
             const conversation = findConversationHandler(doctorId)
             if (conversation && conversation.id) {
@@ -101,7 +97,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>{doctorMail}</Text>
         </View>
         <View style={styles.details}>
-          <Text style={styles.label}>Phone number:</Text>
+          <Text style={styles.label}>Numer telefonu:</Text>
           <Text style={styles.label}>
             {doctorPhoneNumber && doctorPhoneNumber.length > 0
               ? doctorPhoneNumber

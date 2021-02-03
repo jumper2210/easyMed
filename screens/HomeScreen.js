@@ -1,102 +1,146 @@
-import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { View, StyleSheet, Platform } from "react-native"
-import { HeaderButtons, Item } from "react-navigation-header-buttons"
-import HeaderButton from "../UI/CustomHeaderButton"
-import NavigationItem from "../components/NavigationItem"
-import { ScrollView } from "react-native-gesture-handler"
-import * as authActions from "../store/actions/auth"
-import RegisterForPushNotifications from "../helpers/registerForPushNotifications"
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { View, StyleSheet, Platform } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import HeaderButton from '../UI/CustomHeaderButton'
+import NavigationItem from '../components/NavigationItem'
+import { ScrollView } from 'react-native-gesture-handler'
+import * as authActions from '../store/actions/auth'
+import RegisterForPushNotifications from '../helpers/registerForPushNotifications'
 const HomeScreen = ({ navigation }) => {
   const userRole = useSelector((state) => state.authState.role)
+  let display = null
+
   useEffect(() => {
-    if (userRole === "DOCTOR") {
+    if (userRole === 'DOCTOR') {
       RegisterForPushNotifications()
     }
   }, [userRole])
 
-  return (
-    <ScrollView>
+  if (userRole === 'PATIENT') {
+    display = (
       <View style={styles.screen}>
         <NavigationItem
-          name={"Clinic"}
-          iconName={Platform.OS === "android" ? "md-medical" : "ios-medical"}
+          name={'Przychodnia'}
+          iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate("ClinicScreen", { userRole: userRole })
+            navigation.navigate('ClinicScreen', { userRole: userRole })
+          }}
+        />
+
+        <NavigationItem
+          name={'Moje konto'}
+          iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}
+          onPress={() => {
+            navigation.navigate('UserAccountScreen')
           }}
         />
         <NavigationItem
-          name={"Chat room"}
+          name={'Formularz medyczyny'}
           iconName={
-            Platform.OS === "android" ? "md-chatboxes" : "ios-chatboxes"
+            Platform.OS === 'android'
+              ? 'md-add-circle-outline'
+              : 'ios-add-circle-outline'
           }
           onPress={() => {
-            navigation.navigate("ChatGroupsScreen")
+            navigation.navigate('FormScreen')
           }}
         />
         <NavigationItem
-          name={"My account"}
-          iconName={Platform.OS === "android" ? "md-contact" : "ios-contact"}
+          name={'Wszyscy doktorzy'}
+          iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
-            navigation.navigate("UserAccountScreen")
+            navigation.navigate('AllDoctorsScreen')
           }}
         />
-        {userRole === "PATIENT" ? (
-          <View>
-            <NavigationItem
-              name={"Medical Form"}
-              iconName={
-                Platform.OS === "android"
-                  ? "md-add-circle-outline"
-                  : "ios-add-circle-outline"
-              }
-              onPress={() => {
-                navigation.navigate("FormScreen")
-              }}
-            />
-            <NavigationItem
-              name={"All doctors"}
-              iconName={Platform.OS === "android" ? "md-list" : "ios-list"}
-              onPress={() => {
-                navigation.navigate("AllDoctorsScreen")
-              }}
-            />
-          </View>
-        ) : null}
-        {userRole === "DOCTOR" ? (
-          <NavigationItem
-            name={"All patients"}
-            iconName={
-              Platform.OS === "android" ? "md-list-box" : "ios-list-box"
-            }
-            onPress={() => {
-              navigation.navigate("AllPatientsScreen")
-            }}
-          />
-        ) : null}
-
-        {userRole === "ADMIN" ? (
-          <NavigationItem
-            name={"All users"}
-            iconName={Platform.OS === "android" ? "md-list" : "ios-list"}
-            onPress={() => {
-              navigation.navigate("SetDoctorRoleScreen")
-            }}
-          />
-        ) : null}
+        <NavigationItem
+          name={'Konwersacje'}
+          iconName={
+            Platform.OS === 'android' ? 'md-chatboxes' : 'ios-chatboxes'
+          }
+          onPress={() => {
+            navigation.navigate('ChatGroupsScreen')
+          }}
+        />
       </View>
-    </ScrollView>
-  )
+    )
+  }
+  if (userRole === 'ADMIN') {
+    display = (
+      <View style={styles.screen}>
+        <NavigationItem
+          name={'Przychodnia'}
+          iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
+          onPress={() => {
+            navigation.navigate('ClinicScreen', { userRole: userRole })
+          }}
+        />
+
+        <NavigationItem
+          name={'Moje konto'}
+          iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}
+          onPress={() => {
+            navigation.navigate('UserAccountScreen')
+          }}
+        />
+        <NavigationItem
+          name={'Użytkownicy'}
+          iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
+          onPress={() => {
+            navigation.navigate('SetDoctorRoleScreen')
+          }}
+        />
+      </View>
+    )
+  }
+  if (userRole === 'DOCTOR') {
+    display = (
+      <View style={styles.screen}>
+        <NavigationItem
+          name={'Przychodnia'}
+          iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
+          onPress={() => {
+            navigation.navigate('ClinicScreen', { userRole: userRole })
+          }}
+        />
+
+        <NavigationItem
+          name={'Moje konto'}
+          iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}
+          onPress={() => {
+            navigation.navigate('UserAccountScreen')
+          }}
+        />
+        <NavigationItem
+          name={'Konwersacje'}
+          iconName={
+            Platform.OS === 'android' ? 'md-chatboxes' : 'ios-chatboxes'
+          }
+          onPress={() => {
+            navigation.navigate('ChatGroupsScreen')
+          }}
+        />
+        <NavigationItem
+          name={'Wszyscy pacjenci'}
+          iconName={Platform.OS === 'android' ? 'md-list-box' : 'ios-list-box'}
+          onPress={() => {
+            navigation.navigate('AllPatientsScreen')
+          }}
+        />
+      </View>
+    )
+  }
+  return <ScrollView>{display}</ScrollView>
 }
 export const screenOptions = () => {
   const dispatch = useDispatch()
   return {
-    headerTitle: "Home",
+    headerTitle: 'Start',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title=""
-          iconName={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
+          title=''
+          iconName={Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'}
           onPress={() => {
             dispatch(authActions.logout())
           }}
@@ -108,10 +152,10 @@ export const screenOptions = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 1,
-    flexDirection: "row",
     flex: 1,
-    flexWrap: "wrap",
+    padding: 2,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 })
 

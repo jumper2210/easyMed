@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, View, Text, Dimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Colors from "../constants/Colors";
-import CustomIcon from "../UI/CustomIcon";
+import React from "react"
+import { StyleSheet, View, Text, Dimensions } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import Colors from "../constants/Colors"
+import CustomIcon from "../UI/CustomIcon"
 
 const NavigationItem = (props) => {
   return (
@@ -14,13 +14,14 @@ const NavigationItem = (props) => {
         <Text style={styles.name}>{props.name}</Text>
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   item: {
     backgroundColor: Colors.secondary,
     width: Dimensions.get("window").width / 2 - 2,
+    height: 200,
     paddingVertical: 40,
     flexDirection: "column",
     justifyContent: "center",
@@ -52,6 +53,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
   },
-});
+})
 
-export default NavigationItem;
+export default NavigationItem

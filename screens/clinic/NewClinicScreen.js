@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback } from 'react'
 import {
   ScrollView,
   View,
@@ -6,43 +6,43 @@ import {
   Text,
   TextInput,
   StyleSheet,
-} from "react-native";
-import { useDispatch } from "react-redux";
-import * as clinicsActions from "../../store/actions/clinics";
-import Colors from "../../constants/Colors";
-import ImgPicker from "../../components/AddClinicComponents/ImgPicker";
-import LocationPicker from "../../components/AddClinicComponents/LocationPicker";
+} from 'react-native'
+import { useDispatch } from 'react-redux'
+import * as clinicsActions from '../../store/actions/clinics'
+import Colors from '../../constants/Colors'
+import ImgPicker from '../../components/AddClinicComponents/ImgPicker'
+import LocationPicker from '../../components/AddClinicComponents/LocationPicker'
 
 const NewClinicScreen = (props) => {
-  const { navigation } = props;
-  const dispatch = useDispatch();
-  const [selectedImage, setSelectedImage] = useState();
-  const [titleValue, setTitleValue] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState();
+  const { navigation } = props
+  const dispatch = useDispatch()
+  const [selectedImage, setSelectedImage] = useState()
+  const [titleValue, setTitleValue] = useState('')
+  const [selectedLocation, setSelectedLocation] = useState()
 
   const titleChangedHandler = (text) => {
-    setTitleValue(text);
-  };
+    setTitleValue(text)
+  }
 
   const imageTakenHandler = (imagePath) => {
-    setSelectedImage(imagePath);
-  };
+    setSelectedImage(imagePath)
+  }
 
   const saveClinicHandler = () => {
     dispatch(
       clinicsActions.addClinic(titleValue, selectedImage, selectedLocation)
-    );
-    navigation.goBack();
-  };
+    )
+    navigation.goBack()
+  }
 
   const locationPickerHandler = useCallback((location) => {
-    setSelectedLocation(location);
-  }, []);
+    setSelectedLocation(location)
+  }, [])
 
   return (
     <ScrollView>
       <View style={styles.form}>
-        <Text style={styles.label}>Title</Text>
+        <Text style={styles.label}>Nazwa</Text>
         <TextInput
           style={styles.textInput}
           onChangeText={titleChangedHandler}
@@ -56,39 +56,37 @@ const NewClinicScreen = (props) => {
         />
         <View style={styles.saveButton}>
           <Button
-            title="Save Clinic"
+            title='Zapisz przychodnię'
             color={Colors.secondary}
             onPress={saveClinicHandler}
           />
         </View>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
-export const screenOptions = { headerTitle: "Add Your Clinic" };
+export const screenOptions = { headerTitle: 'Zapisz przychodnię' }
 
 const styles = StyleSheet.create({
   form: {
-    margin: 30,
+    padding: 15,
   },
   label: {
     fontSize: 18,
-    marginBottom: 15,
   },
   textInput: {
-    borderBottomColor: "#ccc",
+    borderBottomColor: '#ccc',
     borderBottomWidth: 1,
-    marginBottom: 15,
-    paddingVertical: 4,
+
     paddingHorizontal: 2,
   },
   saveButton: {
     marginTop: 25,
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
   },
-});
+})
 
-export default NewClinicScreen;
+export default NewClinicScreen

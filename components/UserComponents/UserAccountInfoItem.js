@@ -1,17 +1,17 @@
-import React from "react";
-import { Text, StyleSheet, View } from "react-native";
-import Colors from "../../constants/Colors";
+import React from "react"
+import { Text, StyleSheet, View } from "react-native"
+import Colors from "../../constants/Colors"
 
 const UserAccountInfoItem = (props) => {
-  const { name, email, phoneNumber } = props;
+  const { name, email, phoneNumber } = props
   return (
     <View style={styles.item}>
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.phoneNumber}>{phoneNumber}</Text>
       <Text style={styles.email}>{email}</Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   item: {
@@ -20,13 +20,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     height: 200,
   },
-  name: { fontFamily: "open-sans-bold", color: Colors.secondary, fontSize: 17 },
-  email: { fontFamily: "open-sans", color: Colors.secondary, fontSize: 20 },
-  phoneNumber: {
-    fontFamily: "open-sans",
+  name: { fontFamily: "open-sans-bold", color: Colors.secondary, fontSize: 20 },
+  email: {
+    fontFamily: "open-sans-bold",
     color: Colors.secondary,
     fontSize: 20,
   },
-});
+  phoneNumber: {
+    fontFamily: "open-sans-bold",
+    color: Colors.secondary,
+    fontSize: 20,
+  },
+})
 
-export default UserAccountInfoItem;
+export default UserAccountInfoItem

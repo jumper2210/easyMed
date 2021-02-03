@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, View, Button, Text } from "react-native"
+import { StyleSheet, View, Text } from "react-native"
 import { Formik } from "formik"
 import { useDispatch, useSelector } from "react-redux"
 import InputFormik from "../../UI/InputFormik"
@@ -8,7 +8,7 @@ import Colors from "../../constants/Colors"
 import Card from "../../UI/Card"
 import * as userActions from "../../store/actions/user"
 import ImgPicker from "../../components/AddClinicComponents/ImgPicker"
-
+import Button from "../../UI/Button"
 const EditUserDataScreen = (props) => {
   const dispatch = useDispatch()
   const [selectedImage, setSelectedImage] = useState()
@@ -65,7 +65,7 @@ const EditUserDataScreen = (props) => {
               onChangeText={handleChange("editName")}
               onBlur={() => setFieldTouched("editName")}
               value={values.editName}
-              label="your full name"
+              label="twoja nazwa"
             />
             {touched.editName && errors.editName && (
               <Text style={{ fontSize: 10, color: "red" }}>
@@ -76,7 +76,7 @@ const EditUserDataScreen = (props) => {
               onChangeText={handleChange("editPhoneNumber")}
               onBlur={() => setFieldTouched("editPhoneNumber")}
               value={values.editPhoneNumber}
-              label="your phone number"
+              label="twój numer telefonu"
             />
             {touched.editPhoneNumber && errors.editPhoneNumber && (
               <Text style={{ fontSize: 10, color: "red" }}>

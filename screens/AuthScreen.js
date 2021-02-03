@@ -55,7 +55,7 @@ const AuthScreen = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert("An error Occurred!", error, [{ text: "Okay" }])
+      Alert.alert("Wykryto błąd!", error, [{ text: "Okay" }])
     }
   }, [error])
 
@@ -113,7 +113,7 @@ const AuthScreen = (props) => {
           />
           <Input
             id="password"
-            label="Password"
+            label="hasło"
             keyboardType="default"
             secureTextEntry
             required
@@ -126,7 +126,7 @@ const AuthScreen = (props) => {
           {isSignUp === true ? (
             <Input
               id="name"
-              label="name"
+              label="nazwa"
               keyboardType="default"
               required
               minLength={5}
@@ -143,14 +143,14 @@ const AuthScreen = (props) => {
             ) : (
               <Button
                 style={{ width: "80%" }}
-                title={isSignUp ? "Sign Up" : "Login"}
+                title={isSignUp ? "Zajerestruj się" : "Zaloguj"}
                 onPress={authHandler}
               />
             )}
 
             <Button
               style={{ width: "80%" }}
-              title={`Switch to ${isSignUp ? "Login" : "Sign Up"}`}
+              title={`Zamień na ${isSignUp ? "logowanie" : "rejestracje"}`}
               onPress={() => {
                 setIsSignUp((prevState) => !prevState)
               }}
@@ -163,7 +163,7 @@ const AuthScreen = (props) => {
 }
 
 export const screenOptions = {
-  headerTitle: "Authenticate",
+  headerTitle: "Uwierzytelnienie",
 }
 const styles = StyleSheet.create({
   gradient: {

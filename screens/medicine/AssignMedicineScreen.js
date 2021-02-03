@@ -14,11 +14,11 @@ const AssignMedicineScreen = ({ route, navigation }) => {
   const infoHandler = (medicineName, quantity, timeOfTaking) => {
     const { patientId } = route.params
     Alert.alert(
-      "Assign medical",
-      `The medical has been successfully assigned`,
+      "Jesteś pewine, że chcesz przypisać te lekarstwo?",
+      ``,
       [
         {
-          text: "assign medical",
+          text: "przypisz",
           onPress: () => {
             dispatch(
               medicineActions.assignMedicine(
@@ -32,7 +32,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
           },
         },
         {
-          text: "Cancel",
+          text: "Anuluj",
           onPress: () => {},
         },
       ],
@@ -68,7 +68,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               onChangeText={handleChange("medicineName")}
               onBlur={() => setFieldTouched("medicineName")}
               value={values.medicineName}
-              label="name of medicine"
+              label="nazwa leku"
             />
             {touched.medicineName && errors.medicineName && (
               <Text style={{ fontSize: 10, color: "red" }}>
@@ -79,7 +79,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               onChangeText={handleChange("quantity")}
               onBlur={() => setFieldTouched("quantity")}
               value={values.quantity}
-              label="quantity"
+              label="dawka"
             />
             {touched.quantity && errors.quantity && (
               <Text style={{ fontSize: 10, color: "red" }}>
@@ -90,7 +90,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               onChangeText={handleChange("timeOfTaking")}
               onBlur={() => setFieldTouched("timeOfTaking")}
               value={values.timeOfTaking}
-              label="time of taking the medicine"
+              label="Czas zażycia leku"
             />
             {touched.timeOfTaking && errors.timeOfTaking && (
               <Text style={{ fontSize: 10, color: "red" }}>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = (navData) => {
   return {
-    headerTitle: `Assign medicine`,
+    headerTitle: `Przypisanie lekarstwa`,
   }
 }
 export default AssignMedicineScreen

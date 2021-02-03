@@ -109,7 +109,8 @@ export const UserManagementTabs = () => {
           name="UserMedicalCasesScreen"
           component={PatientMedicalCasesScreen}
           options={{
-            title: "Medical History",
+            tabBarLabel: "Moje choroby",
+            title: "Historia medyczna",
             tabBarIcon: () => {
               return (
                 <Ionicons name="md-list" size={26} color={Colors.secondary} />
@@ -123,7 +124,8 @@ export const UserManagementTabs = () => {
           name="PatientMedicinesScreen"
           component={PatientMedicinesScreen}
           options={{
-            title: "My Medicals",
+            tabBarLabel: "Moje leki",
+            title: "Moje leki",
             tabBarIcon: () => {
               return (
                 <Ionicons
@@ -158,12 +160,12 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="ConversationScreen"
         component={ConversationScreen}
-        options={conversationScreenOptions}
+        options={{ headerTitle: "" }}
       />
       <EasyMedStackNavigator.Screen
         name="FormScreen"
         component={MedFormScreen}
-        options={medFormScreenOptions}
+        options={{ headerTitle: "Formularz medyczny" }}
       />
       <EasyMedStackNavigator.Screen
         name="ClinicScreen"
@@ -193,11 +195,12 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="EditUserDataScreen"
         component={EditUserDataScreen}
+        options={{ headerTitle: "Edytuj dane" }}
       />
       <EasyMedStackNavigator.Screen
         name="AllPatientsScreen"
         component={AllPatientsScreen}
-        options={{ headerTitle: "Your patients" }}
+        options={{ headerTitle: "Pacjenci" }}
       />
       <EasyMedStackNavigator.Screen
         name="PatientDataScreen"
@@ -212,7 +215,7 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="AllDoctorsScreen"
         component={AllDoctorsScreen}
-        options={{ headerTitle: "Your doctors" }}
+        options={{ headerTitle: "Twoi doktorzy" }}
       />
       <EasyMedStackNavigator.Screen
         name="DoctorDataScreen"
@@ -227,7 +230,7 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name="SetDoctorRoleScreen"
         component={SetDoctorRoleScreen}
-        options={SetDoctorRoleScreenOptions}
+        options={{ headerTitle: "Przypisz role" }}
       />
       <EasyMedStackNavigator.Screen
         name="UserDataScreen"

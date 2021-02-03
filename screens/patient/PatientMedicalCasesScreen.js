@@ -40,7 +40,9 @@ const PatientMedicalCasesScreen = (props) => {
     }
   })
   let display = (
-    <Text style={styles.info}>You have not any medical history yet.</Text>
+    <Text style={styles.info}>
+      Nie posiadasz zajerestrowanej histori medycznej w tej przychodni.
+    </Text>
   )
 
   if (medicalHistory.length >= 1) {

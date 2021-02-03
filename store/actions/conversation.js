@@ -7,7 +7,7 @@ export const createConversation = (chatMateId, navigation, selfUser) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
 
-    fetch("http://192.168.1.17:8080/conversation/createConversation", {
+    fetch("http://192.168.1.12:8080/conversation/createConversation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const loadConversationsSuccess = (conversations) => ({
 export const loadConversations = () => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch("http://192.168.1.17:8080/conversation/getConversations", {
+    fetch("http://192.168.1.12:8080/conversation/getConversations", {
       method: "GET",
       headers: {
         Authorization: "Barer " + token,

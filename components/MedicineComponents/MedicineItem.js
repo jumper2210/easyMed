@@ -15,11 +15,11 @@ const MedicineControlItem = (props) => {
           </View>
           <View>
             <View style={styles.details}>
-              <Text style={styles.description}>quantity:</Text>
+              <Text style={styles.description}>ilość:</Text>
               <Text style={styles.quantity}>{quantity}</Text>
             </View>
             <View style={styles.details}>
-              <Text style={styles.description}>time of taking:</Text>
+              <Text style={styles.description}>czas przyjmowania:</Text>
               <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
             </View>
           </View>

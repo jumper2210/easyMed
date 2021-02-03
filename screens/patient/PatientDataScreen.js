@@ -39,14 +39,14 @@ const PatientDataScreen = ({ route, navigation }) => {
 
   let medicalCaseDisplay = (
     <Text style={styles.noMedicalCaseInfo}>
-      This paction has not any medical case yet.
+      Ten pacjent nie posiada żadnych przypadków medczynych.
     </Text>
   )
   let buttonDisplay = (
     <Button
       style={{ backgroundColor: Colors.primary }}
       textStyle={{ color: Colors.details }}
-      title={"Add chat mate"}
+      title={"Dodaj do znajomych"}
       onPress={() => {
         dispatch(chatMateActions.addChatMate(patientMail))
         infoHandler()
@@ -73,18 +73,14 @@ const PatientDataScreen = ({ route, navigation }) => {
   }
 
   const infoHandler = () => {
-    Alert.alert(
-      "Talk with your chat mate",
-      "Now you can write to your chat mate",
-      [
-        {
-          text: "add this patient to your chat mates",
-          onPress: () => {
-            navigation.navigate("ChatGroupsScreen")
-          },
+    Alert.alert("Chcesz dodać tego pacjenta do listy znajomych?", "", [
+      {
+        text: "dodaj",
+        onPress: () => {
+          navigation.navigate("ChatGroupsScreen")
         },
-      ]
-    )
+      },
+    ])
   }
 
   if (isChatMateExist) {
@@ -93,7 +89,7 @@ const PatientDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title="Write a message"
+          title="Napisz wiadomość"
           onPress={() => {
             const conversation = findConversationHandler(patientId)
             if (conversation && conversation.id) {
@@ -139,7 +135,7 @@ const PatientDataScreen = ({ route, navigation }) => {
   if (medicalCasesToCheck.length > 0) {
     medicalCaseDisplay = (
       <View>
-        <Text style={styles.medicalCaseInfo}>Check medical case</Text>
+        <Text style={styles.medicalCaseInfo}>Potwierdź przypadek medczny</Text>
         <FlatList
           horizontal
           data={medicalCasesToCheck}
@@ -179,7 +175,7 @@ const PatientDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>{patientMail}</Text>
         </View>
         <View style={styles.details}>
-          <Text style={styles.label}>Phone number:</Text>
+          <Text style={styles.label}>Numer telefonu:</Text>
           <Text style={styles.label}>
             {patientPhoneNumber && patientPhoneNumber.length > 0
               ? patientPhoneNumber
@@ -188,6 +184,7 @@ const PatientDataScreen = ({ route, navigation }) => {
         </View>
       </Card>
       <View style={styles.scrollViewStyled}>{medicalCaseDisplay}</View>
+      <Text style={styles.medicineInfo}>Lekarstwa</Text>
       <View style={{ height: 100, width: "70%" }}>
         <ListOfMedicines patientId={patientId} />
       </View>
@@ -197,7 +194,7 @@ const PatientDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title="Assign medicines"
+          title="przypisz lekarstwo"
           onPress={() => {
             navigation.navigate("AssignMedicineScreen", {
               patientId: patientId,
@@ -223,7 +220,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   scrollViewStyled: {
-    height: 150,
+    height: 200,
   },
   details: {
     flexDirection: "row",
@@ -254,11 +251,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-evenly",
   },
-  medicalCaseInfo: {
-    fontFamily: "open-sans",
+  medicineInfo: {
+    fontFamily: "open-sans-bold",
     fontSize: 15,
     color: Colors.primary,
     textAlign: "center",
+  },
+  medicalCaseInfo: {
+    fontFamily: "open-sans-bold",
+    fontSize: 15,
+    color: Colors.primary,
+    textAlign: "center",
+    marginTop: 15,
   },
   buttonContainer: {
     flexDirection: "row",

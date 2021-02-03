@@ -22,11 +22,11 @@ const MedicineControlItem = (props) => {
           </View>
           <View>
             <View style={styles.details}>
-              <Text style={styles.description}>quantity:</Text>
+              <Text style={styles.description}>ilość:</Text>
               <Text style={styles.quantity}>{quantity}</Text>
             </View>
             <View style={styles.details}>
-              <Text style={styles.description}>time of taking:</Text>
+              <Text style={styles.description}>czas przyjmowania:</Text>
               <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
             </View>
           </View>
@@ -37,13 +37,13 @@ const MedicineControlItem = (props) => {
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
           onPress={onDelete}
-          title="Drop medicine"
+          title="Usuń lek"
         />
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
           onPress={onTriggerNotification}
-          title="Set notification"
+          title="Ustaw powiadomienie"
         />
       </View>
     </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     margin: 30,
     height: constants.screenHeight / 2 - 65,
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   touchable: {
     borderRadius: 10,
@@ -73,8 +73,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   details: {
+    padding: 10,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     flexWrap: "wrap",
   },
   data: {

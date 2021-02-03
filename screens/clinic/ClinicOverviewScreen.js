@@ -1,12 +1,12 @@
-import React, { useEffect } from "react"
-import { Platform, ActivityIndicator, View } from "react-native"
-import { HeaderButtons, Item } from "react-navigation-header-buttons"
-import CustomHeaderButton from "../../UI/CustomHeaderButton"
-import { FlatList } from "react-native-gesture-handler"
-import { useSelector, useDispatch } from "react-redux"
-import ClinicItem from "../../components/AddClinicComponents/ClinicItem"
-import * as clinicsActions from "../../store/actions/clinics"
-import Colors from "../../constants/Colors"
+import React, { useEffect } from 'react'
+import { Platform, ActivityIndicator, View } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import CustomHeaderButton from '../../UI/CustomHeaderButton'
+import { FlatList } from 'react-native-gesture-handler'
+import { useSelector, useDispatch } from 'react-redux'
+import ClinicItem from '../../components/AddClinicComponents/ClinicItem'
+import * as clinicsActions from '../../store/actions/clinics'
+import Colors from '../../constants/Colors'
 
 const ClinicOverviewScreen = ({ navigation }) => {
   const clinics = useSelector((state) => state.clinicsState.clinics)
@@ -15,7 +15,7 @@ const ClinicOverviewScreen = ({ navigation }) => {
     dispatch(clinicsActions.loadClinics())
   }, [dispatch])
 
-  let display = <ActivityIndicator size="large" color={Colors.secondary} />
+  let display = <ActivityIndicator size='large' color={Colors.secondary} />
   if (clinics) {
     display = (
       <FlatList
@@ -27,7 +27,7 @@ const ClinicOverviewScreen = ({ navigation }) => {
             title={itemData.item.title}
             address={itemData.item.address}
             onSelect={() => {
-              navigation.navigate("ClinicDetailsScreen", {
+              navigation.navigate('ClinicDetailsScreen', {
                 clinicTitle: itemData.item.title,
                 placeId: itemData.item._id,
               })
@@ -45,13 +45,13 @@ export const screenOptions = (navData) => {
   const { userRole } = navData.route.params
 
   return {
-    headerTitle: "Clinics",
+    headerTitle: 'Przychodnie',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
-          title=""
+          title=''
           iconName={
-            Platform.OS === "android" ? "md-arrow-back" : "ios-arrow-back"
+            Platform.OS === 'android' ? 'md-arrow-back' : 'ios-arrow-back'
           }
           onPress={() => {
             navData.navigation.goBack()
@@ -62,12 +62,12 @@ export const screenOptions = (navData) => {
 
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        {userRole === "ADMIN" ? (
+        {userRole === 'ADMIN' ? (
           <Item
-            title="AddClinic"
-            iconName={Platform.OS === "android" ? "md-add" : "ios-add"}
+            title='AddClinic'
+            iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
             onPress={() => {
-              navData.navigation.navigate("AddClinicScreen")
+              navData.navigation.navigate('AddClinicScreen')
             }}
           />
         ) : null}

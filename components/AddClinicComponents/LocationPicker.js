@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react'
 import {
   View,
   StyleSheet,
@@ -6,11 +6,11 @@ import {
   Button,
   ActivityIndicator,
   Alert,
-} from "react-native"
-import * as Location from "expo-location"
-import * as Permissions from "expo-permissions"
-import Colors from "../../constants/Colors"
-import MapPreview from "./MapPreview"
+} from 'react-native'
+import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions'
+import Colors from '../../constants/Colors'
+import MapPreview from './MapPreview'
 
 const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState(false)
@@ -30,11 +30,11 @@ const LocationPicker = (props) => {
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION)
-    if (result.status !== "granted") {
+    if (result.status !== 'granted') {
       Alert.alert(
-        "Insufficient permissions",
-        "You need to grant location permissions to use this app",
-        [{ text: "Okay" }]
+        'Insufficient permissions',
+        'You need to grant location permissions to use this app',
+        [{ text: 'Okay' }]
       )
       return false
     }
@@ -42,7 +42,7 @@ const LocationPicker = (props) => {
   }
 
   const pickOnMapHandler = () => {
-    props.navigation.navigate("MapScreen", {
+    props.navigation.navigate('MapScreen', {
       readonly: false,
     })
   }
@@ -67,9 +67,9 @@ const LocationPicker = (props) => {
       })
     } catch (err) {
       Alert.alert(
-        "Could not fetch location!",
-        "Please try again later or pick a location on the map.",
-        [{ text: "Okay" }]
+        'Nie pobrano lokalizacji!',
+        'Spróboj ponownie albo wybierz miejsce na mapie.',
+        [{ text: 'Okay' }]
       )
     }
     setIsFetching(false)
@@ -83,22 +83,23 @@ const LocationPicker = (props) => {
         onPress={pickOnMapHandler}
       >
         {isFetching ? (
-          <ActivityIndicator size="large" color={Colors.primary} />
+          <ActivityIndicator size='large' color={Colors.primary} />
         ) : (
-          <Text>No location chosen yet!</Text>
+          <Text>Nie wybrano jeszcze lokalizacji!</Text>
         )}
       </MapPreview>
 
       <View style={styles.actions}>
         <Button
-          title="Get user location"
+          title='Pobierz lokalizację'
           color={Colors.secondary}
           onPress={getLocationHandler}
         />
         <Button
-          title="Pick on Map"
+          title='Wybierz na mapie'
           color={Colors.secondary}
           onPress={pickOnMapHandler}
+          style={{ borderLeft: 10 }}
         />
       </View>
     </View>
@@ -113,15 +114,15 @@ const styles = StyleSheet.create({
   mapPreview: {
     marginTop: 10,
     marginBottom: 15,
-    width: "100%",
+    width: '100%',
     height: 150,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderWidth: 1,
   },
   actions: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
   },
 })
 export default LocationPicker

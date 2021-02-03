@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from "react"
+import React, { useState, useEffect, useReducer, useCallback } from 'react'
 import {
   StyleSheet,
   Picker,
@@ -6,20 +6,20 @@ import {
   View,
   Text,
   Alert,
-} from "react-native"
-import { ScrollView } from "react-native-gesture-handler"
-import { useDispatch, useSelector } from "react-redux"
-import SendPushNotificationToServer from "../../helpers/sendPushNotificationToServer"
-import Input from "../../UI/Input"
-import Card from "../../UI/Card"
-import Colors from "../../constants/Colors"
-import ImgPicker from "../../components/AddClinicComponents/ImgPicker"
-import * as medicalCaseActions from "../../store/actions/medicalCase"
-import Button from "../../UI/Button"
-import Constants from "../../constants/Constants"
-import * as userActions from "../../store/actions/user"
+} from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useDispatch, useSelector } from 'react-redux'
+import SendPushNotificationToServer from '../../helpers/sendPushNotificationToServer'
+import Input from '../../UI/Input'
+import Card from '../../UI/Card'
+import Colors from '../../constants/Colors'
+import ImgPicker from '../../components/AddClinicComponents/ImgPicker'
+import * as medicalCaseActions from '../../store/actions/medicalCase'
+import Button from '../../UI/Button'
+import Constants from '../../constants/Constants'
+import * as userActions from '../../store/actions/user'
 
-const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE"
+const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -46,7 +46,7 @@ const formReducer = (state, action) => {
 const MedFormScreen = (props) => {
   const { navigation } = props
   const dispatch = useDispatch()
-  const [selectedValue, setSelectedValue] = useState("")
+  const [selectedValue, setSelectedValue] = useState('')
   const [isFormDetails, setIsFormDetails] = useState(false)
   const [error, setError] = useState()
   const [selectedImage, setSelectedImage] = useState()
@@ -56,12 +56,12 @@ const MedFormScreen = (props) => {
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      otherSymptom: "",
-      age: "",
-      scale: "",
-      increase: "",
-      locationOfPain: "",
-      radiance: "",
+      otherSymptom: '',
+      age: '',
+      scale: '',
+      increase: '',
+      locationOfPain: '',
+      radiance: '',
     },
     inputValidities: {
       others: false,
@@ -76,24 +76,23 @@ const MedFormScreen = (props) => {
 
   useEffect(() => {
     dispatch(userActions.loadUserData())
-    ///
   }, [])
 
   useEffect(() => {
     if (error) {
-      Alert.alert("An error Occurred!", error, [{ text: "Okay" }])
+      Alert.alert('Wykryto błąd!', error, [{ text: 'Ok' }])
     }
   }, [error])
 
   const infoHandler = (patientName) => {
     Alert.alert(
-      "Create medical form",
-      "Thank you for complete the form, now you have to wait for response from your doctor",
+      'Czy jestes pewien, że chcesz stworzyć ten formularz medczyny ',
+      '',
       [
         {
-          text: "create medical form",
+          text: 'Tak',
           onPress: () => {
-            navigation.navigate("HomeScreen")
+            navigation.navigate('HomeScreen')
             SendPushNotificationToServer(patientName)
           },
         },
@@ -147,35 +146,35 @@ const MedFormScreen = (props) => {
       <View>
         <Card style={styles.cardContainer}>
           <Input
-            id="escalation"
-            label="escalation of pain. *if relevant"
-            keyboardType="default"
-            autoCapitalize="none"
-            errorMessage="Enter any specific's. *If relevant."
+            id='escalation'
+            label='*podaj nasilenie bólu'
+            keyboardType='default'
+            autoCapitalize='none'
+            errorMessage='przekroczono ilość słów'
             onInputChange={inputChangeHandler}
-            initialValue=""
+            initialValue=''
             editable
             maxLength={20}
           />
           <Input
-            id="locationOfPain"
-            label="location of pain. *if relevant"
-            keyboardType="default"
-            autoCapitalize="none"
-            errorMessage="determine where you feel pain. *If relevant."
+            id='locationOfPain'
+            label='*miejsce bólu'
+            keyboardType='default'
+            autoCapitalize='none'
+            errorMessage='przekroczono ilość słów'
             onInputChange={inputChangeHandler}
-            initialValue=""
+            initialValue=''
             editable
             maxLength={20}
           />
           <Input
-            id="radiance"
-            label="Pain radiation. *if relevant"
-            keyboardType="default"
-            autoCapitalize="none"
-            errorMessage="determine of pain radiation. *if relevant."
+            id='radiance'
+            label='*promieniowanie bólu'
+            keyboardType='default'
+            autoCapitalize='none'
+            errorMessage='przekroczono ilość słów'
             onInputChange={inputChangeHandler}
-            initialValue=""
+            initialValue=''
             editable
             maxLength={40}
           />
@@ -184,7 +183,7 @@ const MedFormScreen = (props) => {
           <View style={styles.buttonsContainer}>
             <Button
               style={styles.button}
-              title="Create medical case"
+              title='Stwórz formularz'
               onPress={() => {
                 formHandler()
                 infoHandler(patientName)
@@ -193,9 +192,9 @@ const MedFormScreen = (props) => {
 
             <Button
               style={styles.button}
-              title="Back"
+              title='Wróć'
               onPress={() => {
-                navigation.navigate("HomeScreen")
+                navigation.navigate('HomeScreen')
               }}
             />
           </View>
@@ -205,7 +204,7 @@ const MedFormScreen = (props) => {
   }
   return (
     <KeyboardAvoidingView
-      behavior="height"
+      behavior='height'
       keyboardVerticalOffset={50}
       style={{ flex: 1 }}
     >
@@ -213,7 +212,7 @@ const MedFormScreen = (props) => {
         <ScrollView>
           <Card style={styles.cardContainer}>
             <View style={styles.textSymptomContainer}>
-              <Text style={styles.textSymptom}>pick your current symptom</Text>
+              <Text style={styles.textSymptom}>Wybierz swój symptom</Text>
             </View>
             <Picker
               selectedValue={selectedValue}
@@ -221,60 +220,60 @@ const MedFormScreen = (props) => {
                 setSelectedValue(itemValue)
               }
             >
-              <Picker.Item label="Pick your symptom" value="" />
-              <Picker.Item label="Fever" value="fever" />
-              <Picker.Item label="Stomachache" value="stomachache" />
+              <Picker.Item label='Wybierz swój symptom' value='' />
+              <Picker.Item label='Ból głowy' value='gorączka' />
+              <Picker.Item label='Ból brzucha' value='ból brzucha' />
             </Picker>
             <View style={styles.inputsContainer}>
               <Input
-                id="otherSymptom"
-                label="other symptom"
-                keyboardType="default"
+                id='otherSymptom'
+                label='Wpisz inne symptomy, jeśli nic więcej nie odczuwasz wpisz (brak)'
+                keyboardType='default'
                 required
-                autoCapitalize="none"
-                errorMessage="Please enter your others symptom."
+                autoCapitalize='none'
+                errorMessage='Wpisze inne symptomy.'
                 onInputChange={inputChangeHandler}
                 numeric
-                initialValue=""
+                initialValue=''
                 editable
                 maxLength={200}
               />
               <Input
-                id="age"
-                label="age"
+                id='age'
+                label='wiek'
                 required
-                autoCapitalize="none"
-                errorMessage="Please enter your age."
+                autoCapitalize='none'
+                errorMessage='Podaj swój wiek.'
                 onInputChange={inputChangeHandler}
-                keyboardType="decimal-pad"
-                initialValue=""
+                keyboardType='decimal-pad'
+                initialValue=''
               />
               <Input
-                id="scale"
-                label="scale of pain (0-10)"
-                keyboardType="decimal-pad"
+                id='scale'
+                label='Podaj skalę bólu (0-10)'
+                keyboardType='decimal-pad'
                 required
-                autoCapitalize="none"
-                errorMessage="Please enter your scale."
+                autoCapitalize='none'
+                errorMessage='Podaj skalę twojego bólu.'
                 onInputChange={inputChangeHandler}
                 numeric
-                initialValue=""
+                initialValue=''
               />
               <Input
-                id="increase"
-                label="increase"
-                keyboardType="decimal-pad"
+                id='increase'
+                label='wzrost'
+                keyboardType='decimal-pad'
                 required
-                autoCapitalize="none"
-                errorMessage="Please enter your increase."
+                autoCapitalize='none'
+                errorMessage='Podaj twój wzrost.'
                 onInputChange={inputChangeHandler}
                 numeric
-                initialValue=""
+                initialValue=''
               />
               <View style={styles.buttonsContainer}>
                 <Button
                   style={styles.button}
-                  title={isFormDetails ? "Hide details" : " Show details"}
+                  title={isFormDetails ? 'Ukrj szczegóły' : 'Pokaż szczegóły'}
                   onPress={() => {
                     setIsFormDetails(!isFormDetails)
                   }}
@@ -282,9 +281,9 @@ const MedFormScreen = (props) => {
 
                 <Button
                   style={styles.button}
-                  title="Back"
+                  title='Wróć'
                   onPress={() => {
-                    navigation.navigate("Home")
+                    navigation.navigate('Home')
                     setIsFormDetails(false)
                   }}
                 />
@@ -304,13 +303,13 @@ const styles = StyleSheet.create({
   },
   gradient: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: Colors.primary,
   },
   buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     paddingVertical: 20,
   },
   inputsContainer: {
@@ -325,40 +324,40 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   mainInfoContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
     paddingVertical: 30,
   },
   mainInfo: {
     fontSize: 10,
-    textAlign: "center",
-    textTransform: "uppercase",
-    fontFamily: "open-sans-bold",
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontFamily: 'open-sans-bold',
     color: Colors.details,
   },
   textSymptomContainer: {
-    justifyContent: "center",
-    width: "100%",
+    justifyContent: 'center',
+    width: '100%',
     paddingVertical: 25,
   },
   textSymptom: {
     fontSize: 13,
-    fontFamily: "open-sans-bold",
-    textAlign: "center",
-    textTransform: "uppercase",
+    fontFamily: 'open-sans-bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
     color: Colors.secondary,
   },
   otherInfoContainer: {
-    justifyContent: "center",
-    width: "100%",
+    justifyContent: 'center',
+    width: '100%',
     paddingVertical: 20,
   },
   otherInfo: {
     fontSize: 11,
-    fontFamily: "open-sans",
-    textAlign: "center",
-    textTransform: "uppercase",
+    fontFamily: 'open-sans',
+    textAlign: 'center',
+    textTransform: 'uppercase',
     color: Colors.secondary,
   },
 })

@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
 
 export const screenOptions = (navData) => {
   return {
-    headerTitle: "My account",
+    tabBarLabel: "Szczegóły",
+    headerTitle: "Moje konto",
     tabBarIcon: () => {
       return <Ionicons name="md-build" size={26} color={Colors.secondary} />
     },

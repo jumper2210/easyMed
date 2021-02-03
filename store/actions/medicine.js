@@ -9,7 +9,7 @@ export const assignMedicine = (
 ) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch(`http://192.168.1.17:8080/medicine/assignMedicine/${patientId}`, {
+    fetch(`http://192.168.1.12:8080/medicine/assignMedicine/${patientId}`, {
       method: "POST",
       body: JSON.stringify({
         medicineName: medicineName,
@@ -37,7 +37,7 @@ export const loadPatientMedicines = (patientId) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
     fetch(
-      `http://192.168.1.17:8080/medicine/loadPatientMedicines/${patientId}`,
+      `http://192.168.1.12:8080/medicine/loadPatientMedicines/${patientId}`,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -63,7 +63,7 @@ export const deleteMedicine = (medicineId) => {
   console.log(medicineId)
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch(`http://192.168.1.17:8080/medicine/deleteMedicine/${medicineId}`, {
+    fetch(`http://192.168.1.12:8080/medicine/deleteMedicine/${medicineId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,

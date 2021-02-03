@@ -34,7 +34,7 @@ const ChatGroupsScreen = (props) => {
   }
 
   let display = (
-    <Text style={styles.info}>You don't have conversation yet.</Text>
+    <Text style={styles.info}>Nie posiadasz jeszcze żadnych konwersacji.</Text>
   )
   if (chatMates) {
     display = (
@@ -73,7 +73,7 @@ const ChatGroupsScreen = (props) => {
 }
 export const screenOptions = (navData) => {
   return {
-    headerTitle: "Your chat mates",
+    headerTitle: "Twoje konwersacje",
   }
 }
 const styles = StyleSheet.create({

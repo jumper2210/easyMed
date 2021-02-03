@@ -1,12 +1,12 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Colors from "../../constants/Colors";
-import constants from "../../constants/Constants";
+import React from "react"
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
+import Colors from "../../constants/Colors"
+import constants from "../../constants/Constants"
 
 const MedicalCaseItem = (props) => {
-  const { createdAt, onPress } = props;
-  const words = createdAt.split("T");
-  const data = words[0];
+  const { createdAt, onPress } = props
+  const words = createdAt.split("T")
+  const data = words[0]
 
   return (
     <View style={styles.item}>
@@ -14,15 +14,15 @@ const MedicalCaseItem = (props) => {
         <TouchableOpacity onPress={onPress}>
           <View>
             <View style={styles.dateContainer}>
-              <Text style={styles.details}>Created at:</Text>
+              <Text style={styles.details}>Utworzone:</Text>
               <Text style={styles.details}>{data}</Text>
             </View>
           </View>
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   item: {
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
     color: Colors.details,
     marginHorizontal: 15,
   },
-});
+})
 
-export default MedicalCaseItem;
+export default MedicalCaseItem

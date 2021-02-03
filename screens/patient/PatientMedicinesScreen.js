@@ -13,7 +13,7 @@ const PatientMedicalCasesScreen = (props) => {
   const dispatch = useDispatch()
   const medicines = useSelector((state) => state.medicinesState.medicines)
   let display = (
-    <Text style={styles.info}>You don't have any assigned medicines</Text>
+    <Text style={styles.info}>Nie posiadasz żadnych przypisanych leków</Text>
   )
 
   useEffect(() => {
@@ -23,8 +23,8 @@ const PatientMedicalCasesScreen = (props) => {
   const triggerNotificationHandler = (medicineName) => {
     Notifications.scheduleNotificationAsync({
       content: {
-        title: "Medicine reminder",
-        body: `It's time to take ${medicineName}!`,
+        title: "Czas na zażycie leku!",
+        body: `${medicineName}`,
       },
       trigger: {
         seconds: 4,
@@ -34,18 +34,18 @@ const PatientMedicalCasesScreen = (props) => {
 
   const infoHandler = (medicineId, medicalName) => {
     Alert.alert(
-      "remove medical",
-      `Are you sure you want to remove ${medicalName}?`,
+      "usuń lek",
+      `Jesteś pewien, że chcesz usunąć ${medicalName}?`,
       [
         {
-          text: "remove medical",
+          text: "usuń lek",
           onPress: () => {
             dispatch(medicineActions.deleteMedicine(medicineId))
             navigation.navigate("HomeScreen")
           },
         },
         {
-          text: "Cancel",
+          text: "Anuluj",
           onPress: () => {},
         },
       ],
@@ -86,7 +86,7 @@ const PatientMedicalCasesScreen = (props) => {
         <Button
           style={{ backgroundColor: Colors.secondary, width: "70%" }}
           textStyle={{ color: Colors.primary }}
-          title="Assign your medicine"
+          title="Przypisz lek"
           onPress={() => {
             navigation.navigate("AssignMedicineScreen", {
               patientId: _id,

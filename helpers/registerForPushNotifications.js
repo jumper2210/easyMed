@@ -1,7 +1,7 @@
 import * as Notifications from "expo-notifications"
 import * as Permissions from "expo-permissions"
 
-const PUSH_ENDPOINT = "http://192.168.1.17:8080/pushNotifications/token"
+const PUSH_ENDPOINT = "http://192.168.1.12:8080/pushNotifications/token"
 
 const registerForPushNotifications = async () => {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)

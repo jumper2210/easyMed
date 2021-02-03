@@ -8,7 +8,7 @@ const ConversationScreen = (props) => {
   const dispatch = useDispatch()
   const { route } = props
   const { conversation, user, chatMates } = route.params
-  const socket = io("http://192.168.1.17:8080")
+  const socket = io("http://192.168.1.12:8080")
 
   const messages = useSelector(
     (state) =>

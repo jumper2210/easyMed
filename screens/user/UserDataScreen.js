@@ -26,11 +26,11 @@ const UserDataScreen = ({ route, navigation }) => {
 
   const infoHandler = (userName) => {
     Alert.alert(
-      "Setting new doctor",
-      `Now ${userName} has permission to have doctor actions ability`,
+      "Ustaw role doktor",
+      `Teraz ${userName} ma możliwość wykonywania akcji dostępnych dla roli doktora,`,
       [
         {
-          text: "go to home screen",
+          text: "powrót do ekranu startowego",
           onPress: () => {
             navigation.navigate("HomeScreen")
           },
@@ -53,7 +53,7 @@ const UserDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>{userId}</Text>
         </View>
         <View style={styles.details}>
-          <Text style={styles.label}>Phone number:</Text>
+          <Text style={styles.label}>Numer telefonu:</Text>
           <Text style={styles.label}>
             {userPhoneNumber && userPhoneNumber.length > 0
               ? userPhoneNumber
@@ -65,7 +65,7 @@ const UserDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title={"Set doctor role"}
+          title={"Ustawe role doktor"}
           onPress={() => {
             dispatch(adminsActions.setDoctorRole(userId))
             infoHandler(userName)

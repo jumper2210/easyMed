@@ -14,7 +14,7 @@ export const createMedicalCase = (
   return async (dispatch, getState) => {
     const token = getState().authState.token
     const response = await fetch(
-      "http://192.168.1.17:8080/medicalCase/createMedicalCase",
+      "http://192.168.1.12:8080/medicalCase/createMedicalCase",
       {
         method: "POST",
         headers: {
@@ -46,7 +46,7 @@ export const loadPatientMedicalCase = (patientId) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
     fetch(
-      `http://192.168.1.17:8080/medicalCase/getPatientMedicalCases/${patientId}`,
+      `http://192.168.1.12:8080/medicalCase/getPatientMedicalCases/${patientId}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const checkMedicalCase = (medicalCaseId) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
     const response = await fetch(
-      `http://192.168.1.17:8080/medicalCase/checkPatientMedicalCase/${medicalCaseId}`,
+      `http://192.168.1.12:8080/medicalCase/checkPatientMedicalCase/${medicalCaseId}`,
       {
         method: "PUT",
         headers: {

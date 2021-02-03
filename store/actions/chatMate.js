@@ -6,7 +6,7 @@ export const SET_NOT_EXIST = "SET_NOT_EXIST"
 export const loadChatMates = () => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch("http://192.168.1.17:8080/chatMates/getChatMates", {
+    fetch("http://192.168.1.12:8080/chatMates/getChatMates", {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -27,7 +27,7 @@ export const addChatMate = (chatMateEmail) => {
   return async (dispatch, getState) => {
     const ownEmail = getState().usersState.selfUser.email
     const token = getState().authState.token
-    fetch("http://192.168.1.17:8080/chatMates/addChatMate", {
+    fetch("http://192.168.1.12:8080/chatMates/addChatMate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

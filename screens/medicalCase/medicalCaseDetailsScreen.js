@@ -25,18 +25,18 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
 
   const checkMedicalCaseHandler = (medicalCaseId) => {
     Alert.alert(
-      "Checking Medical Case",
-      "Are you sure, you want to check this medical case?",
+      "Jesteś pewien, że chcesz zatwierdzić ten przypadek medyczny?",
+      "",
       [
         {
-          text: "Yes, check this!",
+          text: "Zatwierdź",
           onPress: () => {
             navigation.navigate("HomeScreen")
             dispatch(medicalCaseActions.checkMedicalCase(medicalCaseId))
           },
         },
         {
-          text: "Cancel",
+          text: "Anuluj",
           onPress: () => {},
         },
       ],
@@ -51,7 +51,7 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
     let display = data
 
     if (valueOfData == 0) {
-      display = <Text>no data</Text>
+      display = <Text>brak danych</Text>
     }
     return display
   }
@@ -60,45 +60,45 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
     <View style={styles.screen}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>patient name:</Text>
+          <Text style={styles.labelTitle}>nazwa pacjenta:</Text>
           <Text style={styles.labelContent}>{editTextHandler(name)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>age:</Text>
+          <Text style={styles.labelTitle}>wiek:</Text>
           <Text style={styles.labelContent}>{editTextHandler(age)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>increase:</Text>
+          <Text style={styles.labelTitle}>wzrost:</Text>
           <Text style={styles.labelContent}>{editTextHandler(increase)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>location of pain:</Text>
+          <Text style={styles.labelTitle}>umiejscowienie bólu:</Text>
           <Text style={styles.labelContent}>
             {editTextHandler(locationOfPain)}
           </Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>other symptom:</Text>
+          <Text style={styles.labelTitle}>inne symptomy:</Text>
           <Text style={styles.labelContent}>
             {editTextHandler(otherSymptom)}
           </Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>pickedSymptom:</Text>
+          <Text style={styles.labelTitle}>Wybrany symptom:</Text>
           <Text style={styles.labelContent}>
             {editTextHandler(pickedSymptom)}
           </Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>radiance:</Text>
+          <Text style={styles.labelTitle}>promieniowanie:</Text>
           <Text style={styles.labelContent}>{editTextHandler(radiance)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>scale:</Text>
+          <Text style={styles.labelTitle}>waga:</Text>
           <Text style={styles.labelContent}>{editTextHandler(scale)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>created at:</Text>
+          <Text style={styles.labelTitle}>utworzone:</Text>
           <Text style={styles.labelContent}>{editTextHandler(createdAt)}</Text>
         </View>
         {imageUri !== undefined ? (
@@ -107,7 +107,7 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
       </ScrollView>
       {role === "DOCTOR" ? (
         <Button
-          title="check this medical case"
+          title="Potwierdź ten przypadek"
           onPress={() => {
             checkMedicalCaseHandler(medicalCaseId)
           }}
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
 })
 export const screenOptions = (navData) => {
   return {
-    title: "Details",
+    title: "Szczegóły",
   }
 }
 export default medicalCaseDetailsScreen

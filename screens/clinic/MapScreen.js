@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react"
-import { StyleSheet, Text, Platform } from "react-native"
-import MapView, { Marker } from "react-native-maps"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import Colors from "../../constants/Colors"
+import React, { useState, useEffect, useCallback } from 'react'
+import { StyleSheet, Text, Platform } from 'react-native'
+import MapView, { Marker } from 'react-native-maps'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import Colors from '../../constants/Colors'
 
 const MapScreen = (props) => {
   const { navigation, route } = props
@@ -14,8 +14,8 @@ const MapScreen = (props) => {
   let markerCoordinates
 
   const mapRegion = {
-    latitude: initialLocation ? initialLocation.lat : 37.78,
-    longitude: initialLocation ? initialLocation.lng : -122.43,
+    latitude: Number(initialLocation ? initialLocation.lat : 37.78),
+    longitude: Number(initialLocation ? initialLocation.lng : -122.43),
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   }
@@ -35,7 +35,7 @@ const MapScreen = (props) => {
     if (!selectedLocation) {
       return
     }
-    navigation.navigate("AddClinicScreen", {
+    navigation.navigate('AddClinicScreen', {
       pickedLocation: selectedLocation,
     })
   }, [selectedLocation])
@@ -50,7 +50,7 @@ const MapScreen = (props) => {
                 style={styles.headerButton}
                 onPress={savePickedLocationHandler}
               >
-                <Text style={styles.headerButtonText}>Save</Text>
+                <Text style={styles.headerButtonText}>Zapisz</Text>
               </TouchableOpacity>
             ),
           }
@@ -73,14 +73,19 @@ const MapScreen = (props) => {
       onPress={selectedLocationHandler}
     >
       {markerCoordinates && (
-        <Marker title="Picked Location" coordinate={markerCoordinates}></Marker>
+        <Marker
+          title='Wybrana lokalizacja'
+          coordinate={markerCoordinates}
+        ></Marker>
       )}
     </MapView>
   )
 }
 
 export const screenOptions = () => {
-  return {}
+  return {
+    title: 'Mapa',
+  }
 }
 
 const styles = StyleSheet.create({
@@ -92,7 +97,7 @@ const styles = StyleSheet.create({
   },
   headerButtonText: {
     fontSize: 16,
-    color: Platform.OS === "android" ? Colors.secondary : "",
+    color: Platform.OS === 'android' ? Colors.secondary : '',
   },
 })
 export default MapScreen
