@@ -1,10 +1,10 @@
-import React, { useEffect } from "react"
-import { View, StyleSheet, FlatList, Text } from "react-native"
-import Colors from "../../constants/Colors"
-import { useSelector, useDispatch } from "react-redux"
-import MedicalCase from "../../models/medicalCase"
-import * as medicalCaseActions from "../../store/actions/medicalCase"
-import MedicalCaseItem from "../../components/MedicalCaseComponents/MedicalCaseItem"
+import React, { useEffect } from 'react'
+import { View, StyleSheet, FlatList, Text } from 'react-native'
+import Colors from '../../constants/Colors'
+import { useSelector, useDispatch } from 'react-redux'
+import MedicalCase from '../../models/medicalCase'
+import * as medicalCaseActions from '../../store/actions/medicalCase'
+import MedicalCaseItem from '../../components/MedicalCaseComponents/MedicalCaseItem'
 
 const PatientMedicalCasesScreen = (props) => {
   const { navigation } = props
@@ -41,7 +41,7 @@ const PatientMedicalCasesScreen = (props) => {
   })
   let display = (
     <Text style={styles.info}>
-      Nie posiadasz zajerestrowanej histori medycznej w tej przychodni.
+      Nie posiadasz zajerestrowanej historii medycznej w tej przychodni.
     </Text>
   )
 
@@ -54,7 +54,7 @@ const PatientMedicalCasesScreen = (props) => {
           <MedicalCaseItem
             createdAt={itemData.item.createdAt}
             onPress={() => {
-              navigation.navigate("MedicalCaseDetailsScreen", {
+              navigation.navigate('MedicalCaseDetailsScreen', {
                 age: itemData.item.age,
                 increase: itemData.item.increase,
                 locationOfPain: itemData.item.locationOfPain,
@@ -75,12 +75,13 @@ const PatientMedicalCasesScreen = (props) => {
   return <View style={styles.screen}>{display}</View>
 }
 export const styles = StyleSheet.create({
-  screen: { flex: 1, justifyContent: "center", alignItems: "center" },
+  screen: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   info: {
-    fontFamily: "open-sans",
+    paddingHorizontal: 12,
+    fontFamily: 'open-sans',
     fontSize: 20,
     color: Colors.secondary,
-    textAlign: "center",
+    textAlign: 'center',
   },
 })
 

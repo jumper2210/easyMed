@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import Colors from '../../constants/Colors'
 import constants from '../../constants/Constants'
 import UserAvatarItem from './UserAvatarItem'

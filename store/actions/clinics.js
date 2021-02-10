@@ -1,7 +1,8 @@
-import ENV from "../../env"
+import ENV from '../../env'
+import { currentIp } from '../../helpers/currentIp'
 
-export const ADD_CLINIC = "ADD_CLINIC"
-export const SET_CLINIC = "SET_CLINIC"
+export const ADD_CLINIC = 'ADD_CLINIC'
+export const SET_CLINIC = 'SET_CLINIC'
 
 export const addClinic = (title, imageUri, location) => {
   return async (dispatch, getState) => {
@@ -11,20 +12,20 @@ export const addClinic = (title, imageUri, location) => {
     )
 
     if (!response.ok) {
-      throw new Error("something went wrong!")
+      throw new Error('something went wrong!')
     }
 
     const cnvAddress = await response.json()
     const address = cnvAddress.results[0].formatted_address
 
-    let method = "POST"
-    let url = "http://192.168.1.12:8080/clinicFeed/createClinic"
+    let method = 'POST'
+    let url = `${currentIp}/clinicFeed/createClinic`
 
     fetch(url, {
       method: method,
       headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({
         title: title,
@@ -36,7 +37,7 @@ export const addClinic = (title, imageUri, location) => {
     })
       .then((res) => {
         if (res.status !== 201) {
-          throw new Error("Failed to create Clinic")
+          throw new Error('Failed to create Clinic')
         }
         return res.json()
       })
@@ -58,12 +59,12 @@ export const addClinic = (title, imageUri, location) => {
 export const loadClinics = () => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch("http://192.168.1.12:8080/clinicFeed/getClinics", {
-      headers: { Authorization: "Bearer " + token },
+    fetch(`${currentIp}/clinicFeed/getClinics`, {
+      headers: { Authorization: 'Bearer ' + token },
     })
       .then((res) => {
         if (res.status !== 200) {
-          throw new Error("Failed to fetch Clinic")
+          throw new Error('Failed to fetch Clinic')
         }
         return res.json()
       })

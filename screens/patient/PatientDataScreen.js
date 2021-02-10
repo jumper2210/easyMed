@@ -1,18 +1,18 @@
-import React, { useEffect } from "react"
-import { View, StyleSheet, Text, FlatList, Alert } from "react-native"
-import { useDispatch, useSelector } from "react-redux"
-import MedicalCaseItem from "../../components/MedicalCaseComponents/MedicalCaseItem"
-import Colors from "../../constants/Colors"
-import * as conversationActions from "../../store/actions/conversation"
-import * as chatMateActions from "../../store/actions/chatMate"
-import * as medicalCaseActions from "../../store/actions/medicalCase"
-import * as userAction from "../../store/actions/user"
-import MedicalCase from "../../models/medicalCase"
-import Button from "../../UI/Button"
-import Card from "../../UI/Card"
-import constants from "../../constants/Constants"
-import UserAvatarItem from "../../components/UserComponents/UserAvatarItem"
-import ListOfMedicines from "../../components/MedicineComponents/ListOfMedicnes"
+import React, { useEffect } from 'react'
+import { View, StyleSheet, Text, FlatList, Alert } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import MedicalCaseItem from '../../components/MedicalCaseComponents/MedicalCaseItem'
+import Colors from '../../constants/Colors'
+import * as conversationActions from '../../store/actions/conversation'
+import * as chatMateActions from '../../store/actions/chatMate'
+import * as medicalCaseActions from '../../store/actions/medicalCase'
+import * as userAction from '../../store/actions/user'
+import MedicalCase from '../../models/medicalCase'
+import Button from '../../UI/Button'
+import Card from '../../UI/Card'
+import constants from '../../constants/Constants'
+import UserAvatarItem from '../../components/UserComponents/UserAvatarItem'
+import ListOfMedicines from '../../components/MedicineComponents/ListOfMedicnes'
 
 const PatientDataScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
@@ -46,7 +46,7 @@ const PatientDataScreen = ({ route, navigation }) => {
     <Button
       style={{ backgroundColor: Colors.primary }}
       textStyle={{ color: Colors.details }}
-      title={"Dodaj do znajomych"}
+      title={'Dodaj do znajomych'}
       onPress={() => {
         dispatch(chatMateActions.addChatMate(patientMail))
         infoHandler()
@@ -73,11 +73,11 @@ const PatientDataScreen = ({ route, navigation }) => {
   }
 
   const infoHandler = () => {
-    Alert.alert("Chcesz dodać tego pacjenta do listy znajomych?", "", [
+    Alert.alert('Chcesz dodać tego pacjenta do listy znajomych?', '', [
       {
-        text: "dodaj",
+        text: 'dodaj',
         onPress: () => {
-          navigation.navigate("ChatGroupsScreen")
+          navigation.navigate('ChatGroupsScreen')
         },
       },
     ])
@@ -89,12 +89,12 @@ const PatientDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title="Napisz wiadomość"
+          title='Napisz wiadomość'
           onPress={() => {
             const conversation = findConversationHandler(patientId)
             if (conversation && conversation.id) {
               setCurrentConversationId(conversation.id)
-              navigation.navigate("ConversationScreen", {
+              navigation.navigate('ConversationScreen', {
                 conversation: conversation,
                 chatMates: chatMates,
                 user: selfUser,
@@ -144,7 +144,7 @@ const PatientDataScreen = ({ route, navigation }) => {
             <MedicalCaseItem
               createdAt={itemData.item.createdAt}
               onPress={() => {
-                navigation.navigate("MedicalCaseDetailsScreen", {
+                navigation.navigate('MedicalCaseDetailsScreen', {
                   name: patientName,
                   medicalCaseId: itemData.item._id,
                   age: itemData.item.age,
@@ -156,7 +156,7 @@ const PatientDataScreen = ({ route, navigation }) => {
                   scale: itemData.item.scale,
                   createdAt: itemData.item.createdAt,
                   imageUri: itemData.item.imageUri,
-                  role: "DOCTOR",
+                  role: 'DOCTOR',
                 })
               }}
             />
@@ -169,7 +169,7 @@ const PatientDataScreen = ({ route, navigation }) => {
   return (
     <View style={styles.screen}>
       <Card style={styles.patientDataCard}>
-        <UserAvatarItem avatar={avatar} role={"PATIENT"} />
+        <UserAvatarItem avatar={avatar} role={'PATIENT'} />
         <View style={styles.details}>
           <Text style={styles.label}>E-mail:</Text>
           <Text style={styles.label}>{patientMail}</Text>
@@ -179,13 +179,13 @@ const PatientDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>
             {patientPhoneNumber && patientPhoneNumber.length > 0
               ? patientPhoneNumber
-              : "no data"}
+              : 'no data'}
           </Text>
         </View>
       </Card>
       <View style={styles.scrollViewStyled}>{medicalCaseDisplay}</View>
       <Text style={styles.medicineInfo}>Lekarstwa</Text>
-      <View style={{ height: 100, width: "70%" }}>
+      <View style={{ height: 100, width: '70%' }}>
         <ListOfMedicines patientId={patientId} />
       </View>
 
@@ -194,9 +194,9 @@ const PatientDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title="przypisz lekarstwo"
+          title='przypisz lekarstwo'
           onPress={() => {
-            navigation.navigate("AssignMedicineScreen", {
+            navigation.navigate('AssignMedicineScreen', {
               patientId: patientId,
               patientName: patientName,
             })
@@ -209,23 +209,23 @@ const PatientDataScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: Colors.secondary,
   },
   patientDataCard: {
     borderRadius: 10,
     width: constants.screenWidth - 60,
     height: constants.screenHeight / 2 - 110,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
   scrollViewStyled: {
     height: 200,
   },
   details: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 10,
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
   },
   avatar: {
     height: 100,
@@ -235,38 +235,38 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Colors.details,
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     paddingLeft: 10,
   },
   noMedicalCaseInfo: {
     color: Colors.primary,
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 10,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     marginTop: 40,
   },
   data: {
-    flexDirection: "column",
-    justifyContent: "space-evenly",
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
   },
   medicineInfo: {
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 15,
     color: Colors.primary,
-    textAlign: "center",
+    textAlign: 'center',
   },
   medicalCaseInfo: {
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 15,
     color: Colors.primary,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 15,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 })
 

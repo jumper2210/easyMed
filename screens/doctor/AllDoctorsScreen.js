@@ -1,10 +1,10 @@
-import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native"
-import UserDetailsItem from "../../components/UserComponents/UserDetailsItem"
-import * as usersActions from "../../store/actions/user"
-import * as chatMateActions from "../../store/actions/chatMate"
-import Colors from "../../constants/Colors"
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native'
+import UserDetailsItem from '../../components/UserComponents/UserDetailsItem'
+import * as usersActions from '../../store/actions/user'
+import * as chatMateActions from '../../store/actions/chatMate'
+import Colors from '../../constants/Colors'
 
 const AllDoctorsScreen = (props) => {
   const { navigation } = props
@@ -12,7 +12,7 @@ const AllDoctorsScreen = (props) => {
   const chatMates = useSelector((state) => state.chatMatesState.chatMates)
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
+    const unsubscribe = navigation.addListener('focus', () => {
       dispatch(usersActions.loadAllUsers())
       dispatch(chatMateActions.loadChatMates())
     })
@@ -20,7 +20,7 @@ const AllDoctorsScreen = (props) => {
   }, [navigation])
 
   const doctors = useSelector((state) => state.usersState.users)
-  let display = <ActivityIndicator size="large" color={Colors.secondary} />
+  let display = <ActivityIndicator size='large' color={Colors.secondary} />
 
   if (doctors) {
     display = (
@@ -29,7 +29,7 @@ const AllDoctorsScreen = (props) => {
         data={doctors}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) =>
-          itemData.item.role === "DOCTOR" ? (
+          itemData.item.role === 'DOCTOR' ? (
             <UserDetailsItem
               avatar={itemData.item.avatar}
               name={itemData.item.name}
@@ -37,7 +37,7 @@ const AllDoctorsScreen = (props) => {
                 dispatch(
                   chatMateActions.isMyChatMate(chatMates, itemData.item._id)
                 )
-                navigation.navigate("DoctorDataScreen", {
+                navigation.navigate('DoctorDataScreen', {
                   avatar: itemData.item.avatar,
                   doctorName: itemData.item.name,
                   doctorMail: itemData.item.email,
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   list: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 15,
     padding: 20,
   },

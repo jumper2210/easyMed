@@ -1,13 +1,13 @@
-import React, { useEffect } from "react"
-import { View, StyleSheet, Text, Alert } from "react-native"
-import { useDispatch } from "react-redux"
-import Colors from "../../constants/Colors"
-import * as userAction from "../../store/actions/user"
-import Card from "../../UI/Card"
-import constants from "../../constants/Constants"
-import UserAvatarItem from "../../components/UserComponents/UserAvatarItem"
-import Button from "../../UI/Button"
-import * as adminsActions from "../../store/actions/admin"
+import React, { useEffect } from 'react'
+import { View, StyleSheet, Text, Alert } from 'react-native'
+import { useDispatch } from 'react-redux'
+import Colors from '../../constants/Colors'
+import * as userAction from '../../store/actions/user'
+import Card from '../../UI/Card'
+import constants from '../../constants/Constants'
+import UserAvatarItem from '../../components/UserComponents/UserAvatarItem'
+import Button from '../../UI/Button'
+import * as adminsActions from '../../store/actions/admin'
 
 const UserDataScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
@@ -26,13 +26,13 @@ const UserDataScreen = ({ route, navigation }) => {
 
   const infoHandler = (userName) => {
     Alert.alert(
-      "Ustaw role doktor",
-      `Teraz ${userName} ma możliwość wykonywania akcji dostępnych dla roli doktora,`,
+      'Ustaw role doktor',
+      `Teraz ${userName} ma możliwość wykonywania akcji dostępnych dla roli "lekarz".`,
       [
         {
-          text: "powrót do ekranu startowego",
+          text: 'powrót do ekranu startowego',
           onPress: () => {
-            navigation.navigate("HomeScreen")
+            navigation.navigate('HomeScreen')
           },
         },
       ],
@@ -57,15 +57,15 @@ const UserDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>
             {userPhoneNumber && userPhoneNumber.length > 0
               ? userPhoneNumber
-              : "no data"}
+              : 'no data'}
           </Text>
         </View>
       </Card>
-      {role === "PATIENT" ? (
+      {role === 'PATIENT' ? (
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title={"Ustawe role doktor"}
+          title={'Ustawe role doktor'}
           onPress={() => {
             dispatch(adminsActions.setDoctorRole(userId))
             infoHandler(userName)
@@ -78,20 +78,20 @@ const UserDataScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     backgroundColor: Colors.secondary,
   },
   patientDataCard: {
     borderRadius: 10,
     width: constants.screenWidth - 40,
     height: constants.screenHeight / 2 - 90,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
   details: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 10,
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
   },
   avatar: {
     height: 100,
@@ -101,20 +101,20 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Colors.details,
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     paddingLeft: 10,
   },
 
   data: {
-    flexDirection: "column",
-    justifyContent: "space-evenly",
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
   },
 
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 })
 

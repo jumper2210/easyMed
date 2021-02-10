@@ -1,14 +1,14 @@
-import React, { useEffect } from "react"
-import { View, StyleSheet, Text, Alert } from "react-native"
-import { useDispatch, useSelector } from "react-redux"
-import Colors from "../../constants/Colors"
-import Button from "../../UI/Button"
-import * as conversationActions from "../../store/actions/conversation"
-import * as chatMateActions from "../../store/actions/chatMate"
-import * as userAction from "../../store/actions/user"
-import constants from "../../constants/Constants"
-import Card from "../../UI/Card"
-import UserAvatarItem from "../../components/UserComponents/UserAvatarItem"
+import React, { useEffect } from 'react'
+import { View, StyleSheet, Text, Alert } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import Colors from '../../constants/Colors'
+import Button from '../../UI/Button'
+import * as conversationActions from '../../store/actions/conversation'
+import * as chatMateActions from '../../store/actions/chatMate'
+import * as userAction from '../../store/actions/user'
+import constants from '../../constants/Constants'
+import Card from '../../UI/Card'
+import UserAvatarItem from '../../components/UserComponents/UserAvatarItem'
 
 const DoctorDataScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
@@ -27,20 +27,23 @@ const DoctorDataScreen = ({ route, navigation }) => {
   const { doctorMail, doctorPhoneNumber, doctorId, avatar } = route.params
 
   const infoHandler = () => {
-    Alert.alert("Chcesz dodać tego pacjenta do listy znajomych?", "", [
+    Alert.alert('Chcesz dodać tego pacjenta do listy znajomych?', '', [
       {
-        text: "dodaj",
+        text: 'dodaj',
         onPress: () => {
-          navigation.navigate("ChatGroupsScreen")
+          navigation.navigate('ChatGroupsScreen')
         },
       },
     ])
   }
   useEffect(() => {
-    dispatch(conversationActions.loadConversations())
-    dispatch(chatMateActions.loadChatMates())
-    dispatch(userAction.loadUserData())
-  }, [dispatch])
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(conversationActions.loadConversations())
+      dispatch(chatMateActions.loadChatMates())
+      dispatch(userAction.loadUserData())
+    })
+    return unsubscribe
+  }, [navigation])
 
   const findConversationHandler = (patientId) => {
     const findConversation = conversations.find(
@@ -51,7 +54,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
 
   let buttonDisplay = (
     <Button
-      title={"Add chat mate"}
+      title={'Dodaj do znajomych'}
       style={{ backgroundColor: Colors.primary }}
       textStyle={{ color: Colors.details }}
       onPress={() => {
@@ -67,12 +70,12 @@ const DoctorDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title="Napisz wiadomość"
+          title='Napisz wiadomość'
           onPress={() => {
             const conversation = findConversationHandler(doctorId)
             if (conversation && conversation.id) {
               setCurrentConversationId(conversation.id)
-              navigation.navigate("ConversationScreen", {
+              navigation.navigate('ConversationScreen', {
                 conversation: conversation,
                 chatMates: chatMates,
                 user: selfUser,
@@ -91,7 +94,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
   return (
     <View style={styles.screen}>
       <Card style={styles.doctorDataCard}>
-        <UserAvatarItem avatar={avatar} role={"DOCTOR"} />
+        <UserAvatarItem avatar={avatar} role={'DOCTOR'} />
         <View style={styles.details}>
           <Text style={styles.label}>E-mail:</Text>
           <Text style={styles.label}>{doctorMail}</Text>
@@ -101,7 +104,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>
             {doctorPhoneNumber && doctorPhoneNumber.length > 0
               ? doctorPhoneNumber
-              : "no data"}
+              : 'no data'}
           </Text>
         </View>
       </Card>
@@ -112,8 +115,8 @@ const DoctorDataScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     backgroundColor: Colors.secondary,
   },
 
@@ -124,25 +127,25 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
   },
   data: {
-    flexDirection: "column",
-    justifyContent: "space-evenly",
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
   },
   details: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 10,
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
   },
   doctorDataCard: {
     borderRadius: 10,
     width: constants.screenWidth - 40,
     height: constants.screenHeight / 2 - 90,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
   label: {
     color: Colors.details,
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     paddingLeft: 10,
   },
 })

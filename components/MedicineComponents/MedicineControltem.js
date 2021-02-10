@@ -1,8 +1,8 @@
-import React from "react"
-import { View, Text, StyleSheet } from "react-native"
-import Colors from "../../constants/Colors"
-import constants from "../../constants/Constants"
-import Button from "../../UI/Button"
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import Colors from '../../constants/Colors'
+import constants from '../../constants/Constants'
+import Button from '../../UI/Button'
 
 const MedicineControlItem = (props) => {
   const {
@@ -26,7 +26,7 @@ const MedicineControlItem = (props) => {
               <Text style={styles.quantity}>{quantity}</Text>
             </View>
             <View style={styles.details}>
-              <Text style={styles.description}>czas przyjmowania:</Text>
+              <Text style={styles.description}>przyjmowanie:</Text>
               <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
             </View>
           </View>
@@ -37,13 +37,13 @@ const MedicineControlItem = (props) => {
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
           onPress={onDelete}
-          title="Usuń lek"
+          title='Usuń lek'
         />
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
           onPress={onTriggerNotification}
-          title="Ustaw powiadomienie"
+          title='Ustaw powiadomienie'
         />
       </View>
     </View>
@@ -52,7 +52,7 @@ const MedicineControlItem = (props) => {
 
 const styles = StyleSheet.create({
   item: {
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
@@ -61,47 +61,47 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     margin: 30,
     height: constants.screenHeight / 2 - 65,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
   touchable: {
     borderRadius: 10,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     padding: 10,
   },
   details: {
     padding: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   data: {
-    flexDirection: "column",
-    justifyContent: "space-evenly",
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
   },
   nameContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginVertical: 20,
   },
   name: {
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 25,
     marginVertical: 10,
     color: Colors.details,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   timeOfTaking: {
-    fontFamily: "open-sans-bold",
-    fontSize: 18,
+    fontFamily: 'open-sans-bold',
+    fontSize: 13,
     marginVertical: 2,
     color: Colors.secondary,
   },
   quantity: {
-    fontFamily: "open-sans-bold",
+    fontFamily: 'open-sans-bold',
     fontSize: 18,
     marginVertical: 2,
     color: Colors.secondary,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 19,
     color: Colors.secondary,
-    fontFamily: "open-sans",
+    fontFamily: 'open-sans',
   },
 })
 

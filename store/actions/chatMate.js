@@ -1,19 +1,20 @@
-export const LOAD_CHAT_MATES = "LOAD_DOCTORS"
-export const ADD_CHAT_MATE = "ADD_CHAT_MATE"
-export const SET_EXIST = "SET_EXIST"
-export const SET_NOT_EXIST = "SET_NOT_EXIST"
+export const LOAD_CHAT_MATES = 'LOAD_DOCTORS'
+export const ADD_CHAT_MATE = 'ADD_CHAT_MATE'
+export const SET_EXIST = 'SET_EXIST'
+export const SET_NOT_EXIST = 'SET_NOT_EXIST'
+import { currentIp } from '../../helpers/currentIp'
 
 export const loadChatMates = () => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch("http://192.168.1.12:8080/chatMates/getChatMates", {
+    fetch(`${currentIp}/chatMates/getChatMates`, {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     })
       .then((res) => {
         if (res.status !== 200) {
-          throw new Error("Failed to fetch your chat mates")
+          throw new Error('Failed to fetch your chat mates')
         }
         return res.json()
       })
@@ -27,17 +28,17 @@ export const addChatMate = (chatMateEmail) => {
   return async (dispatch, getState) => {
     const ownEmail = getState().usersState.selfUser.email
     const token = getState().authState.token
-    fetch("http://192.168.1.12:8080/chatMates/addChatMate", {
-      method: "POST",
+    fetch(`${currentIp}/chatMates/addChatMate`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({ chatMateEmail, ownEmail }),
     })
       .then((res) => {
         if (res.status !== 201) {
-          throw new Error("Failed to add chat mate")
+          throw new Error('Failed to add chat mate')
         }
         return res.json()
       })

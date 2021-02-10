@@ -1,14 +1,14 @@
-import React, { useEffect } from "react"
-import { GiftedChat } from "react-native-gifted-chat"
-import { useDispatch, useSelector } from "react-redux"
-import io from "socket.io-client"
-import * as messageActions from "../../store/actions/message"
-
+import React, { useEffect } from 'react'
+import { GiftedChat } from 'react-native-gifted-chat'
+import { useDispatch, useSelector } from 'react-redux'
+import io from 'socket.io-client'
+import * as messageActions from '../../store/actions/message'
+import { currentIp } from '../../helpers/currentIp'
 const ConversationScreen = (props) => {
   const dispatch = useDispatch()
   const { route } = props
   const { conversation, user, chatMates } = route.params
-  const socket = io("http://192.168.1.12:8080")
+  const socket = io(`${currentIp}`)
 
   const messages = useSelector(
     (state) =>
@@ -18,18 +18,18 @@ const ConversationScreen = (props) => {
   useEffect(() => {
     dispatch(messageActions.loadMessages(conversation.id))
     return () => {
-      socket.emit("disconnect", {
+      socket.emit('disconnect', {
         senderId: user ? user._id : null,
       })
     }
   }, [])
   if (user) {
-    socket.emit("init", {
+    socket.emit('init', {
       senderId: user._id,
     })
   }
 
-  socket.on("message", (message) => {
+  socket.on('message', (message) => {
     const newMessage = {
       createdAt: message.createdAt,
       text: message.text,
@@ -45,7 +45,7 @@ const ConversationScreen = (props) => {
   const getAvatar = () => {
     return user.avatar
       ? user.avatar
-      : require("../../assets/defaultAvatars/patient.png")
+      : require('../../assets/defaultAvatars/patient.png')
   }
   const getMappedMessages = () => {
     return messages
@@ -67,7 +67,7 @@ const ConversationScreen = (props) => {
   }
 
   const onSend = (message) => {
-    socket.emit("message", {
+    socket.emit('message', {
       conversationId: conversation.id,
       text: message[0].text,
       senderId: user._id,

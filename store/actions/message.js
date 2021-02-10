@@ -1,22 +1,24 @@
+import { currentIp } from '../../helpers/currentIp'
+
 export const loadMessagesSuccess = ({ messages, id }) => ({
-  type: "LOAD_MESSAGES_SUCCESS",
+  type: 'LOAD_MESSAGES_SUCCESS',
   id,
   messages,
 })
 
 export const loadMessagesFailure = () => ({
-  type: "LOAD_MESSAGES_FAILURE",
+  type: 'LOAD_MESSAGES_FAILURE',
 })
 
 export const loadMessages = (conversationId) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch(`http://192.168.1.12:8080/message/getMessage/${conversationId}`, {
-      headers: { Authorization: "Bearer " + token },
+    fetch(`${currentIp}/message/getMessage/${conversationId}`, {
+      headers: { Authorization: 'Bearer ' + token },
     })
       .then((response) => {
         if (response.status !== 200) {
-          throw new Error("Failed to fetch messages")
+          throw new Error('Failed to fetch messages')
         }
         return response.json()
       })
@@ -31,7 +33,7 @@ export const loadMessages = (conversationId) => {
   }
 }
 export const sendMessage = (conversationId, message) => ({
-  type: "SEND_MESSAGE",
+  type: 'SEND_MESSAGE',
   conversationId,
   message,
 })

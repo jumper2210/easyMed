@@ -1,20 +1,21 @@
-import * as Notifications from "expo-notifications"
-import * as Permissions from "expo-permissions"
+import * as Notifications from 'expo-notifications'
+import * as Permissions from 'expo-permissions'
+import { currentIp } from '../helpers/currentIp'
 
-const PUSH_ENDPOINT = "http://192.168.1.12:8080/pushNotifications/token"
+const PUSH_ENDPOINT = `${currentIp}/pushNotifications/token`
 
 const registerForPushNotifications = async () => {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
-  if (status !== "granted") {
-    alert("No notification permissions!")
+  if (status !== 'granted') {
+    alert('No notification permissions!')
     return
   }
   let token = (await Notifications.getExpoPushTokenAsync()).data
   return fetch(PUSH_ENDPOINT, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       token,

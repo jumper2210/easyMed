@@ -1,9 +1,11 @@
-import { AsyncStorage } from "react-native"
-export const AUTHENTICATE = "AUTHENTICATE"
-export const SET_DID_TRY_AL = "SET_DID_TRY_AL"
-export const LOGOUT = "LOGOUT"
-export const GET_NAME = "GET_NAME"
-export const GET_USER = "GET_USER"
+import { AsyncStorage } from 'react-native'
+import { currentIp } from '../../helpers/currentIp'
+
+export const AUTHENTICATE = 'AUTHENTICATE'
+export const SET_DID_TRY_AL = 'SET_DID_TRY_AL'
+export const LOGOUT = 'LOGOUT'
+export const GET_NAME = 'GET_NAME'
+export const GET_USER = 'GET_USER'
 let timer
 
 export const authenticate = (userId, token, name, expireTime, role) => {
@@ -24,10 +26,10 @@ export const setDidTryAl = () => {
 
 export const signup = (email, password, name) => {
   return async (dispatch) => {
-    const response = await fetch("http://192.168.1.12:8080/auth/signup", {
-      method: "POST",
+    const response = await fetch(`${currentIp}/auth/signup`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         email: email,
@@ -36,7 +38,7 @@ export const signup = (email, password, name) => {
       }),
     })
     if (!response.ok) {
-      let message = "Something went wrong!"
+      let message = 'Something went wrong!'
       throw new Error(message)
     }
 
@@ -60,10 +62,10 @@ export const signup = (email, password, name) => {
 
 export const login = (email, password, name) => {
   return async (dispatch) => {
-    const response = await fetch("http://192.168.1.12:8080/auth/login", {
-      method: "POST",
+    const response = await fetch(`${currentIp}/auth/login`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         email: email,
@@ -98,7 +100,7 @@ export const login = (email, password, name) => {
 }
 export const logout = () => {
   clearLogoutTimer()
-  AsyncStorage.removeItem("userData")
+  AsyncStorage.removeItem('userData')
   return { type: LOGOUT }
 }
 const clearLogoutTimer = () => {
@@ -117,7 +119,7 @@ const setLogoutTimer = (expirationTime) => {
 
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
-    "userData",
+    'userData',
     JSON.stringify({
       token: token,
       userId: userId,

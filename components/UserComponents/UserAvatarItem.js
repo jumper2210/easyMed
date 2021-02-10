@@ -1,6 +1,5 @@
-import React from "react"
-import { Image, StyleSheet, View } from "react-native"
-import Colors from "../../constants/Colors"
+import React from 'react'
+import { Image, StyleSheet, View } from 'react-native'
 
 const AvatarDisplayItem = (props) => {
   const { role, avatar, style, imgStyle } = props
@@ -9,18 +8,18 @@ const AvatarDisplayItem = (props) => {
     avatarDisplay = (
       <Image style={[styles.avatar, imgStyle]} source={{ uri: avatar }} />
     )
-  } else if (avatar == undefined && role === "PATIENT") {
+  } else if (avatar == undefined && role === 'PATIENT') {
     avatarDisplay = (
       <Image
         style={[styles.avatar, imgStyle]}
-        source={require("../../assets/defaultAvatars/patient.png")}
+        source={require('../../assets/defaultAvatars/patient.png')}
       />
     )
-  } else if ((avatar == undefined && role === "DOCTOR") || "ADMIN") {
+  } else if ((avatar == undefined && role === 'DOCTOR') || 'ADMIN') {
     avatarDisplay = (
       <Image
         style={[styles.avatar, imgStyle]}
-        source={require("../../assets/defaultAvatars/doctor_avatar.png")}
+        source={require('../../assets/defaultAvatars/doctor_avatar.png')}
       />
     )
   }
@@ -29,8 +28,8 @@ const AvatarDisplayItem = (props) => {
 
 const styles = StyleSheet.create({
   avatarContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   avatar: {
     height: 130,

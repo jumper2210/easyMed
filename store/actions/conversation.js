@@ -1,5 +1,7 @@
+import { currentIp } from '../../helpers/currentIp'
+
 export const createConversationSuccess = (conversation) => ({
-  type: "CREATE_CONVERSATION_SUCCESS",
+  type: 'CREATE_CONVERSATION_SUCCESS',
   conversation,
 })
 
@@ -7,11 +9,11 @@ export const createConversation = (chatMateId, navigation, selfUser) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
 
-    fetch("http://192.168.1.12:8080/conversation/createConversation", {
-      method: "POST",
+    fetch(`${currentIp}/conversation/createConversation`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({ chatMateId }),
     })
@@ -19,7 +21,7 @@ export const createConversation = (chatMateId, navigation, selfUser) => {
       .then((conversation) => {
         if (!conversation.error) {
           dispatch(createConversationSuccess(conversation))
-          navigation.navigate("ConversationScreen", {
+          navigation.navigate('ConversationScreen', {
             conversation: conversation,
             user: selfUser,
           })
@@ -29,17 +31,17 @@ export const createConversation = (chatMateId, navigation, selfUser) => {
 }
 
 export const loadConversationsSuccess = (conversations) => ({
-  type: "LOAD_CONVERSATIONS_SUCCESS",
+  type: 'LOAD_CONVERSATIONS_SUCCESS',
   conversations,
 })
 
 export const loadConversations = () => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch("http://192.168.1.12:8080/conversation/getConversations", {
-      method: "GET",
+    fetch(`${currentIp}/conversation/getConversations`, {
+      method: 'GET',
       headers: {
-        Authorization: "Barer " + token,
+        Authorization: 'Barer ' + token,
       },
     })
       .then((response) => response.json())
@@ -55,6 +57,6 @@ export const loadConversations = () => {
 }
 
 export const setCurrentConversation = (conversationId) => ({
-  type: "SET_CURRENT_CONVERSATION",
+  type: 'SET_CURRENT_CONVERSATION',
   conversationId,
 })
