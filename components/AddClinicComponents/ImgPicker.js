@@ -1,8 +1,9 @@
-import React, { useState } from "react"
-import { View, Button, Text, StyleSheet, Image, Alert } from "react-native"
-import Colors from "../../constants/Colors"
-import * as ImagePicker from "expo-image-picker"
-import * as Permissions from "expo-permissions"
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, Image, Alert } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
+import * as Permissions from 'expo-permissions'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import CustomHeaderButton from '../../UI/CustomHeaderButton'
 
 const ImgPicker = (props) => {
   const [pickedImage, setPickedImage] = useState()
@@ -12,11 +13,11 @@ const ImgPicker = (props) => {
       Permissions.CAMERA_ROLL,
       Permissions.CAMERA
     )
-    if (result.status !== "granted") {
+    if (result.status !== 'granted') {
       Alert.alert(
-        "Insufficient permissions",
-        "You need to grant camera permissions to use this app",
-        [{ text: "Okay" }]
+        'Insufficient permissions',
+        'You need to grant camera permissions to use this app',
+        [{ text: 'Okay' }]
       )
       return false
     }
@@ -46,30 +47,33 @@ const ImgPicker = (props) => {
           <Image style={styles.image} source={{ uri: pickedImage }} />
         )}
       </View>
-      <Button
-        title="Zrób zdjęcie"
-        color={Colors.secondary}
-        onPress={takeImageHandler}
-      />
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton} iconSize={60}>
+        <Item
+          title=''
+          iconName={Platform.OS === 'android' ? 'md-camera' : 'ios-camera'}
+          onPress={() => {
+            takeImageHandler()
+          }}
+        />
+      </HeaderButtons>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   imagePicker: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   imagePreview: {
-    width: "100%",
+    width: '100%',
     height: 200,
-    marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "#ccc",
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#ccc',
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
 })
 export default ImgPicker

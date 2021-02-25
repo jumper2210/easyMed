@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import InputFormik from '../../UI/InputFormik'
@@ -61,38 +67,45 @@ const EditUserDataScreen = (props) => {
       }) => (
         <View style={styles.screen}>
           <Card style={styles.formContainer}>
-            <InputFormik
-              onChangeText={handleChange('editName')}
-              onBlur={() => setFieldTouched('editName')}
-              value={values.editName}
-              label='twoja nazwa'
-            />
-            {touched.editName && errors.editName && (
-              <Text style={{ fontSize: 10, color: 'red' }}>
-                {errors.editName}
-              </Text>
-            )}
-            <InputFormik
-              onChangeText={handleChange('editPhoneNumber')}
-              onBlur={() => setFieldTouched('editPhoneNumber')}
-              value={values.editPhoneNumber}
-              label='twój numer telefonu'
-            />
-            {touched.editPhoneNumber && errors.editPhoneNumber && (
-              <Text style={{ fontSize: 10, color: 'red' }}>
-                {errors.editPhoneNumber}
-              </Text>
-            )}
-            <ImgPicker onImageTaken={imageTakenHandler} />
+            <ScrollView>
+              <KeyboardAvoidingView
+                behavior='padding'
+                keyboardVerticalOffset={35}
+              >
+                <InputFormik
+                  onChangeText={handleChange('editName')}
+                  onBlur={() => setFieldTouched('editName')}
+                  value={values.editName}
+                  label='twoja nazwa'
+                />
+                {touched.editName && errors.editName && (
+                  <Text style={{ fontSize: 10, color: 'red' }}>
+                    {errors.editName}
+                  </Text>
+                )}
+                <InputFormik
+                  onChangeText={handleChange('editPhoneNumber')}
+                  onBlur={() => setFieldTouched('editPhoneNumber')}
+                  value={values.editPhoneNumber}
+                  label='twój numer telefonu'
+                />
+                {touched.editPhoneNumber && errors.editPhoneNumber && (
+                  <Text style={{ fontSize: 10, color: 'red' }}>
+                    {errors.editPhoneNumber}
+                  </Text>
+                )}
+                <ImgPicker onImageTaken={imageTakenHandler} />
+                <View style={styles.buttonContainer}>
+                  <Button
+                    color={Colors.secondary}
+                    disabled={!isValid}
+                    onPress={handleSubmit}
+                    title='Potwierdź'
+                  />
+                </View>
+              </KeyboardAvoidingView>
+            </ScrollView>
           </Card>
-          <View style={styles.buttonContainer}>
-            <Button
-              color={Colors.secondary}
-              disabled={!isValid}
-              onPress={handleSubmit}
-              title='Potwierdź'
-            />
-          </View>
         </View>
       )}
     </Formik>
@@ -107,15 +120,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   buttonContainer: {
-    marginTop: 30,
-    height: 80,
-    width: 140,
-    borderRadius: 8,
+    paddingVertical: 20,
   },
   formContainer: {
-    width: '80%',
+    width: '90%',
     maxWidth: 400,
-    maxHeight: 400,
+    height: '85%',
     padding: 15,
   },
 })
