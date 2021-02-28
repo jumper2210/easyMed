@@ -59,7 +59,6 @@ export const loadPatientMedicines = (patientId) => {
 }
 
 export const deleteMedicine = (medicineId) => {
-  console.log(medicineId)
   return async (dispatch, getState) => {
     const token = getState().authState.token
     fetch(`${currentIp}/medicine/deleteMedicine/${medicineId}`, {

@@ -1,10 +1,10 @@
-import React from "react"
-import { Image } from "react-native"
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native"
-import { useDispatch } from "react-redux"
-import Colors from "../../constants/Colors"
-import * as medicalCaseActions from "../../store/actions/medicalCase"
-import Button from "../../UI/Button"
+import React from 'react'
+import { Image } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
+import { useDispatch } from 'react-redux'
+import Colors from '../../constants/Colors'
+import * as medicalCaseActions from '../../store/actions/medicalCase'
+import Button from '../../UI/Button'
 
 const medicalCaseDetailsScreen = ({ route, navigation }) => {
   const {
@@ -25,18 +25,18 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
 
   const checkMedicalCaseHandler = (medicalCaseId) => {
     Alert.alert(
-      "Jesteś pewien, że chcesz zatwierdzić ten przypadek medyczny?",
-      "",
+      'Jesteś pewien, że chcesz zatwierdzić ten przypadek medyczny?',
+      '',
       [
         {
-          text: "Zatwierdź",
+          text: 'Zatwierdź',
           onPress: () => {
-            navigation.navigate("HomeScreen")
+            navigation.navigate('HomeScreen')
             dispatch(medicalCaseActions.checkMedicalCase(medicalCaseId))
           },
         },
         {
-          text: "Anuluj",
+          text: 'Anuluj',
           onPress: () => {},
         },
       ],
@@ -45,7 +45,7 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
   }
   const editTextHandler = (data) => {
     if (data === undefined) {
-      data = ""
+      data = ''
     }
     const valueOfData = data.length
     let display = data
@@ -105,9 +105,9 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
           <Image style={styles.image} source={{ uri: imageUri }} />
         ) : null}
       </ScrollView>
-      {role === "DOCTOR" ? (
+      {role === 'DOCTOR' ? (
         <Button
-          title="Potwierdź ten przypadek"
+          title='Potwierdź ten przypadek'
           onPress={() => {
             checkMedicalCaseHandler(medicalCaseId)
           }}
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: Colors.primary,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 40,
   },
   scrollView: {
@@ -129,21 +129,21 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     padding: 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderBottomWidth: 0.4,
     borderBottomColor: Colors.secondary,
   },
   labelTitle: {
     color: Colors.secondary,
     fontSize: 13,
-    fontFamily: "open-sans-bold",
-    textTransform: "uppercase",
+    fontFamily: 'open-sans-bold',
+    textTransform: 'uppercase',
   },
   labelContent: {
     color: Colors.details,
     fontSize: 13,
-    fontFamily: "open-sans-bold",
-    textTransform: "uppercase",
+    fontFamily: 'open-sans-bold',
+    textTransform: 'uppercase',
   },
   image: {
     height: 200,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
 })
 export const screenOptions = (navData) => {
   return {
-    title: "Szczegóły",
+    title: 'Szczegóły',
   }
 }
 export default medicalCaseDetailsScreen

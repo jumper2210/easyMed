@@ -1,5 +1,5 @@
-import User from "../../models/user"
-import { LOAD_USER, SET_PATIENT } from "../actions/user"
+import User from '../../models/user'
+import { LOAD_USER, SET_PATIENT } from '../actions/user'
 
 const initialState = {
   users: [],

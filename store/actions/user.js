@@ -53,6 +53,7 @@ export const editUser = (name, phoneNumber, selectedImage) => {
         phoneNumber,
         name,
         selectedImage,
+        // password,
       }),
     }).then((res) => {
       if (res.status !== 200) {

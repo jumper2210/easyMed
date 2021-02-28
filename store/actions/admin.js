@@ -1,14 +1,25 @@
 import { currentIp } from '../../helpers/currentIp'
 
-export const setDoctorRole = (userId) => {
+export const AssignDoctorAccount = (
+  email,
+  password,
+  name,
+  specialization,
+  clinicId
+) => {
   return async (dispatch, getState) => {
-    const token = getState().authState.token
-    fetch(`${currentIp}/admin/setDoctorRole/${userId}`, {
-      method: 'PUT',
+    fetch(`${currentIp}/admin/AssignDoctor/`, {
+      method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        name: name,
+        specialization: specialization,
+        clinicId: clinicId,
+      }),
     })
       .then((res) => {
         if (res.status !== 201) {

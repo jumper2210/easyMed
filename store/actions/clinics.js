@@ -19,7 +19,7 @@ export const addClinic = (title, imageUri, location) => {
     const address = cnvAddress.results[0].formatted_address
 
     let method = 'POST'
-    let url = `${currentIp}/clinicFeed/createClinic`
+    let url = `${currentIp}/clinic/createClinic`
 
     fetch(url, {
       method: method,
@@ -59,7 +59,7 @@ export const addClinic = (title, imageUri, location) => {
 export const loadClinics = () => {
   return async (dispatch, getState) => {
     const token = getState().authState.token
-    fetch(`${currentIp}/clinicFeed/getClinics`, {
+    fetch(`${currentIp}/clinic/getClinics`, {
       headers: { Authorization: 'Bearer ' + token },
     })
       .then((res) => {
@@ -70,6 +70,30 @@ export const loadClinics = () => {
       })
       .then((resData) => {
         dispatch({ type: SET_CLINIC, clinics: resData.clinics })
+      })
+  }
+}
+
+export const assignClinic = (clinicId) => {
+  return async (dispatch, getState) => {
+    const { token, userId } = getState().authState
+
+    fetch(`${currentIp}/clinic/assignClinic/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({ clinicId }),
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error('Failed to assign clinic')
+        }
+        return res.json()
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 }

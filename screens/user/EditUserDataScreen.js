@@ -94,6 +94,17 @@ const EditUserDataScreen = (props) => {
                     {errors.editPhoneNumber}
                   </Text>
                 )}
+                {/* <InputFormik
+                  onChangeText={handleChange('editPassword')}
+                  onBlur={() => setFieldTouched('editPaswword')}
+                  value={values.editPassword}
+                  label='twoje hasło'
+                />
+                {touched.editPassword && errors.editPassword && (
+                  <Text style={{ fontSize: 10, color: 'red' }}>
+                    {errors.editPassword}
+                  </Text>
+                )} */}
                 <ImgPicker onImageTaken={imageTakenHandler} />
                 <View style={styles.buttonContainer}>
                   <Button

@@ -1,30 +1,74 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { View, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet, Platform, Alert } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import HeaderButton from '../UI/CustomHeaderButton'
 import NavigationItem from '../components/NavigationItem'
 import { ScrollView } from 'react-native-gesture-handler'
+import * as userActions from '../store/actions/user'
 import * as authActions from '../store/actions/auth'
-import RegisterForPushNotifications from '../helpers/registerForPushNotifications'
+// import RegisterForPushNotifications from '../helpers/registerForPushNotifications'
+import CustomButton from '../UI/Button'
+
 const HomeScreen = ({ navigation }) => {
-  const userRole = useSelector((state) => state.authState.role)
+  const dispatch = useDispatch()
+  const { role, isAssignClinic } = useSelector(
+    (state) => state.usersState.selfUser
+  )
   let display = null
+  // console.log(isAssignClinic, role)
+
+  // useEffect(() => {
+  //   if (role === 'DOCTOR') {
+  //     RegisterForPushNotifications()
+  //   }
+  // }, [])
 
   useEffect(() => {
-    if (userRole === 'DOCTOR') {
-      RegisterForPushNotifications()
-    }
-  }, [userRole])
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(userActions.loadUserData())
+    })
+    return unsubscribe
+  }, [])
 
-  if (userRole === 'PATIENT') {
+  const noAssignClnicHandler = () => {
+    Alert.alert(
+      'Brak kliniki',
+      'Wygląda na to, że nie masz przypisanej kliniki',
+      [
+        {
+          text: 'Anuluj',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Wybierz swoją klinikę',
+          onPress: () => navigation.navigate('AssignClinicScreen'),
+        },
+      ],
+      { cancelable: false }
+    )
+  }
+
+  if (isAssignClinic === false && role !== 'ADMIN') {
+    noAssignClnicHandler()
+    display = (
+      <View style={styles.noAssignClinic}>
+        <CustomButton
+          title='Wybierz swoją klinikę'
+          onPress={() => navigation.navigate('AssignClinicScreen')}
+        />
+      </View>
+    )
+  }
+  if (role === 'PATIENT' && isAssignClinic) {
     display = (
       <View style={styles.screen}>
         <NavigationItem
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { userRole: userRole })
+            navigation.navigate('ClinicScreen', { role: role })
           }}
         />
 
@@ -65,14 +109,14 @@ const HomeScreen = ({ navigation }) => {
       </View>
     )
   }
-  if (userRole === 'ADMIN') {
+  if (role === 'ADMIN') {
     display = (
       <View style={styles.screen}>
         <NavigationItem
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { userRole: userRole })
+            navigation.navigate('ClinicScreen', { role: role })
           }}
         />
 
@@ -84,23 +128,23 @@ const HomeScreen = ({ navigation }) => {
           }}
         />
         <NavigationItem
-          name={'Użytkownicy'}
+          name={'Dodaj lekarza'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
-            navigation.navigate('SetDoctorRoleScreen')
+            navigation.navigate('AssignDoctorAccountScreen')
           }}
         />
       </View>
     )
   }
-  if (userRole === 'DOCTOR') {
+  if (role === 'DOCTOR' && isAssignClinic) {
     display = (
       <View style={styles.screen}>
         <NavigationItem
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { userRole: userRole })
+            navigation.navigate('ClinicScreen', { role: role })
           }}
         />
 
@@ -156,6 +200,11 @@ const styles = StyleSheet.create({
     padding: 2,
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  noAssignClinic: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 
