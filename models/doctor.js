@@ -1,5 +1,14 @@
 class Doctor {
-  constructor(_id, name, email, phoneNumber, avatar, role, specialization) {
+  constructor(
+    _id,
+    name,
+    email,
+    phoneNumber,
+    avatar,
+    role,
+    specialization,
+    clinics
+  ) {
     this._id = _id
     this.name = name
     this.email = email
@@ -7,6 +16,7 @@ class Doctor {
     this.avatar = avatar
     this.role = role
     this.specialization = specialization
+    this.clinics = clinics
   }
 }
 export default Doctor

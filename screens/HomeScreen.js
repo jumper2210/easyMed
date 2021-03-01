@@ -9,14 +9,19 @@ import * as userActions from '../store/actions/user'
 import * as authActions from '../store/actions/auth'
 // import RegisterForPushNotifications from '../helpers/registerForPushNotifications'
 import CustomButton from '../UI/Button'
+import * as doctorActions from '../store/actions/doctor'
+import * as patientActions from '../store/actions/patient'
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch()
-  const { role, isAssignClinic } = useSelector(
+  const { role, isAssignClinic, clinics } = useSelector(
     (state) => state.usersState.selfUser
   )
   let display = null
-  // console.log(isAssignClinic, role)
+  let currentClinicId = null
+  if (clinics) {
+    currentClinicId = clinics[0]
+  }
 
   // useEffect(() => {
   //   if (role === 'DOCTOR') {
@@ -94,7 +99,8 @@ const HomeScreen = ({ navigation }) => {
           name={'Wszyscy doktorzy'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
-            navigation.navigate('AllDoctorsScreen')
+            navigation.navigate('AllDoctorsScreen', {})
+            dispatch(doctorActions.loadClinicDoctors(currentClinicId))
           }}
         />
         <NavigationItem
@@ -169,6 +175,7 @@ const HomeScreen = ({ navigation }) => {
           iconName={Platform.OS === 'android' ? 'md-list-box' : 'ios-list-box'}
           onPress={() => {
             navigation.navigate('AllPatientsScreen')
+            dispatch(patientActions.loadClinicPatients(currentClinicId))
           }}
         />
       </View>

@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react"
-import * as Font from "expo-font"
-import { AppLoading } from "expo"
-import AppNavigator from "./navigation/AppNavigator"
-import { createStore, combineReducers, applyMiddleware } from "redux"
-import { Provider } from "react-redux"
-import ReduxThunk from "redux-thunk"
-import authReducer from "./store/reducers/auth"
-import messagesReducer from "./store/reducers/message"
-import conversationsReducer from "./store/reducers/conversation"
-import chatMatesReducer from "./store/reducers/chatMate"
-import clinicReducer from "./store/reducers/clinics"
-import medicalCaseReducer from "./store/reducers/medicalCase"
-import usersReducer from "./store/reducers/user"
-import medicinesReducer from "./store/reducers/medicine"
-import * as Notifications from "expo-notifications"
-import * as Permissions from "expo-permissions"
+import React, { useState, useEffect } from 'react'
+import * as Font from 'expo-font'
+import { AppLoading } from 'expo'
+import AppNavigator from './navigation/AppNavigator'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import ReduxThunk from 'redux-thunk'
+import authReducer from './store/reducers/auth'
+import messagesReducer from './store/reducers/message'
+import conversationsReducer from './store/reducers/conversation'
+import chatMatesReducer from './store/reducers/chatMate'
+import clinicReducer from './store/reducers/clinics'
+import medicalCaseReducer from './store/reducers/medicalCase'
+import usersReducer from './store/reducers/user'
+import medicinesReducer from './store/reducers/medicine'
+import doctorsReducer from './store/reducers/doctor'
+import patientsReducer from './store/reducers/patient'
+import * as Notifications from 'expo-notifications'
+import * as Permissions from 'expo-permissions'
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
@@ -25,14 +27,16 @@ const rootReducer = combineReducers({
   chatMatesState: chatMatesReducer,
   usersState: usersReducer,
   medicinesState: medicinesReducer,
+  patientsState: patientsReducer,
+  doctorsState: doctorsReducer,
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   })
 }
 // store.subscribe(() => {
@@ -53,14 +57,14 @@ export default function App() {
     })
     Permissions.getAsync(Permissions.NOTIFICATIONS)
       .then((statusObj) => {
-        if (statusObj.status !== "granted") {
+        if (statusObj.status !== 'granted') {
           return Permissions.askAsync(Permissions.NOTIFICATIONS)
         }
         return statusObj
       })
       .then((statusObj) => {
-        if (statusObj.status !== "granted") {
-          throw new Error("Permissions not granted.")
+        if (statusObj.status !== 'granted') {
+          throw new Error('Permissions not granted.')
         }
       })
       .catch((err) => {
