@@ -1,95 +1,71 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, Text, Alert } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import Colors from '../../constants/Colors'
-import Button from '../../UI/Button'
-import * as conversationActions from '../../store/actions/conversation'
-import * as chatMateActions from '../../store/actions/chatMate'
-import * as userAction from '../../store/actions/user'
-import constants from '../../constants/Constants'
-import Card from '../../UI/Card'
-import UserAvatarItem from '../../components/UserComponents/UserAvatarItem'
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Text, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import Colors from '../../constants/Colors';
+import Button from '../../UI/Button';
+import * as conversationActions from '../../store/actions/conversation';
+import * as chatMateActions from '../../store/actions/chatMate';
+import * as userAction from '../../store/actions/user';
+import constants from '../../constants/Constants';
+import Card from '../../UI/Card';
+import UserAvatarItem from '../../components/UserComponents/UserAvatarItem';
 
 const DoctorDataScreen = ({ route, navigation }) => {
-  const dispatch = useDispatch()
-  const chatMates = useSelector((state) => state.chatMatesState.chatMates)
-  const selfUser = useSelector((state) => state.usersState.selfUser)
+  const dispatch = useDispatch();
+  const chatMates = useSelector((state) => state.chatMatesState.chatMates);
+  const selfUser = useSelector((state) => state.usersState.selfUser);
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
-  )
-  const isChatMateExist = useSelector(
-    (state) => state.chatMatesState.isChatMateExist
-  )
+  );
 
+  let buttonDisplay = null;
   const setCurrentConversationId = (conversationId) => {
-    dispatch(conversationActions.setCurrentConversation(conversationId))
-  }
-  const { doctorMail, doctorPhoneNumber, doctorId, avatar } = route.params
+    dispatch(conversationActions.setCurrentConversation(conversationId));
+  };
+  const { doctorMail, doctorPhoneNumber, doctorId, avatar } = route.params;
 
-  const infoHandler = () => {
-    Alert.alert('Chcesz dodać tego pacjenta do listy znajomych?', '', [
-      {
-        text: 'dodaj',
-        onPress: () => {
-          navigation.navigate('ChatGroupsScreen')
-        },
-      },
-    ])
-  }
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(conversationActions.loadConversations())
-      dispatch(chatMateActions.loadChatMates())
-      dispatch(userAction.loadUserData())
-    })
-    return unsubscribe
-  }, [navigation])
+      dispatch(conversationActions.loadConversations());
+      dispatch(chatMateActions.loadChatMates());
+      dispatch(userAction.loadUserData());
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const findConversationHandler = (patientId) => {
     const findConversation = conversations.find(
       (conversation) => conversation.chatMateId === patientId
-    )
-    return findConversation
-  }
+    );
+    return findConversation;
+  };
 
-  let buttonDisplay = (
+  buttonDisplay = (
     <Button
-      title={'Dodaj do znajomych'}
       style={{ backgroundColor: Colors.primary }}
       textStyle={{ color: Colors.details }}
+      title='Napisz wiadomość'
       onPress={() => {
-        dispatch(chatMateActions.addChatMate(doctorMail))
-        infoHandler()
+        const conversation = findConversationHandler(doctorId);
+        if (conversation && conversation.id) {
+          setCurrentConversationId(conversation.id);
+          navigation.navigate('ConversationScreen', {
+            conversation: conversation,
+            chatMates: chatMates,
+            user: selfUser,
+          });
+        } else {
+          dispatch(
+            conversationActions.createConversation(
+              doctorId,
+              navigation,
+              selfUser
+            )
+          );
+        }
       }}
     />
-  )
-
-  if (isChatMateExist) {
-    if (isChatMateExist == true) {
-      buttonDisplay = (
-        <Button
-          style={{ backgroundColor: Colors.primary }}
-          textStyle={{ color: Colors.details }}
-          title='Napisz wiadomość'
-          onPress={() => {
-            const conversation = findConversationHandler(doctorId)
-            if (conversation && conversation.id) {
-              setCurrentConversationId(conversation.id)
-              navigation.navigate('ConversationScreen', {
-                conversation: conversation,
-                chatMates: chatMates,
-                user: selfUser,
-              })
-            } else {
-              dispatch(
-                conversationActions.createConversation(doctorId, navigation)
-              )
-            }
-          }}
-        />
-      )
-    }
-  }
+  );
 
   return (
     <View style={styles.screen}>
@@ -110,8 +86,8 @@ const DoctorDataScreen = ({ route, navigation }) => {
       </Card>
       {buttonDisplay}
     </View>
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -148,14 +124,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 10,
   },
-})
+});
 
 export const screenOptions = (navData) => {
   return {
     title: navData.route.params.doctorName,
     headerTintColor: Colors.primary,
     headerStyle: { backgroundColor: Colors.secondary },
-  }
-}
+  };
+};
 
-export default DoctorDataScreen
+export default DoctorDataScreen;

@@ -1,26 +1,18 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native'
-import UserDetailsItem from '../../components/UserComponents/UserDetailsItem'
-import * as usersActions from '../../store/actions/user'
-import * as chatMateActions from '../../store/actions/chatMate'
-import Colors from '../../constants/Colors'
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
+import UserDetailsItem from '../../components/UserComponents/UserDetailsItem';
+import Colors from '../../constants/Colors';
 
 const AllPatientsScreen = (props) => {
-  const { navigation } = props
-  const dispatch = useDispatch()
-
-  let display = <ActivityIndicator size='large' color={Colors.secondary} />
-  const patients = useSelector((state) => state.patientsState.patients)
-  // const chatMates = useSelector((state) => state.chatMatesState.chatMates)
+  const { navigation } = props;
+  const patients = useSelector((state) => state.patientsState.patients);
+  let display = <ActivityIndicator size='large' color={Colors.secondary} />;
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      // dispatch(usersActions.loadAllUsers())
-      // dispatch(chatMateActions.loadChatMates())
-    })
-    return unsubscribe
-  }, [navigation])
+    const unsubscribe = navigation.addListener('focus', () => {});
+    return unsubscribe;
+  }, []);
 
   if (patients) {
     display = (
@@ -35,26 +27,24 @@ const AllPatientsScreen = (props) => {
               name={itemData.item.name}
               role={itemData.item.role}
               onPress={() => {
-                dispatch()
-                // chatMateActions.isMyChatMate(chatMates, itemData.item._id)
                 navigation.navigate('PatientDataScreen', {
                   avatar: itemData.item.avatar,
-                  // chatMates: chatMates,
                   patientName: itemData.item.name,
                   patientMail: itemData.item.email,
                   patientId: itemData.item._id,
+                  role: itemData.item.role,
                   patientPhoneNumber: itemData.item.phoneNumber,
-                })
+                });
               }}
             />
           ) : null
         }
       />
-    )
+    );
   }
 
-  return <View style={styles.screen}>{display}</View>
-}
+  return <View style={styles.screen}>{display}</View>;
+};
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -66,5 +56,5 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 20,
   },
-})
-export default AllPatientsScreen
+});
+export default AllPatientsScreen;

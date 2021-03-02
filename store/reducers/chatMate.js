@@ -1,14 +1,8 @@
-import ChatMate from "../../models/chatMate"
-import {
-  ADD_CHAT_MATE,
-  LOAD_CHAT_MATES,
-  SET_EXIST,
-  SET_NOT_EXIST,
-} from "../actions/chatMate"
+import ChatMate from '../../models/chatMate'
+import { ADD_CHAT_MATE, LOAD_CHAT_MATES } from '../actions/chatMate'
 
 const initialState = {
   chatMates: [],
-  isChatMateExist: false,
 }
 
 export default (state = initialState, action) => {
@@ -27,18 +21,7 @@ export default (state = initialState, action) => {
         ),
       }
     }
-    case SET_EXIST: {
-      return {
-        ...state,
-        isChatMateExist: true,
-      }
-    }
-    case SET_NOT_EXIST: {
-      return {
-        ...state,
-        isChatMateExist: false,
-      }
-    }
+
     default: {
       return state
     }

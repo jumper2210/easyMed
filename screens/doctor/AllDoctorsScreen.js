@@ -1,27 +1,20 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native'
-import UserDetailsItem from '../../components/UserComponents/UserDetailsItem'
-import * as doctorActions from '../../store/actions/doctor'
-// import * as chatMateActions from '../../store/actions/chatMate'
-import Colors from '../../constants/Colors'
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
+import UserDetailsItem from '../../components/UserComponents/UserDetailsItem';
+import Colors from '../../constants/Colors';
 
 const AllDoctorsScreen = (props) => {
-  const { navigation } = props
-  const dispatch = useDispatch()
-  const doctors = useSelector((state) => state.doctorsState.doctors)
-  // const chatMates = useSelector((state) => state.doctorState.chatMates)
+  const { navigation } = props;
+  const doctors = useSelector((state) => state.doctorsState.doctors);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      // dispatch(chatMateActions.loadChatMates())
-    })
-    return unsubscribe
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {});
+    return unsubscribe;
+  }, []);
 
-  let display = <ActivityIndicator size='large' color={Colors.secondary} />
+  let display = <ActivityIndicator size='large' color={Colors.secondary} />;
 
-  console.log(doctors)
   if (doctors) {
     display = (
       <FlatList
@@ -35,9 +28,6 @@ const AllDoctorsScreen = (props) => {
               name={itemData.item.name}
               // specialization={itemData.item.specialization}
               onPress={() => {
-                // dispatch(
-                //   chatMateActions.isMyChatMate(chatMates, itemData.item._id)
-                // )
                 navigation.navigate('DoctorDataScreen', {
                   avatar: itemData.item.avatar,
                   doctorName: itemData.item.name,
@@ -46,17 +36,17 @@ const AllDoctorsScreen = (props) => {
                   doctorPhoneNumber: itemData.item.phoneNumber,
                   role: itemData.item.role,
                   specialization: itemData.item.specialization,
-                })
+                });
               }}
             />
           ) : null
         }
       />
-    )
+    );
   }
 
-  return <View style={styles.screen}>{display}</View>
-}
+  return <View style={styles.screen}>{display}</View>;
+};
 
 const styles = StyleSheet.create({
   screen: {
@@ -69,5 +59,5 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 20,
   },
-})
-export default AllDoctorsScreen
+});
+export default AllDoctorsScreen;

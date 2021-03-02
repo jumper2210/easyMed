@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, Text, FlatList, Alert } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import MedicalCaseItem from '../../components/MedicalCaseComponents/MedicalCaseItem'
-import Colors from '../../constants/Colors'
-import * as conversationActions from '../../store/actions/conversation'
-import * as chatMateActions from '../../store/actions/chatMate'
-import * as medicalCaseActions from '../../store/actions/medicalCase'
-import * as userAction from '../../store/actions/user'
-import MedicalCase from '../../models/medicalCase'
-import Button from '../../UI/Button'
-import Card from '../../UI/Card'
-import constants from '../../constants/Constants'
-import UserAvatarItem from '../../components/UserComponents/UserAvatarItem'
-import ListOfMedicines from '../../components/MedicineComponents/ListOfMedicnes'
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Text, FlatList, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import MedicalCaseItem from '../../components/MedicalCaseComponents/MedicalCaseItem';
+import Colors from '../../constants/Colors';
+import * as conversationActions from '../../store/actions/conversation';
+import * as chatMateActions from '../../store/actions/chatMate';
+import * as medicalCaseActions from '../../store/actions/medicalCase';
+import * as userAction from '../../store/actions/user';
+import MedicalCase from '../../models/medicalCase';
+import Button from '../../UI/Button';
+import Card from '../../UI/Card';
+import constants from '../../constants/Constants';
+import UserAvatarItem from '../../components/UserComponents/UserAvatarItem';
+import ListOfMedicines from '../../components/MedicineComponents/ListOfMedicnes';
 
 const PatientDataScreen = ({ route, navigation }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const {
     patientName,
     patientMail,
@@ -23,92 +23,64 @@ const PatientDataScreen = ({ route, navigation }) => {
     patientId,
     chatMates,
     avatar,
-  } = route.params
-  const selfUser = useSelector((state) => state.usersState.selfUser)
+  } = route.params;
+  const selfUser = useSelector((state) => state.usersState.selfUser);
 
   const medicalCases = useSelector(
     (state) => state.medicalCaseState.medicalCases
-  )
+  );
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
-  )
-  const isChatMateExist = useSelector(
-    (state) => state.chatMatesState.isChatMateExist
-  )
-  let medicalCasesToCheck = []
+  );
 
+  let medicalCasesToCheck = [];
+  let buttonDisplay;
   let medicalCaseDisplay = (
     <Text style={styles.noMedicalCaseInfo}>
       Ten pacjent nie posiada żadnych przypadków medczynych.
     </Text>
-  )
-  let buttonDisplay = (
-    <Button
-      style={{ backgroundColor: Colors.primary }}
-      textStyle={{ color: Colors.details }}
-      title={'Dodaj do znajomych'}
-      onPress={() => {
-        dispatch(chatMateActions.addChatMate(patientMail))
-        infoHandler()
-      }}
-    />
-  )
+  );
 
   useEffect(() => {
-    dispatch(medicalCaseActions.loadPatientMedicalCase(patientId))
-    dispatch(conversationActions.loadConversations())
-    dispatch(userAction.loadUserData())
-    dispatch(chatMateActions.loadChatMates())
-  }, [])
+    dispatch(medicalCaseActions.loadPatientMedicalCase(patientId));
+    dispatch(conversationActions.loadConversations());
+    dispatch(userAction.loadUserData());
+    dispatch(chatMateActions.loadChatMates());
+  }, []);
 
   const setCurrentConversationId = (conversationId) => {
-    dispatch(conversationActions.setCurrentConversation(conversationId))
-  }
+    dispatch(conversationActions.setCurrentConversation(conversationId));
+  };
 
   const findConversationHandler = (patientId) => {
     const findConversation = conversations.find(
       (conversation) => conversation.chatMateId === patientId
-    )
-    return findConversation
-  }
+    );
+    return findConversation;
+  };
 
-  const infoHandler = () => {
-    Alert.alert('Chcesz dodać tego pacjenta do listy znajomych?', '', [
-      {
-        text: 'dodaj',
-        onPress: () => {
-          navigation.navigate('ChatGroupsScreen')
-        },
-      },
-    ])
-  }
-
-  if (isChatMateExist) {
-    if (isChatMateExist == true) {
-      buttonDisplay = (
-        <Button
-          style={{ backgroundColor: Colors.primary }}
-          textStyle={{ color: Colors.details }}
-          title='Napisz wiadomość'
-          onPress={() => {
-            const conversation = findConversationHandler(patientId)
-            if (conversation && conversation.id) {
-              setCurrentConversationId(conversation.id)
-              navigation.navigate('ConversationScreen', {
-                conversation: conversation,
-                chatMates: chatMates,
-                user: selfUser,
-              })
-            } else {
-              dispatch(
-                conversationActions.createConversation(patientId, navigation)
-              )
-            }
-          }}
-        />
-      )
-    }
-  }
+  buttonDisplay = (
+    <Button
+      style={{ backgroundColor: Colors.primary }}
+      textStyle={{ color: Colors.details }}
+      title='Napisz wiadomość'
+      onPress={() => {
+        const conversation = findConversationHandler(patientId);
+        if (conversation && conversation.id) {
+          setCurrentConversationId(conversation.id);
+          navigation.navigate('ConversationScreen', {
+            conversation: conversation,
+            chatMates: chatMates,
+            user: selfUser,
+          });
+        } else {
+          dispatch(
+            conversationActions.createConversationPatient(patientId, navigation)
+          );
+        }
+      }}
+    />
+  );
 
   medicalCases.map((mc) => {
     if (mc.resolved === false) {
@@ -127,10 +99,10 @@ const PatientDataScreen = ({ route, navigation }) => {
           mc.imageUri,
           mc.resolved
         )
-      )
-      return medicalCasesToCheck
+      );
+      return medicalCasesToCheck;
     }
-  })
+  });
 
   if (medicalCasesToCheck.length > 0) {
     medicalCaseDisplay = (
@@ -157,13 +129,13 @@ const PatientDataScreen = ({ route, navigation }) => {
                   createdAt: itemData.item.createdAt,
                   imageUri: itemData.item.imageUri,
                   role: 'DOCTOR',
-                })
+                });
               }}
             />
           )}
         />
       </View>
-    )
+    );
   }
 
   return (
@@ -199,13 +171,13 @@ const PatientDataScreen = ({ route, navigation }) => {
             navigation.navigate('AssignMedicineScreen', {
               patientId: patientId,
               patientName: patientName,
-            })
+            });
           }}
         />
       </View>
     </View>
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -268,15 +240,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-})
+});
 
 export const screenOptions = (navData) => {
-  const patientName = navData.route.params.patientName
+  const patientName = navData.route.params.patientName;
   return {
     title: patientName,
     headerTintColor: Colors.primary,
     headerStyle: { backgroundColor: Colors.secondary },
-  }
-}
+  };
+};
 
-export default PatientDataScreen
+export default PatientDataScreen;

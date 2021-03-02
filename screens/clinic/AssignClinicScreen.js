@@ -1,17 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Picker, Button } from 'react-native'
-import * as clinicActions from '../../store/actions/clinics'
-import { useDispatch, useSelector } from 'react-redux'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import CustomHeaderButton from '../../UI/CustomHeaderButton'
-const AssignClinicScreen = ({ navigation }) => {
-  const dispatch = useDispatch()
-  const [selectedValue, setSelectedValue] = useState('')
-  const clinics = useSelector((state) => state.clinicsState.clinics)
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Picker, Alert } from 'react-native';
+import * as clinicActions from '../../store/actions/clinics';
+import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../../UI/CustomHeaderButton';
+import * as authActions from '../../store/actions/auth';
+
+const AssignClinicScreen = ({ navigation, route }) => {
+  const { _id } = route.params;
+  const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState('');
+  const clinics = useSelector((state) => state.clinicsState.clinics);
 
   useEffect(() => {
-    dispatch(clinicActions.loadClinics())
-  }, [])
+    dispatch(clinicActions.loadClinics());
+  }, []);
+
+  const infoHandler = (_) => {
+    Alert.alert(
+      'Sukces!',
+      'Zostaniesz teraz wylogowany z twojego konta.',
+      [
+        {
+          text: 'Wyloguj',
+          onPress: () => {
+            dispatch(authActions.logout());
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Picker
@@ -29,16 +49,16 @@ const AssignClinicScreen = ({ navigation }) => {
           title=''
           iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
           onPress={() => {
-            dispatch(clinicActions.assignClinic(selectedValue))
-            navigation.navigate('HomeScreen')
+            dispatch(clinicActions.assignClinic(selectedValue, _id));
+            infoHandler(_id);
           }}
         />
       </HeaderButtons>
     </View>
-  )
-}
+  );
+};
 
-export default AssignClinicScreen
+export default AssignClinicScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -46,4 +66,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});

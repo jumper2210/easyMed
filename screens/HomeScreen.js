@@ -1,26 +1,28 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { View, StyleSheet, Platform, Alert } from 'react-native'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import HeaderButton from '../UI/CustomHeaderButton'
-import NavigationItem from '../components/NavigationItem'
-import { ScrollView } from 'react-native-gesture-handler'
-import * as userActions from '../store/actions/user'
-import * as authActions from '../store/actions/auth'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { View, StyleSheet, Platform, Alert } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import HeaderButton from '../UI/CustomHeaderButton';
+import NavigationItem from '../components/NavigationItem';
+import { ScrollView } from 'react-native-gesture-handler';
+import * as userActions from '../store/actions/user';
+import * as authActions from '../store/actions/auth';
 // import RegisterForPushNotifications from '../helpers/registerForPushNotifications'
-import CustomButton from '../UI/Button'
-import * as doctorActions from '../store/actions/doctor'
-import * as patientActions from '../store/actions/patient'
+import CustomButton from '../UI/Button';
+import * as doctorActions from '../store/actions/doctor';
+import * as patientActions from '../store/actions/patient';
 
 const HomeScreen = ({ navigation }) => {
-  const dispatch = useDispatch()
-  const { role, isAssignClinic, clinics } = useSelector(
+  const dispatch = useDispatch();
+  const { role, isAssignClinic, clinics, _id } = useSelector(
     (state) => state.usersState.selfUser
-  )
-  let display = null
-  let currentClinicId = null
+  );
+
+  let display = null;
+  let currentClinicId = null;
+
   if (clinics) {
-    currentClinicId = clinics[0]
+    currentClinicId = clinics[0];
   }
 
   // useEffect(() => {
@@ -31,32 +33,32 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(userActions.loadUserData())
-    })
-    return unsubscribe
-  }, [])
+      dispatch(userActions.loadUserData());
+    });
+    return unsubscribe;
+  }, []);
 
-  const noAssignClnicHandler = () => {
+  const noAssignClnicHandler = (_id) => {
     Alert.alert(
       'Brak kliniki',
       'Wygląda na to, że nie masz przypisanej kliniki',
       [
         {
           text: 'Anuluj',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
+          onPress: () => {},
         },
         {
           text: 'Wybierz swoją klinikę',
-          onPress: () => navigation.navigate('AssignClinicScreen'),
+          onPress: () =>
+            navigation.navigate('AssignClinicScreen', { _id: _id }),
         },
       ],
       { cancelable: false }
-    )
-  }
+    );
+  };
 
   if (isAssignClinic === false && role !== 'ADMIN') {
-    noAssignClnicHandler()
+    noAssignClnicHandler(_id);
     display = (
       <View style={styles.noAssignClinic}>
         <CustomButton
@@ -64,16 +66,16 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('AssignClinicScreen')}
         />
       </View>
-    )
+    );
   }
-  if (role === 'PATIENT' && isAssignClinic) {
+  if (role === 'PATIENT' && isAssignClinic === true) {
     display = (
       <View style={styles.screen}>
         <NavigationItem
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { role: role })
+            navigation.navigate('ClinicScreen', { role: role });
           }}
         />
 
@@ -81,7 +83,7 @@ const HomeScreen = ({ navigation }) => {
           name={'Moje konto'}
           iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}
           onPress={() => {
-            navigation.navigate('UserAccountScreen')
+            navigation.navigate('UserAccountScreen');
           }}
         />
         <NavigationItem
@@ -92,15 +94,15 @@ const HomeScreen = ({ navigation }) => {
               : 'ios-add-circle-outline'
           }
           onPress={() => {
-            navigation.navigate('FormScreen')
+            navigation.navigate('FormScreen');
           }}
         />
         <NavigationItem
           name={'Wszyscy doktorzy'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
-            navigation.navigate('AllDoctorsScreen', {})
-            dispatch(doctorActions.loadClinicDoctors(currentClinicId))
+            navigation.navigate('AllDoctorsScreen', {});
+            dispatch(doctorActions.loadClinicDoctors(currentClinicId));
           }}
         />
         <NavigationItem
@@ -109,11 +111,11 @@ const HomeScreen = ({ navigation }) => {
             Platform.OS === 'android' ? 'md-chatboxes' : 'ios-chatboxes'
           }
           onPress={() => {
-            navigation.navigate('ChatGroupsScreen')
+            navigation.navigate('ChatGroupsScreen');
           }}
         />
       </View>
-    )
+    );
   }
   if (role === 'ADMIN') {
     display = (
@@ -122,7 +124,7 @@ const HomeScreen = ({ navigation }) => {
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { role: role })
+            navigation.navigate('ClinicScreen', { role: role });
           }}
         />
 
@@ -130,18 +132,18 @@ const HomeScreen = ({ navigation }) => {
           name={'Moje konto'}
           iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}
           onPress={() => {
-            navigation.navigate('UserAccountScreen')
+            navigation.navigate('UserAccountScreen');
           }}
         />
         <NavigationItem
           name={'Dodaj lekarza'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
-            navigation.navigate('AssignDoctorAccountScreen')
+            navigation.navigate('AssignDoctorAccountScreen');
           }}
         />
       </View>
-    )
+    );
   }
   if (role === 'DOCTOR' && isAssignClinic) {
     display = (
@@ -150,7 +152,7 @@ const HomeScreen = ({ navigation }) => {
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { role: role })
+            navigation.navigate('ClinicScreen', { role: role });
           }}
         />
 
@@ -158,7 +160,7 @@ const HomeScreen = ({ navigation }) => {
           name={'Moje konto'}
           iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}
           onPress={() => {
-            navigation.navigate('UserAccountScreen')
+            navigation.navigate('UserAccountScreen');
           }}
         />
         <NavigationItem
@@ -167,24 +169,24 @@ const HomeScreen = ({ navigation }) => {
             Platform.OS === 'android' ? 'md-chatboxes' : 'ios-chatboxes'
           }
           onPress={() => {
-            navigation.navigate('ChatGroupsScreen')
+            navigation.navigate('ChatGroupsScreen');
           }}
         />
         <NavigationItem
           name={'Wszyscy pacjenci'}
           iconName={Platform.OS === 'android' ? 'md-list-box' : 'ios-list-box'}
           onPress={() => {
-            navigation.navigate('AllPatientsScreen')
-            dispatch(patientActions.loadClinicPatients(currentClinicId))
+            navigation.navigate('AllPatientsScreen');
+            dispatch(patientActions.loadClinicPatients(currentClinicId));
           }}
         />
       </View>
-    )
+    );
   }
-  return <ScrollView>{display}</ScrollView>
-}
+  return <ScrollView>{display}</ScrollView>;
+};
 export const screenOptions = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return {
     headerTitle: 'Start',
     headerLeft: () => (
@@ -193,13 +195,13 @@ export const screenOptions = () => {
           title=''
           iconName={Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'}
           onPress={() => {
-            dispatch(authActions.logout())
+            dispatch(authActions.logout());
           }}
         />
       </HeaderButtons>
     ),
-  }
-}
+  };
+};
 
 const styles = StyleSheet.create({
   screen: {
@@ -213,6 +215,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
-export default HomeScreen
+export default HomeScreen;
