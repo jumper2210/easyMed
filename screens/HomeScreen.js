@@ -8,18 +8,16 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as userActions from '../store/actions/user';
 import * as authActions from '../store/actions/auth';
 // import RegisterForPushNotifications from '../helpers/registerForPushNotifications'
-import CustomButton from '../UI/Button';
 import * as doctorActions from '../store/actions/doctor';
 import * as patientActions from '../store/actions/patient';
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  let display = null;
+  let currentClinicId = null;
   const { role, isAssignClinic, clinics, _id } = useSelector(
     (state) => state.usersState.selfUser
   );
-
-  let display = null;
-  let currentClinicId = null;
 
   if (clinics) {
     currentClinicId = clinics[0];
@@ -38,47 +36,37 @@ const HomeScreen = ({ navigation }) => {
     return unsubscribe;
   }, []);
 
-  const noAssignClnicHandler = (_id) => {
-    Alert.alert(
-      'Brak kliniki',
-      'Wygląda na to, że nie masz przypisanej kliniki',
-      [
-        {
-          text: 'Anuluj',
-          onPress: () => {},
-        },
-        {
-          text: 'Wybierz swoją klinikę',
-          onPress: () =>
-            navigation.navigate('AssignClinicScreen', { _id: _id }),
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
-  if (isAssignClinic === false && role !== 'ADMIN') {
-    noAssignClnicHandler(_id);
+  if (isAssignClinic === false && role === 'PATIENT') {
     display = (
-      <View style={styles.noAssignClinic}>
-        <CustomButton
-          title='Wybierz swoją klinikę'
-          onPress={() => navigation.navigate('AssignClinicScreen')}
+      <View style={styles.screen}>
+        <NavigationItem
+          name={'Przychodnia'}
+          iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
+          onPress={() =>
+            navigation.navigate('ClinicScreen', {
+              isAssignClinic: isAssignClinic,
+              _id: _id,
+              role: role,
+            })
+          }
         />
       </View>
     );
   }
-  if (role === 'PATIENT' && isAssignClinic === true) {
+  if (isAssignClinic === true && role === 'PATIENT') {
     display = (
       <View style={styles.screen}>
         <NavigationItem
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { role: role });
+            navigation.navigate('ClinicScreen', {
+              role: role,
+              _id: _id,
+              role: role,
+            });
           }}
         />
-
         <NavigationItem
           name={'Moje konto'}
           iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}
@@ -87,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
           }}
         />
         <NavigationItem
-          name={'Formularz medyczyny'}
+          name={'Formularz informacji medycznych'}
           iconName={
             Platform.OS === 'android'
               ? 'md-add-circle-outline'
@@ -145,17 +133,20 @@ const HomeScreen = ({ navigation }) => {
       </View>
     );
   }
-  if (role === 'DOCTOR' && isAssignClinic) {
+  if (role === 'DOCTOR' && isAssignClinic === true) {
     display = (
       <View style={styles.screen}>
         <NavigationItem
           name={'Przychodnia'}
           iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
           onPress={() => {
-            navigation.navigate('ClinicScreen', { role: role });
+            navigation.navigate('ClinicScreen', {
+              role: role,
+              _id: _id,
+              isAssignClinic: isAssignClinic,
+            });
           }}
         />
-
         <NavigationItem
           name={'Moje konto'}
           iconName={Platform.OS === 'android' ? 'md-contact' : 'ios-contact'}

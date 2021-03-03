@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import * as Font from 'expo-font'
-import { AppLoading } from 'expo'
-import AppNavigator from './navigation/AppNavigator'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import ReduxThunk from 'redux-thunk'
-import authReducer from './store/reducers/auth'
-import messagesReducer from './store/reducers/message'
-import conversationsReducer from './store/reducers/conversation'
-import chatMatesReducer from './store/reducers/chatMate'
-import clinicReducer from './store/reducers/clinics'
-import medicalCaseReducer from './store/reducers/medicalCase'
-import usersReducer from './store/reducers/user'
-import medicinesReducer from './store/reducers/medicine'
-import doctorsReducer from './store/reducers/doctor'
-import patientsReducer from './store/reducers/patient'
-import * as Notifications from 'expo-notifications'
-import * as Permissions from 'expo-permissions'
+import React, { useState, useEffect } from 'react';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+import AppNavigator from './navigation/AppNavigator';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import authReducer from './store/reducers/auth';
+import messagesReducer from './store/reducers/message';
+import conversationsReducer from './store/reducers/conversation';
+import chatMatesReducer from './store/reducers/chatMate';
+import clinicReducer from './store/reducers/clinics';
+import healthInformationReducer from './store/reducers/healthInformation';
+import usersReducer from './store/reducers/user';
+import medicinesReducer from './store/reducers/medicine';
+import doctorsReducer from './store/reducers/doctor';
+import patientsReducer from './store/reducers/patient';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
 const rootReducer = combineReducers({
   clinicsState: clinicReducer,
   authState: authReducer,
-  medicalCaseState: medicalCaseReducer,
+  healthInformationState: healthInformationReducer,
   messagesState: messagesReducer,
   conversationsState: conversationsReducer,
   chatMatesState: chatMatesReducer,
@@ -29,21 +29,21 @@ const rootReducer = combineReducers({
   medicinesState: medicinesReducer,
   patientsState: patientsReducer,
   doctorsState: doctorsReducer,
-})
+});
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {
   return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
-  })
-}
+  });
+};
 // store.subscribe(() => {
-//   console.log("new state", store.getState())
-// })
+//   console.log('new state', store.getState().usersState);
+// });
 export default function App() {
-  const [fontLoaded, setFontLoaded] = useState(false)
+  const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
     Notifications.setNotificationHandler({
@@ -52,52 +52,52 @@ export default function App() {
           shouldShowAlert: true,
           shouldPlaySound: true,
           shouldSetBadge: false,
-        }
+        };
       },
-    })
+    });
     Permissions.getAsync(Permissions.NOTIFICATIONS)
       .then((statusObj) => {
         if (statusObj.status !== 'granted') {
-          return Permissions.askAsync(Permissions.NOTIFICATIONS)
+          return Permissions.askAsync(Permissions.NOTIFICATIONS);
         }
-        return statusObj
+        return statusObj;
       })
       .then((statusObj) => {
         if (statusObj.status !== 'granted') {
-          throw new Error('Permissions not granted.')
+          throw new Error('Permissions not granted.');
         }
       })
       .catch((err) => {
-        return null
-      })
-  }, [])
+        return null;
+      });
+  }, []);
 
   useEffect(() => {
     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
       (response) => {}
-    )
+    );
     const foregroundSubscription = Notifications.addNotificationReceivedListener(
       (notification) => {}
-    )
+    );
     return () => {
-      backgroundSubscription.remove()
-      foregroundSubscription.remove()
-    }
-  }, [])
+      backgroundSubscription.remove();
+      foregroundSubscription.remove();
+    };
+  }, []);
 
   if (!fontLoaded) {
     return (
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => {
-          setFontLoaded(true)
+          setFontLoaded(true);
         }}
       />
-    )
+    );
   }
   return (
     <Provider store={store}>
       <AppNavigator />
     </Provider>
-  )
+  );
 }

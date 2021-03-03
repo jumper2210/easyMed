@@ -1,12 +1,12 @@
-import React from 'react'
-import { Image } from 'react-native'
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
-import { useDispatch } from 'react-redux'
-import Colors from '../../constants/Colors'
-import * as medicalCaseActions from '../../store/actions/medicalCase'
-import Button from '../../UI/Button'
+import React from 'react';
+import { Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
+import Colors from '../../constants/Colors';
+import * as healthInformationActions from '../../store/actions/healthInformation';
+import Button from '../../UI/Button';
 
-const medicalCaseDetailsScreen = ({ route, navigation }) => {
+const healthInformationDetailsScreen = ({ route, navigation }) => {
   const {
     name,
     age,
@@ -18,12 +18,12 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
     scale,
     createdAt,
     imageUri,
-    medicalCaseId,
+    healthInformationId,
     role,
-  } = route.params
-  const dispatch = useDispatch()
+  } = route.params;
+  const dispatch = useDispatch();
 
-  const checkMedicalCaseHandler = (medicalCaseId) => {
+  const checkHealthInformationHandler = (healthInformationId) => {
     Alert.alert(
       'Jesteś pewien, że chcesz zatwierdzić ten przypadek medyczny?',
       '',
@@ -31,8 +31,12 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
         {
           text: 'Zatwierdź',
           onPress: () => {
-            navigation.navigate('HomeScreen')
-            dispatch(medicalCaseActions.checkMedicalCase(medicalCaseId))
+            navigation.navigate('HomeScreen');
+            dispatch(
+              healthInformationActions.checkHealthInformation(
+                healthInformationId
+              )
+            );
           },
         },
         {
@@ -41,20 +45,20 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
         },
       ],
       { cancelable: false }
-    )
-  }
+    );
+  };
   const editTextHandler = (data) => {
     if (data === undefined) {
-      data = ''
+      data = '';
     }
-    const valueOfData = data.length
-    let display = data
+    const valueOfData = data.length;
+    let display = data;
 
     if (valueOfData == 0) {
-      display = <Text>brak danych</Text>
+      display = <Text>brak danych</Text>;
     }
-    return display
-  }
+    return display;
+  };
 
   return (
     <View style={styles.screen}>
@@ -109,13 +113,13 @@ const medicalCaseDetailsScreen = ({ route, navigation }) => {
         <Button
           title='Potwierdź ten przypadek'
           onPress={() => {
-            checkMedicalCaseHandler(medicalCaseId)
+            checkHealthInformationHandler(healthInformationId);
           }}
         />
       ) : null}
     </View>
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -149,10 +153,10 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
   },
-})
+});
 export const screenOptions = (navData) => {
   return {
     title: 'Szczegóły',
-  }
-}
-export default medicalCaseDetailsScreen
+  };
+};
+export default healthInformationDetailsScreen;

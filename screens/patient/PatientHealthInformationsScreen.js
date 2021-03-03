@@ -1,28 +1,28 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, FlatList, Text } from 'react-native'
-import Colors from '../../constants/Colors'
-import { useSelector, useDispatch } from 'react-redux'
-import MedicalCase from '../../models/medicalCase'
-import * as medicalCaseActions from '../../store/actions/medicalCase'
-import MedicalCaseItem from '../../components/MedicalCaseComponents/MedicalCaseItem'
+import React, { useEffect } from 'react';
+import { View, StyleSheet, FlatList, Text } from 'react-native';
+import Colors from '../../constants/Colors';
+import { useSelector, useDispatch } from 'react-redux';
+import HealthInformation from '../../models/healthInformation';
+import * as healthInformationActions from '../../store/actions/healthInformation';
+import HealthInformationItem from '../../components/HealthInformationComponents/HealthInformationItem';
 
-const PatientMedicalCasesScreen = (props) => {
-  const { navigation } = props
-  const dispatch = useDispatch()
-  let medicalHistory = []
-  const medicalCases = useSelector(
-    (state) => state.medicalCaseState.medicalCases
-  )
-  const { _id, role } = useSelector((state) => state.usersState.selfUser)
+const PatientHealthinformationsScreen = (props) => {
+  const { navigation } = props;
+  const dispatch = useDispatch();
+  let medicalHistory = [];
+  const healthInformations = useSelector(
+    (state) => state.healthInformationState.healthInformations
+  );
+  const { _id, role } = useSelector((state) => state.usersState.selfUser);
 
   useEffect(() => {
-    dispatch(medicalCaseActions.loadPatientMedicalCase(_id))
-  }, [])
+    dispatch(healthInformationActions.loadPatientHealthInformation(_id));
+  }, []);
 
-  medicalCases.map((mc) => {
+  healthInformations.map((mc) => {
     if (mc.resolved === true) {
       medicalHistory.push(
-        new MedicalCase(
+        new HealthInformation(
           mc._id.toString(),
           mc.name,
           mc.age,
@@ -35,15 +35,15 @@ const PatientMedicalCasesScreen = (props) => {
           mc.createdAt,
           mc.imageUri
         )
-      )
-      return medicalHistory
+      );
+      return medicalHistory;
     }
-  })
+  });
   let display = (
     <Text style={styles.info}>
       Nie posiadasz zajerestrowanej historii medycznej w tej przychodni.
     </Text>
-  )
+  );
 
   if (medicalHistory.length >= 1) {
     display = (
@@ -51,10 +51,10 @@ const PatientMedicalCasesScreen = (props) => {
         data={medicalHistory}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
-          <MedicalCaseItem
+          <HealthInformationItem
             createdAt={itemData.item.createdAt}
             onPress={() => {
-              navigation.navigate('MedicalCaseDetailsScreen', {
+              navigation.navigate('HealthInformationScreen', {
                 age: itemData.item.age,
                 increase: itemData.item.increase,
                 locationOfPain: itemData.item.locationOfPain,
@@ -65,15 +65,15 @@ const PatientMedicalCasesScreen = (props) => {
                 createdAt: itemData.item.createdAt,
                 imageUri: itemData.item.imageUri,
                 role: role,
-              })
+              });
             }}
           />
         )}
       />
-    )
+    );
   }
-  return <View style={styles.screen}>{display}</View>
-}
+  return <View style={styles.screen}>{display}</View>;
+};
 export const styles = StyleSheet.create({
   screen: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   info: {
@@ -83,6 +83,6 @@ export const styles = StyleSheet.create({
     color: Colors.secondary,
     textAlign: 'center',
   },
-})
+});
 
-export default PatientMedicalCasesScreen
+export default PatientHealthinformationsScreen;

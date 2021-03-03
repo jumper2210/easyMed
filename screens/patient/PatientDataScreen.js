@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text, FlatList, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import MedicalCaseItem from '../../components/MedicalCaseComponents/MedicalCaseItem';
+import HealthInformationItem from '../../components/HealthInformationComponents/HealthInformationItem';
 import Colors from '../../constants/Colors';
 import * as conversationActions from '../../store/actions/conversation';
 import * as chatMateActions from '../../store/actions/chatMate';
-import * as medicalCaseActions from '../../store/actions/medicalCase';
+import * as healthInformationActions from '../../store/actions/healthInformation';
 import * as userAction from '../../store/actions/user';
-import MedicalCase from '../../models/medicalCase';
+import HealthInformation from '../../models/healthInformation';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
 import constants from '../../constants/Constants';
@@ -26,23 +26,23 @@ const PatientDataScreen = ({ route, navigation }) => {
   } = route.params;
   const selfUser = useSelector((state) => state.usersState.selfUser);
 
-  const medicalCases = useSelector(
-    (state) => state.medicalCaseState.medicalCases
+  const healthInformations = useSelector(
+    (state) => state.healthInformationState.healthInformations
   );
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
   );
 
-  let medicalCasesToCheck = [];
+  let healthInformationsToCheck = [];
   let buttonDisplay;
-  let medicalCaseDisplay = (
-    <Text style={styles.noMedicalCaseInfo}>
+  let healthInformationDisplay = (
+    <Text style={styles.nohealthInformationInfo}>
       Ten pacjent nie posiada żadnych przypadków medczynych.
     </Text>
   );
 
   useEffect(() => {
-    dispatch(medicalCaseActions.loadPatientMedicalCase(patientId));
+    dispatch(healthInformationActions.loadPatientHealthInformation(patientId));
     dispatch(conversationActions.loadConversations());
     dispatch(userAction.loadUserData());
     dispatch(chatMateActions.loadChatMates());
@@ -82,10 +82,10 @@ const PatientDataScreen = ({ route, navigation }) => {
     />
   );
 
-  medicalCases.map((mc) => {
+  healthInformations.map((mc) => {
     if (mc.resolved === false) {
-      medicalCasesToCheck.push(
-        new MedicalCase(
+      healthInformationsToCheck.push(
+        new HealthInformation(
           mc._id.toString(),
           mc.name,
           mc.age,
@@ -100,23 +100,25 @@ const PatientDataScreen = ({ route, navigation }) => {
           mc.resolved
         )
       );
-      return medicalCasesToCheck;
+      return healthInformationsToCheck;
     }
   });
 
-  if (medicalCasesToCheck.length > 0) {
-    medicalCaseDisplay = (
+  if (healthInformationsToCheck.length > 0) {
+    historyinformationDisplay = (
       <View>
-        <Text style={styles.medicalCaseInfo}>Potwierdź przypadek medczny</Text>
+        <Text style={styles.healthInformationInfo}>
+          Potwierdź przypadek medczny
+        </Text>
         <FlatList
           horizontal
-          data={medicalCasesToCheck}
+          data={healthInformationsToCheck}
           keyExtractor={(item) => item._id}
           renderItem={(itemData) => (
-            <MedicalCaseItem
+            <HealthInformationItem
               createdAt={itemData.item.createdAt}
               onPress={() => {
-                navigation.navigate('MedicalCaseDetailsScreen', {
+                navigation.navigate('HealthInformationDetailsScreen', {
                   name: patientName,
                   medicalCaseId: itemData.item._id,
                   age: itemData.item.age,
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 10,
   },
-  noMedicalCaseInfo: {
+  noHealthInformationInfo: {
     color: Colors.primary,
     fontFamily: 'open-sans-bold',
     fontSize: 10,
@@ -229,7 +231,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     textAlign: 'center',
   },
-  medicalCaseInfo: {
+  healthInformationInfo: {
     fontFamily: 'open-sans-bold',
     fontSize: 15,
     color: Colors.primary,

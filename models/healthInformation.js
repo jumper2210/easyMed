@@ -1,4 +1,4 @@
-class medicalCase {
+class healthInformation {
   constructor(
     _id,
     name,
@@ -27,4 +27,4 @@ class medicalCase {
     this.resolved = resolved;
   }
 }
-export default medicalCase;
+export default healthInformation;

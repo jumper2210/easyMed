@@ -1,81 +1,81 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Colors from '../constants/Colors'
-import { Ionicons } from '@expo/vector-icons'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Colors from '../constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 import ClinicScreen, {
   screenOptions as clinicScreenOptions,
-} from '../screens/clinic/ClinicOverviewScreen'
+} from '../screens/clinic/ClinicOverviewScreen';
 
 import HomeScreen, {
   screenOptions as HomeScreenOptions,
-} from '../screens/HomeScreen'
+} from '../screens/HomeScreen';
 
 import NewClinicScreen, {
   screenOptions as AddClinicScreenOptions,
-} from '../screens/clinic/NewClinicScreen'
+} from '../screens/clinic/NewClinicScreen';
 
 import ClinicDetailScreen, {
   screenOptions as clinicDetailOptions,
-} from '../screens/clinic/ClinicDetailScreen'
+} from '../screens/clinic/ClinicDetailScreen';
 
 import MapScreen, {
   screenOptions as mapScreenOptions,
-} from '../screens/clinic/MapScreen'
+} from '../screens/clinic/MapScreen';
 import AuthScreen, {
   screenOptions as AuthScreenOptions,
-} from '../screens/AuthScreen'
+} from '../screens/AuthScreen';
 
 import MedFormScreen, {
   screenOptions as medFormScreenOptions,
-} from '../screens/form/MedFormScreen'
+} from '../screens/healthInformation/HealthInformationScreen';
 
 import ChatGroupScreen, {
   screenOptions as ChatGroupsScreenOptions,
-} from '../screens/chat/ChatGroupsScreen'
+} from '../screens/chat/ChatGroupsScreen';
 
 import ConversationScreen, {
   screenOptions as conversationScreenOptions,
-} from '../screens/chat/ConversationScreen'
+} from '../screens/chat/ConversationScreen';
 
 import UserAccountScreen, {
   screenOptions as UserAccountScreenOptions,
-} from '../screens/user/UserAccountScreen'
+} from '../screens/user/UserAccountScreen';
 
-import MedicalCaseDetailsScreen, {
-  screenOptions as MedicalCaseDetailsScreenOptions,
-} from '../screens/medicalCase/medicalCaseDetailsScreen'
+import HealthInformationDetailsScreen, {
+  screenOptions as HealthInformationDetailsScreenOptions,
+} from '../screens/healthInformation/HealthInformationDetailsScreen';
 
 import PatientDataScreen, {
   screenOptions as PatientDataScreenOptions,
-} from '../screens/patient/PatientDataScreen'
+} from '../screens/patient/PatientDataScreen';
 
-import AllDoctorsScreen from '../screens/doctor/AllDoctorsScreen'
+import AllDoctorsScreen from '../screens/doctor/AllDoctorsScreen';
 
 import DoctorDataScreen, {
   screenOptions as DoctorDataScreenOptions,
-} from '../screens/doctor/DoctorDataScreen'
+} from '../screens/doctor/DoctorDataScreen';
 
 import AssignMedicineScreen, {
   screenOptions as AssignMedicineScreenOptions,
-} from '../screens/medicine/AssignMedicineScreen'
+} from '../screens/medicine/AssignMedicineScreen';
 
-import AssignClinicScreen from '../screens/clinic/AssignClinicScreen'
+import AssignClinicScreen from '../screens/clinic/AssignClinicScreen';
 
-import AssignDoctorAccountScreen from '../screens/admin/AssignDoctorAccountScreen'
+import AssignDoctorAccountScreen from '../screens/admin/AssignDoctorAccountScreen';
 import UserDataScreen, {
   screenOptions as UserDataScreenOptions,
-} from '../screens/user/UserDataScreen'
+} from '../screens/user/UserDataScreen';
 
-import EditUserDataScreen from '../screens/user/EditUserDataScreen'
+import EditUserDataScreen from '../screens/user/EditUserDataScreen';
 
-import PatientMedicalCasesScreen from '../screens/patient/PatientMedicalCasesScreen'
+import PatientHealthInformationsScreen from '../screens/patient/PatientHealthInformationsScreen';
 
-import PatientMedicinesScreen from '../screens/patient/PatientMedicinesScreen'
+import PatientMedicinesScreen from '../screens/patient/PatientMedicinesScreen';
 
-import AllPatientsScreen from '../screens/patient/AllPatientsScreen'
+import AllPatientsScreen from '../screens/patient/AllPatientsScreen';
 
 const defaultNavOptions = {
   headerTitleStyle: {
@@ -85,16 +85,16 @@ const defaultNavOptions = {
     fontFamily: 'open-sans',
   },
   headerTintColor: Colors.secondary,
-}
+};
 const defaultTabBarOptions = {
   activeTintColor: Colors.secondary,
   labelStyle: { fontFamily: 'open-sans' },
-}
+};
 
-const UserManagementBottomTabs = createBottomTabNavigator()
+const UserManagementBottomTabs = createBottomTabNavigator();
 
 export const UserManagementTabs = () => {
-  const userRole = useSelector((state) => state.authState.role)
+  const userRole = useSelector((state) => state.authState.role);
 
   return (
     <UserManagementBottomTabs.Navigator tabBarOptions={defaultTabBarOptions}>
@@ -105,15 +105,15 @@ export const UserManagementTabs = () => {
       />
       {userRole == 'PATIENT' && (
         <UserManagementBottomTabs.Screen
-          name='UserMedicalCasesScreen'
-          component={PatientMedicalCasesScreen}
+          name='PatientHealthInformationScreen'
+          component={PatientHealthInformationsScreen}
           options={{
-            tabBarLabel: 'Moje choroby',
+            tabBarLabel: 'Historia dolegliwości',
             title: 'Historia medyczna',
             tabBarIcon: () => {
               return (
                 <Ionicons name='md-list' size={26} color={Colors.secondary} />
-              )
+              );
             },
           }}
         />
@@ -132,16 +132,16 @@ export const UserManagementTabs = () => {
                   size={26}
                   color={Colors.secondary}
                 />
-              )
+              );
             },
           }}
         />
       )}
     </UserManagementBottomTabs.Navigator>
-  )
-}
+  );
+};
 
-const EasyMedStackNavigator = createStackNavigator()
+const EasyMedStackNavigator = createStackNavigator();
 
 export const EasyMedNavigator = () => {
   return (
@@ -207,9 +207,9 @@ export const EasyMedNavigator = () => {
         options={PatientDataScreenOptions}
       />
       <EasyMedStackNavigator.Screen
-        name='MedicalCaseDetailsScreen'
-        component={MedicalCaseDetailsScreen}
-        options={MedicalCaseDetailsScreenOptions}
+        name='HealthInformationDetailsScreen'
+        component={HealthInformationDetailsScreen}
+        options={HealthInformationDetailsScreenOptions}
       />
       <EasyMedStackNavigator.Screen
         name='AllDoctorsScreen'
@@ -242,9 +242,9 @@ export const EasyMedNavigator = () => {
         options={UserDataScreenOptions}
       />
     </EasyMedStackNavigator.Navigator>
-  )
-}
-const AuthStackNavigator = createStackNavigator()
+  );
+};
+const AuthStackNavigator = createStackNavigator();
 
 export const AuthNavigator = () => {
   return (
@@ -255,5 +255,5 @@ export const AuthNavigator = () => {
         options={AuthScreenOptions}
       />
     </AuthStackNavigator.Navigator>
-  )
-}
+  );
+};

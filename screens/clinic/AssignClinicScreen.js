@@ -16,7 +16,7 @@ const AssignClinicScreen = ({ navigation, route }) => {
     dispatch(clinicActions.loadClinics());
   }, []);
 
-  const infoHandler = (_) => {
+  const infoHandler = () => {
     Alert.alert(
       'Sukces!',
       'Zostaniesz teraz wylogowany z twojego konta.',

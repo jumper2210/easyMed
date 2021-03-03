@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from 'react'
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import {
   StyleSheet,
   Picker,
@@ -6,53 +6,53 @@ import {
   View,
   Text,
   Alert,
-} from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
-import SendPushNotificationToServer from '../../helpers/sendPushNotificationToServer'
-import Input from '../../UI/Input'
-import Card from '../../UI/Card'
-import Colors from '../../constants/Colors'
-import ImgPicker from '../../components/AddClinicComponents/ImgPicker'
-import * as medicalCaseActions from '../../store/actions/medicalCase'
-import Button from '../../UI/Button'
-import Constants from '../../constants/Constants'
-import * as userActions from '../../store/actions/user'
+} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
+import SendPushNotificationToServer from '../../helpers/sendPushNotificationToServer';
+import Input from '../../UI/Input';
+import Card from '../../UI/Card';
+import Colors from '../../constants/Colors';
+import ImgPicker from '../../components/AddClinicComponents/ImgPicker';
+import * as healthInformationActions from '../../store/actions/healthInformation';
+import Button from '../../UI/Button';
+import Constants from '../../constants/Constants';
+import * as userActions from '../../store/actions/user';
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
+const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
       [action.input]: action.value,
-    }
+    };
     const updatedValidities = {
       ...state.inputValidities,
       [action.input]: action.isValid,
-    }
-    let updatedFormIsValid = true
+    };
+    let updatedFormIsValid = true;
     for (const key in updatedValidities) {
-      updatedFormIsValid = updatedFormIsValid && updatedValidities[key]
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
     return {
       formIsValid: updatedFormIsValid,
       inputValidities: updatedValidities,
       inputValues: updatedValues,
-    }
+    };
   }
-  return state
-}
+  return state;
+};
 const MedFormScreen = (props) => {
-  const { navigation } = props
-  const dispatch = useDispatch()
-  const [selectedValue, setSelectedValue] = useState('')
-  const [isFormDetails, setIsFormDetails] = useState(false)
-  const [error, setError] = useState()
-  const [selectedImage, setSelectedImage] = useState()
-  const [isLoading, setIsLoading] = useState(false)
-  let action = null
-  const patientName = useSelector((state) => state.usersState.selfUser.name)
+  const { navigation } = props;
+  const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState('');
+  const [isFormDetails, setIsFormDetails] = useState(false);
+  const [error, setError] = useState();
+  const [selectedImage, setSelectedImage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  let action = null;
+  const patientName = useSelector((state) => state.usersState.selfUser.name);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -72,17 +72,17 @@ const MedFormScreen = (props) => {
       radiance: false,
     },
     formIsValid: false,
-  })
+  });
 
   useEffect(() => {
-    dispatch(userActions.loadUserData())
-  }, [])
+    dispatch(userActions.loadUserData());
+  }, []);
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Wykryto błąd!', error, [{ text: 'Ok' }])
+      Alert.alert('Wykryto błąd!', error, [{ text: 'Ok' }]);
     }
-  }, [error])
+  }, [error]);
 
   const infoHandler = (patientName) => {
     Alert.alert(
@@ -92,21 +92,21 @@ const MedFormScreen = (props) => {
         {
           text: 'Tak',
           onPress: () => {
-            navigation.navigate('HomeScreen')
-            SendPushNotificationToServer(patientName)
+            navigation.navigate('HomeScreen');
+            SendPushNotificationToServer(patientName);
           },
         },
       ],
       { cancelable: false }
-    )
-  }
+    );
+  };
 
   const imageTakenHandler = (imagePath) => {
-    setSelectedImage(imagePath)
-  }
+    setSelectedImage(imagePath);
+  };
 
   const formHandler = async () => {
-    action = medicalCaseActions.createMedicalCase(
+    action = healthInformationActions.createHealthInformation(
       selectedImage,
       selectedValue,
       formState.inputValues.otherSymptom,
@@ -115,17 +115,17 @@ const MedFormScreen = (props) => {
       formState.inputValues.increase,
       formState.inputValues.locationOfPain,
       formState.inputValues.radiance
-    )
-    setError(null)
-    setIsLoading(true)
+    );
+    setError(null);
+    setIsLoading(true);
     try {
-      await dispatch(action)
-      setIsLoading(false)
+      await dispatch(action);
+      setIsLoading(false);
     } catch (err) {
-      setError(err.message)
-      setIsLoading(false)
+      setError(err.message);
+      setIsLoading(false);
     }
-  }
+  };
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -134,12 +134,12 @@ const MedFormScreen = (props) => {
         value: inputValue,
         isValid: inputValidity,
         input: inputIdentifier,
-      })
+      });
     },
     [dispatchFormState]
-  )
+  );
 
-  let detailsDisplay = null
+  let detailsDisplay = null;
 
   if (isFormDetails === true) {
     detailsDisplay = (
@@ -185,8 +185,8 @@ const MedFormScreen = (props) => {
               style={styles.button}
               title='Stwórz formularz'
               onPress={() => {
-                formHandler()
-                infoHandler(patientName)
+                formHandler();
+                infoHandler(patientName);
               }}
             />
 
@@ -194,13 +194,13 @@ const MedFormScreen = (props) => {
               style={styles.button}
               title='Wróć'
               onPress={() => {
-                navigation.navigate('HomeScreen')
+                navigation.navigate('HomeScreen');
               }}
             />
           </View>
         </Card>
       </View>
-    )
+    );
   }
   return (
     <KeyboardAvoidingView
@@ -275,7 +275,7 @@ const MedFormScreen = (props) => {
                   style={styles.button}
                   title={isFormDetails ? 'Ukrj szczegóły' : 'Pokaż szczegóły'}
                   onPress={() => {
-                    setIsFormDetails(!isFormDetails)
+                    setIsFormDetails(!isFormDetails);
                   }}
                 />
 
@@ -283,8 +283,8 @@ const MedFormScreen = (props) => {
                   style={styles.button}
                   title='Wróć'
                   onPress={() => {
-                    navigation.navigate('Home')
-                    setIsFormDetails(false)
+                    navigation.navigate('Home');
+                    setIsFormDetails(false);
                   }}
                 />
               </View>
@@ -294,8 +294,8 @@ const MedFormScreen = (props) => {
         </ScrollView>
       </View>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {
@@ -360,5 +360,5 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     color: Colors.secondary,
   },
-})
-export default MedFormScreen
+});
+export default MedFormScreen;
