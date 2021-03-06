@@ -15,6 +15,7 @@ import usersReducer from './store/reducers/user';
 import medicinesReducer from './store/reducers/medicine';
 import doctorsReducer from './store/reducers/doctor';
 import patientsReducer from './store/reducers/patient';
+import medicalVisitReducer from './store/reducers/medicalVisit';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   medicinesState: medicinesReducer,
   patientsState: patientsReducer,
   doctorsState: doctorsReducer,
+  medicalVisitState: medicalVisitReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

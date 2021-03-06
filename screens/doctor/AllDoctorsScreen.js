@@ -4,10 +4,9 @@ import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 import UserDetailsItem from '../../components/UserComponents/UserDetailsItem';
 import Colors from '../../constants/Colors';
 
-const AllDoctorsScreen = (props) => {
-  const { navigation } = props;
+const AllDoctorsScreen = ({ navigation, route }) => {
   const doctors = useSelector((state) => state.doctorsState.doctors);
-
+  const { _id } = route.params;
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {});
     return unsubscribe;
@@ -36,6 +35,7 @@ const AllDoctorsScreen = (props) => {
                   doctorPhoneNumber: itemData.item.phoneNumber,
                   role: itemData.item.role,
                   specialization: itemData.item.specialization,
+                  _id: _id,
                 });
               }}
             />

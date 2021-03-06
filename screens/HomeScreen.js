@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
           name={'Wszyscy doktorzy'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
-            navigation.navigate('AllDoctorsScreen', {});
+            navigation.navigate('AllDoctorsScreen', { _id: _id });
             dispatch(doctorActions.loadClinicDoctors(currentClinicId));
           }}
         />
@@ -102,6 +102,15 @@ const HomeScreen = ({ navigation }) => {
             navigation.navigate('ChatGroupsScreen');
           }}
         />
+        {/* <NavigationItem
+          name={'Umów wizytę'}
+          iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
+          onPress={() => {
+            navigation.navigate('DoctorsAppointmentScreen', {
+              _id: _id,
+            });
+          }}
+        /> */}
       </View>
     );
   }

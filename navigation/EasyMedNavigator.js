@@ -77,6 +77,10 @@ import PatientMedicinesScreen from '../screens/patient/PatientMedicinesScreen';
 
 import AllPatientsScreen from '../screens/patient/AllPatientsScreen';
 
+import DoctorsAppointmentScreen from '../screens/doctorsAppointment/DoctorsAppointmentScreen';
+
+import AvaibleHoursScreen from '../screens/doctorsAppointment/AvaibleHoursScreen';
+
 const defaultNavOptions = {
   headerTitleStyle: {
     fontFamily: 'open-sans-bold',
@@ -240,6 +244,16 @@ export const EasyMedNavigator = () => {
         name='UserDataScreen'
         component={UserDataScreen}
         options={UserDataScreenOptions}
+      />
+      <EasyMedStackNavigator.Screen
+        name='DoctorsAppointmentScreen'
+        component={DoctorsAppointmentScreen}
+        options={{ headerTitle: 'Umów wizytę' }}
+      />
+      <EasyMedStackNavigator.Screen
+        name='AvaibleHoursScreen'
+        component={AvaibleHoursScreen}
+        options={{ headerTitle: 'Dostępne godziny' }}
       />
     </EasyMedStackNavigator.Navigator>
   );

@@ -1,24 +1,24 @@
-import React from "react"
-import { StyleSheet, View, Button, Text, Alert } from "react-native"
-import { Formik } from "formik"
-import { useDispatch } from "react-redux"
-import InputFormik from "../../UI/InputFormik"
-import * as Yup from "yup"
-import Colors from "../../constants/Colors"
-import Card from "../../UI/Card"
-import * as medicineActions from "../../store/actions/medicine"
+import React from 'react';
+import { StyleSheet, View, Button, Text, Alert } from 'react-native';
+import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
+import InputFormik from '../../UI/InputFormik';
+import * as Yup from 'yup';
+import Colors from '../../constants/Colors';
+import Card from '../../UI/Card';
+import * as medicineActions from '../../store/actions/medicine';
 
 const AssignMedicineScreen = ({ route, navigation }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const infoHandler = (medicineName, quantity, timeOfTaking) => {
-    const { patientId } = route.params
+    const { patientId } = route.params;
     Alert.alert(
-      "Jesteś pewine, że chcesz przypisać te lekarstwo?",
+      'Jesteś pewien, że chcesz przypisać te lekarstwo?',
       ``,
       [
         {
-          text: "przypisz",
+          text: 'przypisz',
           onPress: () => {
             dispatch(
               medicineActions.assignMedicine(
@@ -27,25 +27,25 @@ const AssignMedicineScreen = ({ route, navigation }) => {
                 timeOfTaking,
                 patientId
               )
-            )
-            navigation.navigate("HomeScreen")
+            );
+            navigation.navigate('HomeScreen');
           },
         },
         {
-          text: "Anuluj",
+          text: 'Anuluj',
           onPress: () => {},
         },
       ],
       { cancelable: false }
-    )
-  }
+    );
+  };
 
   return (
     <Formik
-      initialValues={{ medicineName: "", quantity: "", timeOfTaking: "" }}
+      initialValues={{ medicineName: '', quantity: '', timeOfTaking: '' }}
       onSubmit={(values) => {
-        const { medicineName, quantity, timeOfTaking } = values
-        infoHandler(medicineName, quantity, timeOfTaking)
+        const { medicineName, quantity, timeOfTaking } = values;
+        infoHandler(medicineName, quantity, timeOfTaking);
       }}
       validationSchema={Yup.object().shape({
         medicineName: Yup.string().min(3).required(),
@@ -65,35 +65,35 @@ const AssignMedicineScreen = ({ route, navigation }) => {
         <View style={styles.screen}>
           <Card style={styles.formContainer}>
             <InputFormik
-              onChangeText={handleChange("medicineName")}
-              onBlur={() => setFieldTouched("medicineName")}
+              onChangeText={handleChange('medicineName')}
+              onBlur={() => setFieldTouched('medicineName')}
               value={values.medicineName}
-              label="nazwa leku"
+              label='nazwa leku'
             />
             {touched.medicineName && errors.medicineName && (
-              <Text style={{ fontSize: 10, color: "red" }}>
+              <Text style={{ fontSize: 10, color: 'red' }}>
                 {errors.medicineName}
               </Text>
             )}
             <InputFormik
-              onChangeText={handleChange("quantity")}
-              onBlur={() => setFieldTouched("quantity")}
+              onChangeText={handleChange('quantity')}
+              onBlur={() => setFieldTouched('quantity')}
               value={values.quantity}
-              label="dawka"
+              label='dawka'
             />
             {touched.quantity && errors.quantity && (
-              <Text style={{ fontSize: 10, color: "red" }}>
+              <Text style={{ fontSize: 10, color: 'red' }}>
                 {errors.quantity}
               </Text>
             )}
             <InputFormik
-              onChangeText={handleChange("timeOfTaking")}
-              onBlur={() => setFieldTouched("timeOfTaking")}
+              onChangeText={handleChange('timeOfTaking')}
+              onBlur={() => setFieldTouched('timeOfTaking')}
               value={values.timeOfTaking}
-              label="Czas zażycia leku"
+              label='Czas zażycia leku'
             />
             {touched.timeOfTaking && errors.timeOfTaking && (
-              <Text style={{ fontSize: 10, color: "red" }}>
+              <Text style={{ fontSize: 10, color: 'red' }}>
                 {errors.timeOfTaking}
               </Text>
             )}
@@ -103,20 +103,20 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               color={Colors.secondary}
               disabled={!isValid}
               onPress={handleSubmit}
-              title="Submit"
+              title='Submit'
             />
           </View>
         </View>
       )}
     </Formik>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: Colors.primary,
   },
   buttonContainer: {
@@ -126,16 +126,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   formContainer: {
-    width: "80%",
+    width: '80%',
     maxWidth: 400,
     maxHeight: 400,
     padding: 15,
   },
-})
+});
 
 export const screenOptions = (navData) => {
   return {
     headerTitle: `Przypisanie lekarstwa`,
-  }
-}
-export default AssignMedicineScreen
+  };
+};
+export default AssignMedicineScreen;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../../constants/Colors';
 import Button from '../../UI/Button';
@@ -18,11 +18,10 @@ const DoctorDataScreen = ({ route, navigation }) => {
     (state) => state.conversationsState.conversations
   );
 
-  let buttonDisplay = null;
   const setCurrentConversationId = (conversationId) => {
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
-  const { doctorMail, doctorPhoneNumber, doctorId, avatar } = route.params;
+  const { doctorMail, doctorPhoneNumber, doctorId, avatar, _id } = route.params;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -40,7 +39,21 @@ const DoctorDataScreen = ({ route, navigation }) => {
     return findConversation;
   };
 
-  buttonDisplay = (
+  let buttonSchedule = (
+    <Button
+      style={{ backgroundColor: Colors.primary }}
+      textStyle={{ color: Colors.details }}
+      title='Umów wizytę'
+      onPress={() => {
+        navigation.navigate('DoctorsAppointmentScreen', {
+          doctorId: doctorId,
+          _id,
+        });
+      }}
+    />
+  );
+
+  let buttonWriteMessage = (
     <Button
       style={{ backgroundColor: Colors.primary }}
       textStyle={{ color: Colors.details }}
@@ -84,7 +97,8 @@ const DoctorDataScreen = ({ route, navigation }) => {
           </Text>
         </View>
       </Card>
-      {buttonDisplay}
+      {buttonWriteMessage}
+      {buttonSchedule}
     </View>
   );
 };
