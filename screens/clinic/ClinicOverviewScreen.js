@@ -17,9 +17,19 @@ import CustomButton from '../../UI/Button';
 
 const ClinicOverviewScreen = ({ navigation, route }) => {
   const clinics = useSelector((state) => state.clinicsState.clinics);
+  const { _id, role, isAssignClinic, currentClinicId } = route.params;
   const dispatch = useDispatch();
   let display = <ActivityIndicator size='large' color={Colors.secondary} />;
-  const { _id, role, isAssignClinic } = route.params;
+  let currentClinicsArr = [];
+
+  if (clinics) {
+    clinics.map((cl) => {
+      if (cl._id === currentClinicId) {
+        currentClinicsArr.push(cl);
+      }
+      return currentClinicsArr;
+    });
+  }
 
   useEffect(() => {
     dispatch(clinicsActions.loadClinics());
@@ -46,11 +56,10 @@ const ClinicOverviewScreen = ({ navigation, route }) => {
       />
     );
   }
-
   if (clinics && isAssignClinic === true) {
     display = (
       <FlatList
-        data={clinics}
+        data={currentClinicsArr}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
           <ClinicItem

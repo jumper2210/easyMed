@@ -7,7 +7,6 @@ import NavigationItem from '../components/NavigationItem';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as userActions from '../store/actions/user';
 import * as authActions from '../store/actions/auth';
-// import RegisterForPushNotifications from '../helpers/registerForPushNotifications'
 import * as doctorActions from '../store/actions/doctor';
 import * as patientActions from '../store/actions/patient';
 
@@ -22,12 +21,6 @@ const HomeScreen = ({ navigation }) => {
   if (clinics) {
     currentClinicId = clinics[0];
   }
-
-  // useEffect(() => {
-  //   if (role === 'DOCTOR') {
-  //     RegisterForPushNotifications()
-  //   }
-  // }, [])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -64,6 +57,8 @@ const HomeScreen = ({ navigation }) => {
               role: role,
               _id: _id,
               role: role,
+              currentClinicId: currentClinicId,
+              isAssignClinic: isAssignClinic,
             });
           }}
         />
@@ -89,8 +84,11 @@ const HomeScreen = ({ navigation }) => {
           name={'Wszyscy doktorzy'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
-            navigation.navigate('AllDoctorsScreen', { _id: _id });
-            dispatch(doctorActions.loadClinicDoctors(currentClinicId));
+            navigation.navigate('AllDoctorsScreen', {
+              _id: _id,
+              currentClinicId: currentClinicId,
+            });
+            dispatch(doctorActions.loadClinicDoctors(currentClinicId, _id));
           }}
         />
         <NavigationItem
@@ -153,6 +151,7 @@ const HomeScreen = ({ navigation }) => {
               role: role,
               _id: _id,
               isAssignClinic: isAssignClinic,
+              currentClinicId: currentClinicId,
             });
           }}
         />
@@ -176,8 +175,11 @@ const HomeScreen = ({ navigation }) => {
           name={'Wszyscy pacjenci'}
           iconName={Platform.OS === 'android' ? 'md-list-box' : 'ios-list-box'}
           onPress={() => {
-            navigation.navigate('AllPatientsScreen');
-            dispatch(patientActions.loadClinicPatients(currentClinicId));
+            navigation.navigate('AllPatientsScreen', {
+              _id: _id,
+              currentClinicId: currentClinicId,
+            });
+            dispatch(patientActions.loadClinicPatients(currentClinicId, _id));
           }}
         />
       </View>

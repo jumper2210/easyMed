@@ -1,22 +1,23 @@
-import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { StyleSheet, View, Text } from 'react-native'
-import Colors from '../../constants/Colors'
-import constants from '../../constants/Constants'
-import UserAvatarItem from './UserAvatarItem'
+import React from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text } from 'react-native';
+import Colors from '../../constants/Colors';
+import constants from '../../constants/Constants';
+import UserAvatarItem from './UserAvatarItem';
 
 const UserDetailsItem = (props) => {
-  const { avatar, name, onPress, role } = props
+  const { avatar, name, onPress, role, specialization } = props;
 
   return (
     <TouchableOpacity activeOpacity={0.8} style={styles.item} onPress={onPress}>
       <UserAvatarItem role={role} avatar={avatar} />
-      <View style={styles.nameContainer}>
+      <View style={styles.infoData}>
         <Text style={styles.name}>{name}</Text>
+        <Text style={styles.specialization}>{specialization}</Text>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   item: {
     marginVertical: 20,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'space-around',
   },
-  nameContainer: {
+  infoData: {
     justifyContent: 'center',
     paddingBottom: 30,
   },
@@ -47,5 +48,5 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     color: Colors.details,
   },
-})
-export default UserDetailsItem
+});
+export default UserDetailsItem;

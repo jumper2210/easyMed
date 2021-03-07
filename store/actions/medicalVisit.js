@@ -28,6 +28,7 @@ export const createMedicalVisit = (day, doctorId, hour) => {
 
 export const checkOfAvaibleDates = (doctorId, day, navigation, _id) => {
   return async (dispatch, getState) => {
+    let busyHours = [];
     const token = getState().authState.token;
     const { dateString } = day;
     fetch(
@@ -43,7 +44,19 @@ export const checkOfAvaibleDates = (doctorId, day, navigation, _id) => {
         return response.json();
       })
       .then((resData) => {
-        console.log(resData.deadlines);
+        let busyHours = resData.deadlines;
+        let avaibleHours = [];
+        if (busyHours.length == 0) {
+          return;
+        }
+        if (busyHours.length > 0) {
+          arrayOfAvaibleHours.map((ao) => {
+            for (let i of busyHours) {
+              if (ao.hour !== i) avaibleHours.push(ao.hour);
+            }
+          });
+        }
+        console.log(avaibleHours);
       })
       .catch((err) => {
         console.log(err);

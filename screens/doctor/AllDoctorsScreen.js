@@ -25,7 +25,7 @@ const AllDoctorsScreen = ({ navigation, route }) => {
             <UserDetailsItem
               avatar={itemData.item.avatar}
               name={itemData.item.name}
-              // specialization={itemData.item.specialization}
+              specialization={itemData.item.specialization}
               onPress={() => {
                 navigation.navigate('DoctorDataScreen', {
                   avatar: itemData.item.avatar,
