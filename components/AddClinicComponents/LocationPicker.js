@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,74 +6,74 @@ import {
   Button,
   ActivityIndicator,
   Alert,
-} from 'react-native'
-import * as Location from 'expo-location'
-import * as Permissions from 'expo-permissions'
-import Colors from '../../constants/Colors'
-import MapPreview from './MapPreview'
+} from 'react-native';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import Colors from '../../constants/Colors';
+import MapPreview from './MapPreview';
 
 const LocationPicker = (props) => {
-  const [isFetching, setIsFetching] = useState(false)
-  const [pickedLocation, setPickedLocation] = useState()
+  const [isFetching, setIsFetching] = useState(false);
+  const [pickedLocation, setPickedLocation] = useState();
 
   const mapPickedLocation = props.route.params
     ? props.route.params.pickedLocation
-    : null
+    : null;
 
-  const { onLocationPicked } = props
+  const { onLocationPicked } = props;
   useEffect(() => {
     if (mapPickedLocation) {
-      setPickedLocation(mapPickedLocation)
-      onLocationPicked(mapPickedLocation)
+      setPickedLocation(mapPickedLocation);
+      onLocationPicked(mapPickedLocation);
     }
-  }, [mapPickedLocation])
+  }, [mapPickedLocation]);
 
   const verifyPermissions = async () => {
-    const result = await Permissions.askAsync(Permissions.LOCATION)
+    const result = await Permissions.askAsync(Permissions.LOCATION);
     if (result.status !== 'granted') {
       Alert.alert(
-        'Insufficient permissions',
-        'You need to grant location permissions to use this app',
-        [{ text: 'Okay' }]
-      )
-      return false
+        'Problem ze zgodą.',
+        'Musisz zezwolić na udostępnienie twojej lokalizacji.',
+        [{ text: 'Ok' }]
+      );
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   const pickOnMapHandler = () => {
     props.navigation.navigate('MapScreen', {
       readonly: false,
-    })
-  }
+    });
+  };
 
   const getLocationHandler = async () => {
-    const hasPermission = await verifyPermissions()
+    const hasPermission = await verifyPermissions();
     if (!hasPermission) {
-      return
+      return;
     }
     try {
-      setIsFetching(true)
+      setIsFetching(true);
       const location = await Location.getCurrentPositionAsync({
         timeout: 5000,
-      })
+      });
       setPickedLocation({
         lat: location.coords.latitude,
         lng: location.coords.longitude,
-      })
+      });
       props.onLocationPicked({
         lat: location.coords.latitude,
         lng: location.coords.longitude,
-      })
+      });
     } catch (err) {
       Alert.alert(
         'Nie pobrano lokalizacji!',
-        'Spróboj ponownie albo wybierz miejsce na mapie.',
+        'Spróbuj ponownie, albo wybierz miejsce na mapie.',
         [{ text: 'Okay' }]
-      )
+      );
     }
-    setIsFetching(false)
-  }
+    setIsFetching(false);
+  };
 
   return (
     <View style={styles.locationPicker}>
@@ -103,8 +103,8 @@ const LocationPicker = (props) => {
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   locationPicker: {
@@ -124,5 +124,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
   },
-})
-export default LocationPicker
+});
+export default LocationPicker;

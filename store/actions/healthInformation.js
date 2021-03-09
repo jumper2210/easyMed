@@ -62,7 +62,7 @@ export const loadPatientHealthInformation = (patientId) => {
     )
       .then((res) => {
         if (res.status !== 200) {
-          throw new Error('Failed to fetch Medical Case');
+          throw new Error('Nie pobrano historii medycznej');
         }
         return res.json();
       })

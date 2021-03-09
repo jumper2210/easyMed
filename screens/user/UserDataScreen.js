@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, Text, Alert } from 'react-native'
-import { useDispatch } from 'react-redux'
-import Colors from '../../constants/Colors'
-import * as userAction from '../../store/actions/user'
-import Card from '../../UI/Card'
-import constants from '../../constants/Constants'
-import UserAvatarItem from '../../components/UserComponents/UserAvatarItem'
-import Button from '../../UI/Button'
-import * as adminsActions from '../../store/actions/admin'
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Text, Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
+import Colors from '../../constants/Colors';
+import * as userAction from '../../store/actions/user';
+import Card from '../../UI/Card';
+import constants from '../../constants/Constants';
+import UserAvatarItem from '../../components/UserComponents/UserAvatarItem';
+import Button from '../../UI/Button';
+import * as adminsActions from '../../store/actions/admin';
 
 const UserDataScreen = ({ route, navigation }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const {
     userMail,
     userPhoneNumber,
@@ -18,27 +18,11 @@ const UserDataScreen = ({ route, navigation }) => {
     avatar,
     role,
     userName,
-  } = route.params
+  } = route.params;
 
   useEffect(() => {
-    dispatch(userAction.loadUserData())
-  }, [])
-
-  const infoHandler = (userName) => {
-    Alert.alert(
-      'Ustaw role doktor',
-      `Teraz ${userName} ma możliwość wykonywania akcji dostępnych dla roli "lekarz".`,
-      [
-        {
-          text: 'powrót do ekranu startowego',
-          onPress: () => {
-            navigation.navigate('HomeScreen')
-          },
-        },
-      ],
-      { cancelable: false }
-    )
-  }
+    dispatch(userAction.loadUserData());
+  }, []);
 
   return (
     <View style={styles.screen}>
@@ -57,24 +41,13 @@ const UserDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>
             {userPhoneNumber && userPhoneNumber.length > 0
               ? userPhoneNumber
-              : 'no data'}
+              : 'Brak dancyh'}
           </Text>
         </View>
       </Card>
-      {role === 'PATIENT' ? (
-        <Button
-          style={{ backgroundColor: Colors.primary }}
-          textStyle={{ color: Colors.details }}
-          title={'Ustawe role doktor'}
-          onPress={() => {
-            dispatch(adminsActions.setDoctorRole(userId))
-            infoHandler(userName)
-          }}
-        />
-      ) : null}
     </View>
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -116,15 +89,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-})
+});
 
 export const screenOptions = (navData) => {
-  const patientName = navData.route.params.patientName
+  const patientName = navData.route.params.patientName;
   return {
     title: patientName,
     headerTintColor: Colors.primary,
     headerStyle: { backgroundColor: Colors.secondary },
-  }
-}
+  };
+};
 
-export default UserDataScreen
+export default UserDataScreen;

@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
   Text,
   KeyboardAvoidingView,
   ScrollView,
-} from 'react-native'
-import { Formik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
-import InputFormik from '../../UI/InputFormik'
-import * as Yup from 'yup'
-import Colors from '../../constants/Colors'
-import Card from '../../UI/Card'
-import * as userActions from '../../store/actions/user'
-import ImgPicker from '../../components/AddClinicComponents/ImgPicker'
-import Button from '../../UI/Button'
+} from 'react-native';
+import { Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import InputFormik from '../../UI/InputFormik';
+import * as Yup from 'yup';
+import Colors from '../../constants/Colors';
+import Card from '../../UI/Card';
+import * as userActions from '../../store/actions/user';
+import ImgPicker from '../../components/AddClinicComponents/ImgPicker';
+import Button from '../../UI/Button';
 const EditUserDataScreen = (props) => {
-  const dispatch = useDispatch()
-  const [selectedImage, setSelectedImage] = useState()
-  const selfUser = useSelector((state) => state.usersState.selfUser)
-  const { navigation } = props
-  const name = selfUser.name
-  const phoneNumber = selfUser.phoneNumber
-  const avatar = selfUser.avatar
+  const dispatch = useDispatch();
+  const [selectedImage, setSelectedImage] = useState();
+  const selfUser = useSelector((state) => state.usersState.selfUser);
+  const { navigation } = props;
+  const name = selfUser.name;
+  const phoneNumber = selfUser.phoneNumber;
+  const avatar = selfUser.avatar;
 
   const imageTakenHandler = (imagePath) => {
-    setSelectedImage(imagePath)
-  }
+    setSelectedImage(imagePath);
+  };
 
   useEffect(() => {
-    dispatch(userActions.loadUserData())
-  }, [])
+    dispatch(userActions.loadUserData());
+  }, []);
 
   return (
     <Formik
@@ -40,16 +40,16 @@ const EditUserDataScreen = (props) => {
         avatar: avatar,
       }}
       onSubmit={(values) => {
-        const { editName, editPhoneNumber, avatar } = values
-        let avatarResult = ''
+        const { editName, editPhoneNumber, avatar } = values;
+        let avatarResult = '';
         if (avatar !== selectedImage) {
-          avatarResult = selectedImage
+          avatarResult = selectedImage;
         } else {
-          avatarResult = avatar
+          avatarResult = avatar;
         }
 
-        dispatch(userActions.editUser(editName, editPhoneNumber, avatarResult))
-        navigation.navigate('HomeScreen')
+        dispatch(userActions.editUser(editName, editPhoneNumber, avatarResult));
+        navigation.navigate('HomeScreen');
       }}
       validationSchema={Yup.object().shape({
         editName: Yup.string(),
@@ -76,7 +76,7 @@ const EditUserDataScreen = (props) => {
                   onChangeText={handleChange('editName')}
                   onBlur={() => setFieldTouched('editName')}
                   value={values.editName}
-                  label='twoja nazwa'
+                  label='Twoja nazwa'
                 />
                 {touched.editName && errors.editName && (
                   <Text style={{ fontSize: 10, color: 'red' }}>
@@ -87,7 +87,7 @@ const EditUserDataScreen = (props) => {
                   onChangeText={handleChange('editPhoneNumber')}
                   onBlur={() => setFieldTouched('editPhoneNumber')}
                   value={values.editPhoneNumber}
-                  label='twój numer telefonu'
+                  label='Twój numer telefonu'
                 />
                 {touched.editPhoneNumber && errors.editPhoneNumber && (
                   <Text style={{ fontSize: 10, color: 'red' }}>
@@ -120,8 +120,8 @@ const EditUserDataScreen = (props) => {
         </View>
       )}
     </Formik>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {
@@ -139,6 +139,6 @@ const styles = StyleSheet.create({
     height: '85%',
     padding: 15,
   },
-})
+});
 
-export default EditUserDataScreen
+export default EditUserDataScreen;

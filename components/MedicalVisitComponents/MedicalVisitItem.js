@@ -3,24 +3,24 @@ import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 import constants from '../../constants/Constants';
 
-const MedicineControlItem = (props) => {
-  const { name, quantity, timeOfTaking } = props;
+const MedicalVisitItem = (props) => {
+  const { date, doctor, patient } = props;
 
   return (
     <View style={styles.item}>
       <View style={styles.touchable}>
         <View style={styles.data}>
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>{name}</Text>
+          <View style={styles.dateContainer}>
+            <Text style={styles.date}>{date}</Text>
           </View>
           <View>
             <View style={styles.details}>
-              <Text style={styles.description}>Ilość:</Text>
-              <Text style={styles.quantity}>{quantity}</Text>
+              <Text style={styles.description}>Lekarz:</Text>
+              <Text style={styles.doctor}>{doctor}</Text>
             </View>
             <View style={styles.details}>
-              <Text style={styles.description}>Przyjmowanie:</Text>
-              <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
+              <Text style={styles.description}>Pacjent:</Text>
+              <Text style={styles.patient}>{patient}</Text>
             </View>
           </View>
         </View>
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
   },
-  nameContainer: {
+  dateContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginVertical: 20,
   },
-  name: {
+  date: {
     fontFamily: 'open-sans-bold',
     fontSize: 25,
     marginVertical: 10,
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MedicineControlItem;
+export default MedicalVisitItem;

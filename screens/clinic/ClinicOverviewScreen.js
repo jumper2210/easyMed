@@ -81,7 +81,7 @@ const ClinicOverviewScreen = ({ navigation, route }) => {
     display = (
       <View>
         <Text style={{ paddingVertical: 40 }}>
-          Wygląda na to, że nie jesteś zapisany w żadnej klinice
+          Wygląda na to, że nie jesteś zapisany w żadnej klinicę.
         </Text>
         <CustomButton
           title='Zapisz mnie'
@@ -99,7 +99,7 @@ export const screenOptions = (navData) => {
   const { userRole } = navData.route.params;
 
   return {
-    headerTitle: 'Przychodnie',
+    headerTitle: 'Twoja przychodnia',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item

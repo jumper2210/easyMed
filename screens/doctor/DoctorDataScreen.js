@@ -17,11 +17,17 @@ const DoctorDataScreen = ({ route, navigation }) => {
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
   );
-
   const setCurrentConversationId = (conversationId) => {
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
-  const { doctorMail, doctorPhoneNumber, doctorId, avatar, _id } = route.params;
+  const {
+    doctorMail,
+    doctorPhoneNumber,
+    doctorId,
+    avatar,
+    _id,
+    specialization,
+  } = route.params;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -39,15 +45,29 @@ const DoctorDataScreen = ({ route, navigation }) => {
     return findConversation;
   };
 
-  let buttonSchedule = (
+  let familyDoctorVisit = (
     <Button
       style={{ backgroundColor: Colors.primary }}
       textStyle={{ color: Colors.details }}
       title='Umów wizytę'
       onPress={() => {
+        navigation.navigate('HealthInformationScreen', {
+          doctorId: doctorId,
+          _id: _id,
+        });
+      }}
+    />
+  );
+
+  let buttonSchedule = (
+    <Button
+      style={{ backgroundColor: Colors.primary }}
+      textStyle={{ color: Colors.details }}
+      title='Umów wizytę u specjalisty'
+      onPress={() => {
         navigation.navigate('DoctorsAppointmentScreen', {
           doctorId: doctorId,
-          _id,
+          _id: _id,
         });
       }}
     />
@@ -93,12 +113,15 @@ const DoctorDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>
             {doctorPhoneNumber && doctorPhoneNumber.length > 0
               ? doctorPhoneNumber
-              : 'no data'}
+              : 'brak danych'}
           </Text>
         </View>
       </Card>
-      {buttonWriteMessage}
-      {buttonSchedule}
+      <View style={styles.buttonContainer}>
+        {specialization === 'Lekarz rodzinny' ? familyDoctorVisit : null}
+        {buttonWriteMessage}
+        {specialization !== 'Lekarz rodzinny' ? buttonSchedule : null}
+      </View>
     </View>
   );
 };
@@ -109,7 +132,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.secondary,
   },
-
+  buttonContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+  },
   avatar: {
     height: 100,
     width: 100,

@@ -28,7 +28,6 @@ export const createMedicalVisit = (day, doctorId, hour) => {
 
 export const checkOfAvaibleDates = (doctorId, day, navigation, _id) => {
   return async (dispatch, getState) => {
-    let busyHours = [];
     const token = getState().authState.token;
     const { dateString } = day;
     fetch(

@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Alert } from 'react-native';
 import { arrayOfAvaibleHours } from '../../helpers/arrayOfAvaibleHours';
-import Houritem from '../../components/AppointmentComponents/HourItem';
+import Houritem from '../../components/MedicalVisitComponents/HourItem';
 import * as medicalVisitActions from '../../store/actions/medicalVisit';
 import { useDispatch } from 'react-redux';
-import Button from '../../UI/Button';
 import Colors from '../../constants/Colors';
 
 const AvaibleHoursScreen = ({ navigation, route }) => {
@@ -17,7 +16,7 @@ const AvaibleHoursScreen = ({ navigation, route }) => {
       ``,
       [
         {
-          text: 'zapisz mnie',
+          text: 'Zapisz mnie',
           onPress: () => {
             dispatch(
               medicalVisitActions.createMedicalVisit(day, doctorId, hour)
@@ -36,22 +35,19 @@ const AvaibleHoursScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.screen}>
-      <Text>Termin: </Text>
+      <Text style={styles.text}>Termin: </Text>
       <FlatList
-        horizontal={true}
         data={arrayOfAvaibleHours}
         keyExtractor={(item) => item.hour}
         renderItem={(itemData) => (
           <Houritem
             hour={itemData.item.hour}
             onSelect={() => {
-              // navigation.navigate('HomeScreen', {});
               infoHandler(day, doctorId, itemData.item.hour);
             }}
           />
         )}
       />
-      {/* <Button title='Umów się' /> */}
     </View>
   );
 };
@@ -63,6 +59,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     paddingHorizontal: 20,
     paddingVertical: 40,
+  },
+  text: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 15,
+    width: '100%',
+    textAlign: 'center',
+    color: Colors.secondary,
   },
 });
 

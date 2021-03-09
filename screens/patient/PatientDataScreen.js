@@ -35,11 +35,7 @@ const PatientDataScreen = ({ route, navigation }) => {
 
   let healthInformationsToCheck = [];
   let buttonDisplay;
-  let healthInformationDisplay = (
-    <Text style={styles.nohealthInformationInfo}>
-      Ten pacjent nie posiada żadnych przypadków medczynych.
-    </Text>
-  );
+  let healthInformationDisplay;
 
   useEffect(() => {
     dispatch(healthInformationActions.loadPatientHealthInformation(patientId));
@@ -153,7 +149,7 @@ const PatientDataScreen = ({ route, navigation }) => {
           <Text style={styles.label}>
             {patientPhoneNumber && patientPhoneNumber.length > 0
               ? patientPhoneNumber
-              : 'no data'}
+              : 'Brak danych'}
           </Text>
         </View>
       </Card>
@@ -168,7 +164,7 @@ const PatientDataScreen = ({ route, navigation }) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          title='przypisz lekarstwo'
+          title='Przypisz lekarstwo'
           onPress={() => {
             navigation.navigate('AssignMedicineScreen', {
               patientId: patientId,

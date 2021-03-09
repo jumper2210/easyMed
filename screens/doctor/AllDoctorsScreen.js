@@ -20,27 +20,25 @@ const AllDoctorsScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.list}
         data={doctors}
         keyExtractor={(item) => item._id}
-        renderItem={(itemData) =>
-          itemData.item.role === 'DOCTOR' ? (
-            <UserDetailsItem
-              avatar={itemData.item.avatar}
-              name={itemData.item.name}
-              specialization={itemData.item.specialization}
-              onPress={() => {
-                navigation.navigate('DoctorDataScreen', {
-                  avatar: itemData.item.avatar,
-                  doctorName: itemData.item.name,
-                  doctorMail: itemData.item.email,
-                  doctorId: itemData.item._id,
-                  doctorPhoneNumber: itemData.item.phoneNumber,
-                  role: itemData.item.role,
-                  specialization: itemData.item.specialization,
-                  _id: _id,
-                });
-              }}
-            />
-          ) : null
-        }
+        renderItem={(itemData) => (
+          <UserDetailsItem
+            avatar={itemData.item.avatar}
+            name={itemData.item.name}
+            specialization={itemData.item.specialization}
+            onPress={() => {
+              navigation.navigate('DoctorDataScreen', {
+                avatar: itemData.item.avatar,
+                doctorName: itemData.item.name,
+                doctorMail: itemData.item.email,
+                doctorId: itemData.item._id,
+                doctorPhoneNumber: itemData.item.phoneNumber,
+                role: itemData.item.role,
+                specialization: itemData.item.specialization,
+                _id: _id,
+              });
+            }}
+          />
+        )}
       />
     );
   }

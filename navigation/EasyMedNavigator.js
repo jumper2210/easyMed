@@ -28,8 +28,8 @@ import AuthScreen, {
   screenOptions as AuthScreenOptions,
 } from '../screens/AuthScreen';
 
-import MedFormScreen, {
-  screenOptions as medFormScreenOptions,
+import HealthInformationScreen, {
+  screenOptions as HealthInformationScreenOptions,
 } from '../screens/healthInformation/HealthInformationScreen';
 
 import ChatGroupScreen, {
@@ -81,6 +81,10 @@ import DoctorsAppointmentScreen from '../screens/doctorsAppointment/DoctorsAppoi
 
 import AvaibleHoursScreen from '../screens/doctorsAppointment/AvaibleHoursScreen';
 
+import DoctorMedicalVisitsScreen from '../screens/doctor/DoctorMedicalVisitsScreen';
+
+import PatientMedicalVisitsScreen from '../screens/patient/PatientMedicalVisitsScreen';
+
 const defaultNavOptions = {
   headerTitleStyle: {
     fontFamily: 'open-sans-bold',
@@ -112,8 +116,8 @@ export const UserManagementTabs = () => {
           name='PatientHealthInformationScreen'
           component={PatientHealthInformationsScreen}
           options={{
-            tabBarLabel: 'Historia dolegliwości',
-            title: 'Historia medyczna',
+            tabBarLabel: 'Historia twoich dolegliwości',
+            title: 'Historia twoich dolegliwości',
             tabBarIcon: () => {
               return (
                 <Ionicons name='md-list' size={26} color={Colors.secondary} />
@@ -166,9 +170,9 @@ export const EasyMedNavigator = () => {
         options={{ headerTitle: '' }}
       />
       <EasyMedStackNavigator.Screen
-        name='FormScreen'
-        component={MedFormScreen}
-        options={{ headerTitle: 'Formularz medyczny' }}
+        name='HealthInformationScreen'
+        component={HealthInformationScreen}
+        options={{ headerTitle: 'Opis twojej dolegliwości' }}
       />
       <EasyMedStackNavigator.Screen
         name='ClinicScreen'
@@ -218,7 +222,7 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name='AllDoctorsScreen'
         component={AllDoctorsScreen}
-        options={{ headerTitle: 'Twoi doktorzy' }}
+        options={{ headerTitle: 'Lekarze twojej przychodni' }}
       />
       <EasyMedStackNavigator.Screen
         name='DoctorDataScreen'
@@ -254,6 +258,16 @@ export const EasyMedNavigator = () => {
         name='AvaibleHoursScreen'
         component={AvaibleHoursScreen}
         options={{ headerTitle: 'Dostępne godziny' }}
+      />
+      <EasyMedStackNavigator.Screen
+        name='DoctorMedicalVisitsScreen'
+        component={DoctorMedicalVisitsScreen}
+        options={{ headerTitle: 'Porady lekarskie' }}
+      />
+      <EasyMedStackNavigator.Screen
+        name='PatientMedicalVisitsScreen'
+        component={PatientMedicalVisitsScreen}
+        options={{ headerTitle: 'Wizyty lekarskie' }}
       />
     </EasyMedStackNavigator.Navigator>
   );

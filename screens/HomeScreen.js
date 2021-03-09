@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, Platform, Alert } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../UI/CustomHeaderButton';
 import NavigationItem from '../components/NavigationItem';
@@ -70,18 +70,7 @@ const HomeScreen = ({ navigation }) => {
           }}
         />
         <NavigationItem
-          name={'Formularz informacji medycznych'}
-          iconName={
-            Platform.OS === 'android'
-              ? 'md-add-circle-outline'
-              : 'ios-add-circle-outline'
-          }
-          onPress={() => {
-            navigation.navigate('FormScreen');
-          }}
-        />
-        <NavigationItem
-          name={'Wszyscy doktorzy'}
+          name={'Lekarze twojej przychodni'}
           iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           onPress={() => {
             navigation.navigate('AllDoctorsScreen', {
@@ -100,15 +89,13 @@ const HomeScreen = ({ navigation }) => {
             navigation.navigate('ChatGroupsScreen');
           }}
         />
-        {/* <NavigationItem
-          name={'Umów wizytę'}
-          iconName={Platform.OS === 'android' ? 'md-medical' : 'ios-medical'}
+        <NavigationItem
+          name={'Umówione wizyty'}
+          iconName={Platform.OS === 'android' ? 'md-contacts' : 'ios-contacts'}
           onPress={() => {
-            navigation.navigate('DoctorsAppointmentScreen', {
-              _id: _id,
-            });
+            navigation.navigate('PatientMedicalVisitsScreen');
           }}
-        /> */}
+        />
       </View>
     );
   }
@@ -180,6 +167,13 @@ const HomeScreen = ({ navigation }) => {
               currentClinicId: currentClinicId,
             });
             dispatch(patientActions.loadClinicPatients(currentClinicId, _id));
+          }}
+        />
+        <NavigationItem
+          name={'Umówione wizyty'}
+          iconName={Platform.OS === 'android' ? 'md-contacts' : 'ios-contacts'}
+          onPress={() => {
+            navigation.navigate('DoctorMedicalVisitsScreen');
           }}
         />
       </View>

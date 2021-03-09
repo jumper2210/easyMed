@@ -41,7 +41,7 @@ const PatientHealthinformationsScreen = (props) => {
   });
   let display = (
     <Text style={styles.info}>
-      Nie posiadasz zajerestrowanej historii medycznej w tej przychodni.
+      Nie posiadasz historii medycznej w tej przychodni.
     </Text>
   );
 

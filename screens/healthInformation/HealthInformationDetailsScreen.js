@@ -13,7 +13,6 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
     increase,
     locationOfPain,
     otherSymptom,
-    pickedSymptom,
     radiance,
     scale,
     createdAt,
@@ -23,30 +22,30 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
   } = route.params;
   const dispatch = useDispatch();
 
-  const checkHealthInformationHandler = (healthInformationId) => {
-    Alert.alert(
-      'Jesteś pewien, że chcesz zatwierdzić ten przypadek medyczny?',
-      '',
-      [
-        {
-          text: 'Zatwierdź',
-          onPress: () => {
-            navigation.navigate('HomeScreen');
-            dispatch(
-              healthInformationActions.checkHealthInformation(
-                healthInformationId
-              )
-            );
-          },
-        },
-        {
-          text: 'Anuluj',
-          onPress: () => {},
-        },
-      ],
-      { cancelable: false }
-    );
-  };
+  // const checkHealthInformationHandler = (healthInformationId) => {
+  //   Alert.alert(
+  //     'Jesteś pewien?',
+  //     '',
+  //     [
+  //       {
+  //         text: 'Zatwierdź',
+  //         onPress: () => {
+  //           navigation.navigate('HomeScreen');
+  //           dispatch(
+  //             healthInformationActions.checkHealthInformation(
+  //               healthInformationId
+  //             )
+  //           );
+  //         },
+  //       },
+  //       {
+  //         text: 'Anuluj',
+  //         onPress: () => {},
+  //       },
+  //     ],
+  //     { cancelable: false }
+  //   );
+  // };
   const editTextHandler = (data) => {
     if (data === undefined) {
       data = '';
@@ -55,7 +54,7 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
     let display = data;
 
     if (valueOfData == 0) {
-      display = <Text>brak danych</Text>;
+      display = <Text>Brak danych</Text>;
     }
     return display;
   };
@@ -64,59 +63,57 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
     <View style={styles.screen}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>nazwa pacjenta:</Text>
+          <Text style={styles.labelTitle}>Nazwa pacjenta:</Text>
           <Text style={styles.labelContent}>{editTextHandler(name)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>wiek:</Text>
+          <Text style={styles.labelTitle}>Wiek:</Text>
           <Text style={styles.labelContent}>{editTextHandler(age)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>wzrost:</Text>
+          <Text style={styles.labelTitle}>Wzrost:</Text>
           <Text style={styles.labelContent}>{editTextHandler(increase)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>umiejscowienie bólu:</Text>
+          <Text style={styles.labelTitle}>Umiejscowienie bólu:</Text>
           <Text style={styles.labelContent}>
             {editTextHandler(locationOfPain)}
           </Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>inne symptomy:</Text>
+          <Text style={styles.labelTitle}>Inne symptomy:</Text>
           <Text style={styles.labelContent}>
             {editTextHandler(otherSymptom)}
           </Text>
         </View>
         <View style={styles.labelContainer}>
           <Text style={styles.labelTitle}>Wybrany symptom:</Text>
-          <Text style={styles.labelContent}>
-            {editTextHandler(pickedSymptom)}
-          </Text>
+          <Text style={styles.labelContent}></Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>promieniowanie:</Text>
+          <Text style={styles.labelTitle}>Promieniowanie:</Text>
           <Text style={styles.labelContent}>{editTextHandler(radiance)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>waga:</Text>
+          <Text style={styles.labelTitle}>Waga:</Text>
           <Text style={styles.labelContent}>{editTextHandler(scale)}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>utworzone:</Text>
+          <Text style={styles.labelTitle}>Utworzono:</Text>
           <Text style={styles.labelContent}>{editTextHandler(createdAt)}</Text>
         </View>
         {imageUri !== undefined ? (
           <Image style={styles.image} source={{ uri: imageUri }} />
         ) : null}
       </ScrollView>
-      {role === 'DOCTOR' ? (
+      {/* {role === 'DOCTOR' ? (
         <Button
           title='Potwierdź ten przypadek'
           onPress={() => {
             checkHealthInformationHandler(healthInformationId);
           }}
         />
-      ) : null}
+      ) : null} */}
     </View>
   );
 };

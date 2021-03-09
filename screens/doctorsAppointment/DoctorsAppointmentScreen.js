@@ -36,8 +36,26 @@ const doctorsAppointmentScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.screen}>
-      <Text>Wybierz termin</Text>
+      <Text style={styles.text}>Wybierz termin</Text>
       <Calendar
+        style={{ height: 300, width: '90%', justifyContent: 'center' }}
+        theme={{
+          backgroundColor: '#ffffff',
+          calendarBackground: '#ffffff',
+          todayTextColor: '#57B9BB',
+          dayTextColor: '#222222',
+          textDisabledColor: '#d9e1e8',
+          monthTextColor: '#57B9BB',
+          arrowColor: '#57B9BB',
+          textDayFontWeight: '300',
+          textMonthFontWeight: 'bold',
+          textDayHeaderFontWeight: '500',
+          textDayFontSize: 16,
+          textMonthFontSize: 18,
+          selectedDayBackgroundColor: '#57B9BB',
+          selectedDayTextColor: 'white',
+          textDayHeaderFontSize: 8,
+        }}
         current
         minDate={new Date()}
         maxDate={'2022-05-30'}
@@ -91,5 +109,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     padding: 10,
     backgroundColor: Colors.primary,
+  },
+  text: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 25,
+    width: '100%',
+    textAlign: 'center',
+    color: Colors.secondary,
   },
 });

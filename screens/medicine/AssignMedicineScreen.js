@@ -14,11 +14,11 @@ const AssignMedicineScreen = ({ route, navigation }) => {
   const infoHandler = (medicineName, quantity, timeOfTaking) => {
     const { patientId } = route.params;
     Alert.alert(
-      'Jesteś pewien, że chcesz przypisać te lekarstwo?',
+      'Jesteś pewien?',
       ``,
       [
         {
-          text: 'przypisz',
+          text: 'Przypisz',
           onPress: () => {
             dispatch(
               medicineActions.assignMedicine(
@@ -68,7 +68,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               onChangeText={handleChange('medicineName')}
               onBlur={() => setFieldTouched('medicineName')}
               value={values.medicineName}
-              label='nazwa leku'
+              label='Nazwa leku'
             />
             {touched.medicineName && errors.medicineName && (
               <Text style={{ fontSize: 10, color: 'red' }}>
@@ -79,7 +79,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               onChangeText={handleChange('quantity')}
               onBlur={() => setFieldTouched('quantity')}
               value={values.quantity}
-              label='dawka'
+              label='Dawka leku'
             />
             {touched.quantity && errors.quantity && (
               <Text style={{ fontSize: 10, color: 'red' }}>
@@ -90,7 +90,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               onChangeText={handleChange('timeOfTaking')}
               onBlur={() => setFieldTouched('timeOfTaking')}
               value={values.timeOfTaking}
-              label='Czas zażycia leku'
+              label='Czas zażywania leku'
             />
             {touched.timeOfTaking && errors.timeOfTaking && (
               <Text style={{ fontSize: 10, color: 'red' }}>
@@ -103,7 +103,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
               color={Colors.secondary}
               disabled={!isValid}
               onPress={handleSubmit}
-              title='Submit'
+              title='Potwierdź'
             />
           </View>
         </View>

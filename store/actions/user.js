@@ -40,7 +40,7 @@ export const loadAllUsers = () => {
   };
 };
 
-export const editUser = (name, phoneNumber, selectedImage) => {
+export const editUser = (name, phoneNumber, selectedImage, password) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token;
     fetch(`${currentIp}/user/editUser`, {
@@ -53,7 +53,7 @@ export const editUser = (name, phoneNumber, selectedImage) => {
         phoneNumber,
         name,
         selectedImage,
-        // password,
+        password,
       }),
     }).then((res) => {
       if (res.status !== 200) {

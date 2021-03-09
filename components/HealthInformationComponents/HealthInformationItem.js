@@ -14,7 +14,7 @@ const HealthInformationItem = (props) => {
         <TouchableOpacity onPress={onPress}>
           <View>
             <View style={styles.dateContainer}>
-              <Text style={styles.details}>Utworzone:</Text>
+              <Text style={styles.details}>Utworzono:</Text>
               <Text style={styles.details}>{data}</Text>
             </View>
           </View>

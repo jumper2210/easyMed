@@ -1,17 +1,11 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import Colors from '../../constants/Colors'
-import constants from '../../constants/Constants'
-import Button from '../../UI/Button'
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import Colors from '../../constants/Colors';
+import constants from '../../constants/Constants';
+import Button from '../../UI/Button';
 
 const MedicineControlItem = (props) => {
-  const {
-    name,
-    quantity,
-    timeOfTaking,
-    onDelete,
-    onTriggerNotification,
-  } = props
+  const { name, quantity, timeOfTaking, onTriggerNotification } = props;
 
   return (
     <View style={styles.item}>
@@ -22,11 +16,11 @@ const MedicineControlItem = (props) => {
           </View>
           <View>
             <View style={styles.details}>
-              <Text style={styles.description}>ilość:</Text>
+              <Text style={styles.description}>Ilość:</Text>
               <Text style={styles.quantity}>{quantity}</Text>
             </View>
             <View style={styles.details}>
-              <Text style={styles.description}>przyjmowanie:</Text>
+              <Text style={styles.description}>Przyjmowanie:</Text>
               <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
             </View>
           </View>
@@ -36,19 +30,13 @@ const MedicineControlItem = (props) => {
         <Button
           style={{ backgroundColor: Colors.primary }}
           textStyle={{ color: Colors.details }}
-          onPress={onDelete}
-          title='Usuń lek'
-        />
-        <Button
-          style={{ backgroundColor: Colors.primary }}
-          textStyle={{ color: Colors.details }}
           onPress={onTriggerNotification}
           title='Ustaw powiadomienie'
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   item: {
@@ -111,6 +99,6 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
     fontFamily: 'open-sans',
   },
-})
+});
 
-export default MedicineControlItem
+export default MedicineControlItem;
