@@ -1,6 +1,6 @@
 import { currentIp } from '../../helpers/currentIp';
 export const LOAD_CLINIC_PATIENTS = 'LOAD_CLINIC_PATIENTS';
-export const LOAD_PATIENTS_MEDICAL_VISITS = ' LOAD_PATIENTS_MEDICAL_VISITS';
+export const LOAD_PATIENTS_MEDICAL_VISITS = 'LOAD_PATIENTS_MEDICAL_VISITS';
 
 export const loadClinicPatients = (clinicId, _id) => {
   return async (dispatch, getState) => {
@@ -49,7 +49,6 @@ export const loadPatientMedicalVisits = () => {
         return response.json();
       })
       .then((resData) => {
-        console.log(resData.patientMedicalVisits);
         dispatch({
           type: LOAD_PATIENTS_MEDICAL_VISITS,
           patientMedicalVisits: resData.patientMedicalVisits,

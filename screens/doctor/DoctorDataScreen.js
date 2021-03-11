@@ -105,8 +105,12 @@ const DoctorDataScreen = ({ route, navigation }) => {
       <Card style={styles.doctorDataCard}>
         <UserAvatarItem avatar={avatar} role={'DOCTOR'} />
         <View style={styles.details}>
-          <Text style={styles.label}>E-mail:</Text>
+          <Text style={styles.label}>Nazwa:</Text>
           <Text style={styles.label}>{doctorMail}</Text>
+        </View>
+        <View style={styles.details}>
+          <Text style={styles.label}>Specjalizacja:</Text>
+          <Text style={styles.label}>{specialization}</Text>
         </View>
         <View style={styles.details}>
           <Text style={styles.label}>Numer telefonu:</Text>
@@ -155,13 +159,13 @@ const styles = StyleSheet.create({
   doctorDataCard: {
     borderRadius: 10,
     width: constants.screenWidth - 40,
-    height: constants.screenHeight / 2 - 90,
+    height: constants.screenHeight / 2 - 40,
     justifyContent: 'space-around',
   },
   label: {
     color: Colors.details,
     fontFamily: 'open-sans-bold',
-    fontSize: 14,
+    fontSize: 16,
     textAlign: 'center',
     paddingLeft: 10,
   },
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = (navData) => {
   return {
-    title: navData.route.params.doctorName,
+    headerTitle: 'Szczegóły lekarza',
     headerTintColor: Colors.primary,
     headerStyle: { backgroundColor: Colors.secondary },
   };

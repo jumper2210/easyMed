@@ -93,7 +93,7 @@ const HomeScreen = ({ navigation }) => {
           name={'Umówione wizyty'}
           iconName={Platform.OS === 'android' ? 'md-contacts' : 'ios-contacts'}
           onPress={() => {
-            navigation.navigate('PatientMedicalVisitsScreen');
+            navigation.navigate('PatientMedicalVisitsScreen', { _id: _id });
           }}
         />
       </View>
@@ -173,7 +173,7 @@ const HomeScreen = ({ navigation }) => {
           name={'Umówione wizyty'}
           iconName={Platform.OS === 'android' ? 'md-contacts' : 'ios-contacts'}
           onPress={() => {
-            navigation.navigate('DoctorMedicalVisitsScreen');
+            navigation.navigate('DoctorMedicalVisitsScreen', { _id: _id });
           }}
         />
       </View>

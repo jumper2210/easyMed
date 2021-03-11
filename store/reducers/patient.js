@@ -3,7 +3,7 @@ import MedicalVisit from '../../models/medicalVisit';
 import {
   LOAD_CLINIC_PATIENTS,
   LOAD_PATIENTS_MEDICAL_VISITS,
-} from '../actions/user';
+} from '../actions/patient';
 
 const initialState = {
   patients: [],
@@ -32,18 +32,7 @@ export default (state = initialState, action) => {
     case LOAD_PATIENTS_MEDICAL_VISITS:
       return {
         patientMedicalVisits: action.patientMedicalVisits.map(
-          (mv) =>
-            new Patient(
-              pt._id.toString(),
-              pt.name,
-              pt.medicalCases,
-              pt.email,
-              pt.phoneNumber,
-              pt.avatar,
-              pt.role,
-              pt.medicalVisits,
-              pt.isAssignClinic
-            )
+          (md) => new MedicalVisit(md._id, md.date, md.doctor, md.patient)
         ),
       };
     default:

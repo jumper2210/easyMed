@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
-import MedicalVisitItem from '../../components/MedicalVisitComponents/MedicalVisitItem';
+import DoctorMedicalVisitItem from '../../components/MedicalVisitComponents/DoctorMedicalVisitItem';
 import Colors from '../../constants/Colors';
 import * as doctorActions from '../../store/actions/doctor';
 import Button from '../../UI/Button';
@@ -29,7 +29,7 @@ const DoctorMedicalVisitsScreen = (props) => {
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
           <View>
-            <MedicalVisitItem
+            <DoctorMedicalVisitItem
               date={itemData.item.medicalVisits.date}
               patient={itemData.item.medicalVisits.doctor}
             />

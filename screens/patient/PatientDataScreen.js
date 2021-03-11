@@ -101,10 +101,10 @@ const PatientDataScreen = ({ route, navigation }) => {
   });
 
   if (healthInformationsToCheck.length > 0) {
-    historyinformationDisplay = (
+    healthInformationDisplay = (
       <View>
         <Text style={styles.healthInformationInfo}>
-          Potwierdź przypadek medczny
+          Zobacz szczegóły dolegliwości pacjenta
         </Text>
         <FlatList
           horizontal
@@ -153,8 +153,8 @@ const PatientDataScreen = ({ route, navigation }) => {
           </Text>
         </View>
       </Card>
-      <View style={styles.scrollViewStyled}>{medicalCaseDisplay}</View>
-      <Text style={styles.medicineInfo}>Lekarstwa</Text>
+      <View style={styles.scrollViewStyled}>{healthInformationDisplay}</View>
+      <Text style={styles.medicineInfo}>Lekarstwa: </Text>
       <View style={{ height: 100, width: '70%' }}>
         <ListOfMedicines patientId={patientId} />
       </View>
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
   },
   patientDataCard: {
     borderRadius: 10,
-    width: constants.screenWidth - 60,
-    height: constants.screenHeight / 2 - 110,
+    width: constants.screenWidth - 40,
+    height: constants.screenHeight / 2 - 140,
     justifyContent: 'space-around',
   },
   scrollViewStyled: {
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   avatar: {
-    height: 100,
+    height: 80,
     width: 100,
     borderRadius: 20,
     backgroundColor: Colors.secondary,

@@ -3,8 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 import constants from '../../constants/Constants';
 
-const MedicalVisitItem = (props) => {
-  const { date, doctor, patient } = props;
+const DoctorMedicalVisitItem = (props) => {
+  const { date, patient } = props;
 
   return (
     <View style={styles.item}>
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MedicalVisitItem;
+export default DoctorMedicalVisitItem;
