@@ -28,12 +28,12 @@ const DoctorDataScreen = ({ route, navigation }) => {
     _id,
     specialization,
   } = route.params;
-
+  // tu działa
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(conversationActions.loadConversations());
-      dispatch(chatMateActions.loadChatMates());
       dispatch(userAction.loadUserData());
+      dispatch(chatMateActions.loadChatMates());
     });
     return unsubscribe;
   }, [navigation]);
@@ -73,33 +73,6 @@ const DoctorDataScreen = ({ route, navigation }) => {
     />
   );
 
-  let buttonWriteMessage = (
-    <Button
-      style={{ backgroundColor: Colors.primary }}
-      textStyle={{ color: Colors.details }}
-      title='Napisz wiadomość'
-      onPress={() => {
-        const conversation = findConversationHandler(doctorId);
-        if (conversation && conversation.id) {
-          setCurrentConversationId(conversation.id);
-          navigation.navigate('ConversationScreen', {
-            conversation: conversation,
-            chatMates: chatMates,
-            user: selfUser,
-          });
-        } else {
-          dispatch(
-            conversationActions.createConversation(
-              doctorId,
-              navigation,
-              selfUser
-            )
-          );
-        }
-      }}
-    />
-  );
-
   return (
     <View style={styles.screen}>
       <Card style={styles.doctorDataCard}>
@@ -122,8 +95,33 @@ const DoctorDataScreen = ({ route, navigation }) => {
         </View>
       </Card>
       <View style={styles.buttonContainer}>
+        <Button
+          style={{ backgroundColor: Colors.primary }}
+          textStyle={{ color: Colors.details }}
+          title='Napisz wiadomość'
+          onPress={() => {
+            const conversation = findConversationHandler(doctorId);
+
+            if (conversation && conversation.id) {
+              setCurrentConversationId(conversation.id);
+              navigation.navigate('ConversationScreen', {
+                conversation: conversation,
+                chatMates: chatMates,
+                user: selfUser,
+              });
+            } else {
+              dispatch(
+                conversationActions.createConversation(
+                  doctorId,
+                  navigation,
+                  selfUser
+                )
+              );
+            }
+          }}
+        />
         {specialization === 'Lekarz rodzinny' ? familyDoctorVisit : null}
-        {buttonWriteMessage}
+
         {specialization !== 'Lekarz rodzinny' ? buttonSchedule : null}
       </View>
     </View>

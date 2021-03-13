@@ -21,10 +21,11 @@ const PatientDataScreen = ({ route, navigation }) => {
     patientMail,
     patientPhoneNumber,
     patientId,
-    chatMates,
     avatar,
+    _id,
   } = route.params;
   const selfUser = useSelector((state) => state.usersState.selfUser);
+  const chatMates = useSelector((state) => state.chatMatesState.chatMates);
 
   const healthInformations = useSelector(
     (state) => state.healthInformationState.healthInformations
@@ -39,12 +40,13 @@ const PatientDataScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     dispatch(healthInformationActions.loadPatientHealthInformation(patientId));
-    dispatch(conversationActions.loadConversations());
+    dispatch(conversationActions.loadConversationsPatients());
     dispatch(userAction.loadUserData());
     dispatch(chatMateActions.loadChatMates());
   }, []);
 
   const setCurrentConversationId = (conversationId) => {
+    console.log(conversationId);
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
 
@@ -62,6 +64,7 @@ const PatientDataScreen = ({ route, navigation }) => {
       title='Napisz wiadomość'
       onPress={() => {
         const conversation = findConversationHandler(patientId);
+
         if (conversation && conversation.id) {
           setCurrentConversationId(conversation.id);
           navigation.navigate('ConversationScreen', {
@@ -71,7 +74,11 @@ const PatientDataScreen = ({ route, navigation }) => {
           });
         } else {
           dispatch(
-            conversationActions.createConversationPatient(patientId, navigation)
+            conversationActions.createConversationPatient(
+              patientId,
+              navigation,
+              selfUser
+            )
           );
         }
       }}
@@ -104,7 +111,7 @@ const PatientDataScreen = ({ route, navigation }) => {
     healthInformationDisplay = (
       <View>
         <Text style={styles.healthInformationInfo}>
-          Zobacz szczegóły dolegliwości pacjenta
+          Zobacz szczegóły dolegliwości tego pacjenta
         </Text>
         <FlatList
           horizontal

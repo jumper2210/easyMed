@@ -4,7 +4,7 @@ import Colors from '../../constants/Colors';
 import constants from '../../constants/Constants';
 
 const DoctorMedicalVisitItem = (props) => {
-  const { date, patient } = props;
+  const { date, patientName } = props;
 
   return (
     <View style={styles.item}>
@@ -15,12 +15,8 @@ const DoctorMedicalVisitItem = (props) => {
           </View>
           <View>
             <View style={styles.details}>
-              <Text style={styles.description}>Lekarz:</Text>
-              <Text style={styles.doctor}>{doctor}</Text>
-            </View>
-            <View style={styles.details}>
               <Text style={styles.description}>Pacjent:</Text>
-              <Text style={styles.patient}>{patient}</Text>
+              <Text style={styles.quantity}>{patientName}</Text>
             </View>
           </View>
         </View>
@@ -31,6 +27,7 @@ const DoctorMedicalVisitItem = (props) => {
 
 const styles = StyleSheet.create({
   item: {
+    width: constants.screenWidth - 40,
     shadowColor: 'black',
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
@@ -39,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Colors.primary,
     margin: 30,
-    height: constants.screenHeight / 2 - 65,
+    height: constants.screenHeight / 2 - 145,
     justifyContent: 'space-between',
   },
   touchable: {
@@ -80,14 +77,14 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontFamily: 'open-sans-bold',
-    fontSize: 15,
-    marginVertical: 2,
+    fontSize: 22,
+    // marginVertical: 2,
     color: Colors.secondary,
   },
   description: {
-    fontSize: 15,
+    fontSize: 22,
     color: Colors.secondary,
-    fontFamily: 'open-sans',
+    fontFamily: 'open-sans-bold',
   },
 });
 

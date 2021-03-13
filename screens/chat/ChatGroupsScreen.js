@@ -8,9 +8,8 @@ import * as chatMateActions from '../../store/actions/chatMate';
 import Colors from '../../constants/Colors';
 import * as userActions from '../../store/actions/user';
 
-const ChatGroupsScreen = (props) => {
+const ChatGroupsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { navigation } = props;
   const chatMates = useSelector((state) => state.chatMatesState.chatMates);
   const conversations = useSelector(
     (state) => state.conversationsState.conversations
@@ -27,13 +26,14 @@ const ChatGroupsScreen = (props) => {
     dispatch(userActions.loadUserData());
   }, [dispatch]);
 
+  // console.log(chatMates);
+  console.log(conversations);
   const findConversationHandler = (chatMateId) => {
     const findConversation = conversations.find(
       (conversation) => conversation.chatMateId === chatMateId
     );
     return findConversation;
   };
-
   let display = (
     <Text style={styles.info}>Nie posiadasz jeszcze żadnych konwersacji.</Text>
   );

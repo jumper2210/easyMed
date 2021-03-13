@@ -2,7 +2,7 @@ import Doctor from '../../models/doctor';
 import MedicalVisit from '../../models/medicalVisit';
 import {
   LOAD_CLINIC_DOCTORS,
-  LOAD_DOCTORS_MEDICAL_VISITS,
+  LOAD_DOCTORS_MEDICAL_DOCTORS,
 } from '../actions/doctor';
 
 const initialState = {
@@ -28,7 +28,8 @@ export default (state = initialState, action) => {
             )
         ),
       };
-    case LOAD_DOCTORS_MEDICAL_VISITS:
+    case LOAD_DOCTORS_MEDICAL_DOCTORS:
+      console.log('tuu');
       return {
         doctorMedicalVisits: action.doctorMedicalVisits.map(
           (md) => new MedicalVisit(md._id, md.date, md.doctor, md.patient)

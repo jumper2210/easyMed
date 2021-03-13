@@ -63,7 +63,7 @@ const MedFormScreen = (props) => {
       radiance: '',
     },
     inputValidities: {
-      others: false,
+      symptom: false,
       age: false,
       scale: false,
       increase: false,
@@ -144,12 +144,12 @@ const MedFormScreen = (props) => {
           <KeyboardAvoidingView behavior='height' keyboardVerticalOffset={50}>
             <View style={styles.inputsContainer}>
               <Input
-                id='otherSymptom'
+                id='symptom'
                 label='*Co Ci dolega?'
                 keyboardType='default'
                 required
                 autoCapitalize='none'
-                errorMessage='Wpisze inne symptomy'
+                errorMessage='Wpisz co Ci dolega'
                 onInputChange={inputChangeHandler}
                 numeric
                 initialValue=''

@@ -5,6 +5,26 @@ export const createConversationSuccess = (conversation) => ({
   conversation,
 });
 
+export const loadConversations = () => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
+    fetch(`${currentIp}/conversation/getConversationsWithDoctors`, {
+      method: 'GET',
+      headers: {
+        Authorization: 'Barer ' + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((conversations) => {
+        if (!conversations.error) {
+          dispatch(loadConversationsSuccess(conversations));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 export const createConversation = (chatMateId, navigation, selfUser) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token;
@@ -29,28 +49,8 @@ export const createConversation = (chatMateId, navigation, selfUser) => {
   };
 };
 
-export const loadConversations = () => {
-  return async (dispatch, getState) => {
-    const token = getState().authState.token;
-    fetch(`${currentIp}/conversation/getConversationsWithDoctors`, {
-      method: 'GET',
-      headers: {
-        Authorization: 'Barer ' + token,
-      },
-    })
-      .then((response) => response.json())
-      .then((conversations) => {
-        if (!conversations.error) {
-          dispatch(loadConversationsSuccess(conversations));
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
 export const createConversationPatient = (chatMateId, navigation, selfUser) => {
+  console.log(chatMateId, selfUser, 'z ccp');
   return async (dispatch, getState) => {
     const token = getState().authState.token;
     fetch(`${currentIp}/conversation/createConversationWithPatient`, {

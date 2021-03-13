@@ -12,7 +12,7 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
     age,
     increase,
     locationOfPain,
-    otherSymptom,
+    symptom,
     radiance,
     scale,
     createdAt,
@@ -22,30 +22,30 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
   } = route.params;
   const dispatch = useDispatch();
 
-  // const checkHealthInformationHandler = (healthInformationId) => {
-  //   Alert.alert(
-  //     'Jesteś pewien?',
-  //     '',
-  //     [
-  //       {
-  //         text: 'Zatwierdź',
-  //         onPress: () => {
-  //           navigation.navigate('HomeScreen');
-  //           dispatch(
-  //             healthInformationActions.checkHealthInformation(
-  //               healthInformationId
-  //             )
-  //           );
-  //         },
-  //       },
-  //       {
-  //         text: 'Anuluj',
-  //         onPress: () => {},
-  //       },
-  //     ],
-  //     { cancelable: false }
-  //   );
-  // };
+  const checkHealthInformationHandler = (healthInformationId) => {
+    Alert.alert(
+      'Zapis opisu dolegliowści do konta pacjenta',
+      '',
+      [
+        {
+          text: 'Zapisz',
+          onPress: () => {
+            navigation.navigate('HomeScreen');
+            dispatch(
+              healthInformationActions.checkHealthInformation(
+                healthInformationId
+              )
+            );
+          },
+        },
+        {
+          text: 'Anuluj',
+          onPress: () => {},
+        },
+      ],
+      { cancelable: false }
+    );
+  };
   const editTextHandler = (data) => {
     if (data === undefined) {
       data = '';
@@ -81,14 +81,8 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
           </Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>Inne symptomy:</Text>
-          <Text style={styles.labelContent}>
-            {editTextHandler(otherSymptom)}
-          </Text>
-        </View>
-        <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>Wybrany symptom:</Text>
-          <Text style={styles.labelContent}></Text>
+          <Text style={styles.labelTitle}>Główna dolegliwość:</Text>
+          <Text style={styles.labelContent}>{symptom}</Text>
         </View>
         <View style={styles.labelContainer}>
           <Text style={styles.labelTitle}>Promieniowanie:</Text>
@@ -106,14 +100,14 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
           <Image style={styles.image} source={{ uri: imageUri }} />
         ) : null}
       </ScrollView>
-      {/* {role === 'DOCTOR' ? (
+      {role === 'DOCTOR' ? (
         <Button
-          title='Potwierdź ten przypadek'
+          title='Zapisz'
           onPress={() => {
             checkHealthInformationHandler(healthInformationId);
           }}
         />
-      ) : null} */}
+      ) : null}
     </View>
   );
 };

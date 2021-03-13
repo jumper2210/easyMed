@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 import UserDetailsItem from '../../components/UserComponents/UserDetailsItem';
 import Colors from '../../constants/Colors';
+import * as chatMateAction from '../../store/actions/chatMate';
 
 const AllDoctorsScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const doctors = useSelector((state) => state.doctorsState.doctors);
   const { _id } = route.params;
   useEffect(() => {
@@ -26,6 +28,9 @@ const AllDoctorsScreen = ({ navigation, route }) => {
             name={itemData.item.name}
             specialization={itemData.item.specialization}
             onPress={() => {
+              dispatch(
+                chatMateAction.addChatMateForPatient(itemData.item.email)
+              );
               navigation.navigate('DoctorDataScreen', {
                 avatar: itemData.item.avatar,
                 doctorName: itemData.item.name,

@@ -6,8 +6,8 @@ import Colors from '../../constants/Colors';
 import * as doctorActions from '../../store/actions/doctor';
 import Button from '../../UI/Button';
 
-const DoctorMedicalVisitsScreen = (props) => {
-  const { navigation } = props;
+const DoctorMedicalVisitsScreen = ({ navigation, route }) => {
+  const { _id } = route.params;
   const dispatch = useDispatch();
   const doctorMedicalVisits = useSelector(
     (state) => state.doctorsState.doctorMedicalVisits
@@ -30,13 +30,21 @@ const DoctorMedicalVisitsScreen = (props) => {
         renderItem={(itemData) => (
           <View>
             <DoctorMedicalVisitItem
-              date={itemData.item.medicalVisits.date}
-              patient={itemData.item.medicalVisits.doctor}
+              date={itemData.item.date}
+              patientName={itemData.item.patient.name}
             />
             <Button
+              style={styles.button}
               title='Szczegóły pacjenta'
               onPress={() => {
-                navigation.navigate('PatientDataScreen', {});
+                navigation.navigate('PatientDataScreen', {
+                  avatar: itemData.item.patient.avatar,
+                  patientMail: itemData.item.patient.name,
+                  patientPhoneNumber: itemData.item.patient.doctorPhoneNumber,
+                  patientId: itemData.item.patient._id,
+                  role: itemData.item.patient.role,
+                  _id: _id,
+                });
               }}
             />
           </View>
@@ -57,6 +65,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
     padding: 20,
+  },
+  button: {
+    alignSelf: 'center',
+    width: '60%',
   },
 });
 export default DoctorMedicalVisitsScreen;

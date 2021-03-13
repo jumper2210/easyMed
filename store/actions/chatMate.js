@@ -22,11 +22,35 @@ export const loadChatMates = () => {
   };
 };
 
-export const addChatMate = (chatMateEmail) => {
+export const addChatMateForDoctor = (chatMateEmail) => {
   return async (dispatch, getState) => {
     const ownEmail = getState().usersState.selfUser.email;
     const token = getState().authState.token;
-    fetch(`${currentIp}/chatMates/addChatMate`, {
+    fetch(`${currentIp}/chatMates/addChatMateForDoctor`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({ chatMateEmail, ownEmail }),
+    })
+      .then((res) => {
+        if (res.status !== 201) {
+          throw new Error('Failed to add chat mate');
+        }
+        return res.json();
+      })
+      .then((response) => {
+        dispatch({ type: ADD_CHAT_MATE, chatMate: response.chatMate });
+      });
+  };
+};
+
+export const addChatMateForPatient = (chatMateEmail) => {
+  return async (dispatch, getState) => {
+    const ownEmail = getState().usersState.selfUser.email;
+    const token = getState().authState.token;
+    fetch(`${currentIp}/chatMates/addChatMateForPatient`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
