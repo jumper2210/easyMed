@@ -83,3 +83,29 @@ export const deleteDoctorMedicalVisit = (medicalVisitId, patientId) => {
       });
   };
 };
+
+export const editPassword = (password) => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
+    console.log(password);
+    fetch(`${currentIp}/doctor/editPassword`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        password,
+      }),
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error('Wystąpił błąd');
+        }
+        return response.json();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};

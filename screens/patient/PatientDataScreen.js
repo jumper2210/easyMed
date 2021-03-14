@@ -46,7 +46,6 @@ const PatientDataScreen = ({ route, navigation }) => {
   }, []);
 
   const setCurrentConversationId = (conversationId) => {
-    console.log(conversationId);
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
 

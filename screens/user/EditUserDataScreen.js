@@ -13,17 +13,23 @@ import * as Yup from 'yup';
 import Colors from '../../constants/Colors';
 import Card from '../../UI/Card';
 import * as userActions from '../../store/actions/user';
+import * as doctorActions from '../../store/actions/doctor';
 import ImgPicker from '../../components/AddClinicComponents/ImgPicker';
 import Button from '../../UI/Button';
-const EditUserDataScreen = (props) => {
+import Modal from 'react-native-modal';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+const EditUserDataScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState();
-  const selfUser = useSelector((state) => state.usersState.selfUser);
-  const { navigation } = props;
-  const name = selfUser.name;
-  const phoneNumber = selfUser.phoneNumber;
-  const avatar = selfUser.avatar;
-
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  const { name, phoneNumber, avatar, role } = useSelector(
+    (state) => state.usersState.selfUser
+  );
+  let changePassDisplay;
   const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
   };
@@ -32,6 +38,88 @@ const EditUserDataScreen = (props) => {
     dispatch(userActions.loadUserData());
   }, []);
 
+  if (role === 'DOCTOR') {
+    changePassDisplay = (
+      <TouchableOpacity onPress={toggleModal} style={styles.item}>
+        <Text
+          style={{
+            textAlign: 'center',
+            color: Colors.primary,
+            textTransform: 'uppercase',
+            fontFamily: 'open-sans-bold',
+          }}
+        >
+          Zmień hasło
+        </Text>
+        <Modal
+          backdropOpacity={0.4}
+          isVisible={isModalVisible}
+          onBackdropPress={() => setModalVisible(false)}
+        >
+          <Formik
+            initialValues={{
+              password: '',
+            }}
+            onSubmit={(values) => {
+              const { password } = values;
+              dispatch(doctorActions.editPassword(password));
+              navigation.navigate('HomeScreen');
+            }}
+            validationSchema={Yup.object().shape({
+              password: Yup.string().min(5),
+            })}
+          >
+            {({
+              handleChange,
+              handleSubmit,
+              values,
+              isValid,
+              errors,
+              setFieldTouched,
+              touched,
+            }) => (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  width: '100%',
+                  height: '60%',
+                  alignItems: 'center',
+                }}
+              >
+                <Card style={styles.formContainer}>
+                  <KeyboardAvoidingView
+                    behavior='padding'
+                    keyboardVerticalOffset={35}
+                  >
+                    <InputFormik
+                      onChangeText={handleChange('password')}
+                      onBlur={() => setFieldTouched('password')}
+                      value={values.password}
+                      label='Wpisz nowe hasło'
+                    />
+                    {touched.password && errors.password && (
+                      <Text style={{ fontSize: 10, color: 'red' }}>
+                        {errors.password}
+                      </Text>
+                    )}
+                    <View style={styles.buttonContainer}>
+                      <Button
+                        color={Colors.secondary}
+                        disabled={!isValid}
+                        onPress={handleSubmit}
+                        title='Potwierdź'
+                      />
+                    </View>
+                  </KeyboardAvoidingView>
+                </Card>
+              </View>
+            )}
+          </Formik>
+        </Modal>
+      </TouchableOpacity>
+    );
+  }
   return (
     <Formik
       initialValues={{
@@ -94,17 +182,7 @@ const EditUserDataScreen = (props) => {
                     {errors.editPhoneNumber}
                   </Text>
                 )}
-                {/* <InputFormik
-                  onChangeText={handleChange('editPassword')}
-                  onBlur={() => setFieldTouched('editPaswword')}
-                  value={values.editPassword}
-                  label='twoje hasło'
-                />
-                {touched.editPassword && errors.editPassword && (
-                  <Text style={{ fontSize: 10, color: 'red' }}>
-                    {errors.editPassword}
-                  </Text>
-                )} */}
+
                 <ImgPicker onImageTaken={imageTakenHandler} />
                 <View style={styles.buttonContainer}>
                   <Button
@@ -115,6 +193,7 @@ const EditUserDataScreen = (props) => {
                   />
                 </View>
               </KeyboardAvoidingView>
+              {changePassDisplay}
             </ScrollView>
           </Card>
         </View>
@@ -136,8 +215,23 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '90%',
     maxWidth: 400,
-    height: '85%',
+    height: '90%',
     padding: 15,
+  },
+  item: {
+    backgroundColor: Colors.details,
+    shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 8,
+    elevation: 0,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    padding: 10,
+    height: 40,
+    width: '90%',
+    maxWidth: 400,
+    alignSelf: 'center',
   },
 });
 
