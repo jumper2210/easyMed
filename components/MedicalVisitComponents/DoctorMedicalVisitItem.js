@@ -81,6 +81,7 @@ const DoctorMedicalVisitItem = (props) => {
             onPress={() => {
               navigation.navigate('PatientDataScreen', {
                 avatar: avatar,
+                patientName: patientName,
                 patientMail: patientMail,
                 patientPhoneNumber: patientPhoneNumber,
                 patientId: patientId,

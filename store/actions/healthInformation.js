@@ -6,8 +6,7 @@ export const LOAD_PATIENT_HEALTH_INFORMATIONS =
 
 export const createHealthInformation = (
   imageUri,
-  pickedSymptom,
-  otherSymptom,
+  symptom,
   age,
   scale,
   increase,
@@ -26,8 +25,7 @@ export const createHealthInformation = (
         },
         body: JSON.stringify({
           imageUri: imageUri,
-          pickedSymptom: pickedSymptom,
-          otherSymptom: otherSymptom,
+          symptom: symptom,
           age: age,
           scale: scale,
           increase: increase,
@@ -76,6 +74,7 @@ export const loadPatientHealthInformation = (patientId) => {
 };
 
 export const checkHealthInformation = (healthInformationId) => {
+  console.log(healthInformationId, ' z action');
   return async (dispatch, getState) => {
     const token = getState().authState.token;
     const response = await fetch(

@@ -13,7 +13,7 @@ const PatientHealthinformationsScreen = (props) => {
   const healthInformations = useSelector(
     (state) => state.healthInformationState.healthInformations
   );
-  const { _id, role } = useSelector((state) => state.usersState.selfUser);
+  const { _id, role, name } = useSelector((state) => state.usersState.selfUser);
 
   useEffect(() => {
     dispatch(healthInformationActions.loadPatientHealthInformation(_id));
@@ -28,12 +28,12 @@ const PatientHealthinformationsScreen = (props) => {
           mc.age,
           mc.increase,
           mc.locationOfPain,
-          mc.otherSymptom,
-          mc.pickedSymptom,
+          mc.symptom,
           mc.radiance,
           mc.scale,
           mc.createdAt,
-          mc.imageUri
+          mc.imageUri,
+          mc.resolved
         )
       );
       return medicalHistory;
@@ -44,7 +44,7 @@ const PatientHealthinformationsScreen = (props) => {
       Nie posiadasz historii medycznej w tej przychodni.
     </Text>
   );
-
+  console.log(medicalHistory);
   if (medicalHistory.length >= 1) {
     display = (
       <FlatList
@@ -54,12 +54,12 @@ const PatientHealthinformationsScreen = (props) => {
           <HealthInformationItem
             createdAt={itemData.item.createdAt}
             onPress={() => {
-              navigation.navigate('HealthInformationScreen', {
+              navigation.navigate('HealthInformationDetailsScreen', {
                 age: itemData.item.age,
+                name: name,
                 increase: itemData.item.increase,
                 locationOfPain: itemData.item.locationOfPain,
-                otherSymptom: itemData.item.otherSymptom,
-                pickedSymptom: itemData.item.pickedSymptom,
+                symptom: itemData.item.symptom,
                 radiance: itemData.item.radiance,
                 scale: itemData.item.scale,
                 createdAt: itemData.item.createdAt,

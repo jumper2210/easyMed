@@ -120,7 +120,7 @@ export const UserManagementTabs = () => {
             title: 'Historia twoich dolegliwości',
             tabBarIcon: () => {
               return (
-                <Ionicons name='md-list' size={26} color={Colors.secondary} />
+                <Ionicons name='md-list' size={30} color={Colors.secondary} />
               );
             },
           }}
@@ -137,7 +137,7 @@ export const UserManagementTabs = () => {
               return (
                 <Ionicons
                   name='md-medical'
-                  size={26}
+                  size={30}
                   color={Colors.secondary}
                 />
               );

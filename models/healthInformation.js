@@ -5,8 +5,7 @@ class healthInformation {
     age,
     increase,
     locationOfPain,
-    otherSymptom,
-    pickedSymptom,
+    symptom,
     radiance,
     scale,
     createdAt,
@@ -18,8 +17,7 @@ class healthInformation {
     this.age = age;
     this.increase = increase;
     this.locationOfPain = locationOfPain;
-    this.otherSymptom = otherSymptom;
-    this.pickedSymptom = pickedSymptom;
+    this.symptom = symptom;
     this.radiance = radiance;
     this.scale = scale;
     this.createdAt = createdAt;
