@@ -157,7 +157,7 @@ const AuthScreen = (props) => {
 
               <Button
                 style={{ width: '80%' }}
-                title={`Zamień na ${isSignUp ? 'logowanie' : 'rejestracje'}`}
+                title={`Zamień na ${isSignUp ? 'logowanie' : 'rejestrację'}`}
                 onPress={() => {
                   setIsSignUp((prevState) => !prevState);
                 }}

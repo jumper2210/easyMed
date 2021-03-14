@@ -32,7 +32,8 @@ export default (state = initialState, action) => {
       console.log('tuu');
       return {
         doctorMedicalVisits: action.doctorMedicalVisits.map(
-          (md) => new MedicalVisit(md._id, md.date, md.doctor, md.patient)
+          (md) =>
+            new MedicalVisit(md._id, md.date, md.hour, md.doctor, md.patient)
         ),
       };
     default:

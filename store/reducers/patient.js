@@ -32,7 +32,8 @@ export default (state = initialState, action) => {
     case LOAD_PATIENTS_MEDICAL_VISITS:
       return {
         patientMedicalVisits: action.patientMedicalVisits.map(
-          (md) => new MedicalVisit(md._id, md.date, md.doctor, md.patient)
+          (md) =>
+            new MedicalVisit(md._id, md.date, md.hour, md.doctor, md.patient)
         ),
       };
     default:

@@ -59,3 +59,27 @@ export const loadPatientMedicalVisits = () => {
       });
   };
 };
+
+export const deletePatientMedicalVisit = (medicalVisitId, doctorId) => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
+
+    fetch(
+      `${currentIp}/medicalVisit/deletePatientMedicalVisit/${medicalVisitId}/${doctorId}`,
+      {
+        method: 'DELETE',
+        headers: { Authorization: 'Bearer ' + token },
+      }
+    )
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error('Wystąpił błąd');
+        }
+        return response.json();
+      })
+      .then((resData) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};

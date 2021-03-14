@@ -28,26 +28,20 @@ const DoctorMedicalVisitsScreen = ({ navigation, route }) => {
         data={doctorMedicalVisits}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
-          <View>
-            <DoctorMedicalVisitItem
-              date={itemData.item.date}
-              patientName={itemData.item.patient.name}
-            />
-            <Button
-              style={styles.button}
-              title='Szczegóły pacjenta'
-              onPress={() => {
-                navigation.navigate('PatientDataScreen', {
-                  avatar: itemData.item.patient.avatar,
-                  patientMail: itemData.item.patient.name,
-                  patientPhoneNumber: itemData.item.patient.doctorPhoneNumber,
-                  patientId: itemData.item.patient._id,
-                  role: itemData.item.patient.role,
-                  _id: _id,
-                });
-              }}
-            />
-          </View>
+          <DoctorMedicalVisitItem
+            date={itemData.item.date}
+            hour={itemData.item.hour}
+            medicalVisitId={itemData.item._id}
+            patientName={itemData.item.patient.name}
+            patientMail={itemData.item.patient.name}
+            patientPhoneNumber={itemData.item.patient.doctorPhoneNumber}
+            patientId={itemData.item.patient._id}
+            avatar={itemData.item.patient.avatar}
+            specialization={itemData.item.patient.specialization}
+            role={itemData.item.patient.role}
+            _id={_id}
+            navigation={navigation}
+          />
         )}
       />
     );

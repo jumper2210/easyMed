@@ -4,7 +4,6 @@ import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 import PatientMedicalVisitItem from '../../components/MedicalVisitComponents/PatientMedicalVisitItem';
 import Colors from '../../constants/Colors';
 import * as patientActions from '../../store/actions/patient';
-import Button from '../../UI/Button';
 
 const AppoinmentsScreen = ({ navigation, route }) => {
   const patientData = useSelector(
@@ -27,26 +26,20 @@ const AppoinmentsScreen = ({ navigation, route }) => {
         data={patientData}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
-          <View>
-            <PatientMedicalVisitItem
-              date={itemData.item.date}
-              doctorName={itemData.item.doctor.name}
-            />
-            <Button
-              style={styles.button}
-              title='Szczegóły lekarza'
-              onPress={() => {
-                navigation.navigate('DoctorDataScreen', {
-                  doctorMail: itemData.item.doctor.name,
-                  doctorPhoneNumber: itemData.item.doctor.doctorPhoneNumber,
-                  doctorId: itemData.item.doctor._id,
-                  avatar: itemData.item.doctor.avatar,
-                  specialization: itemData.item.doctor.specialization,
-                  _id: _id,
-                });
-              }}
-            />
-          </View>
+          <PatientMedicalVisitItem
+            date={itemData.item.date}
+            hour={itemData.item.hour}
+            medicalVisitId={itemData.item._id}
+            doctorName={itemData.item.doctor.name}
+            doctorMail={itemData.item.doctor.name}
+            doctorPhoneNumber={itemData.item.doctor.doctorPhoneNumber}
+            doctorId={itemData.item.doctor._id}
+            avatar={itemData.item.doctor.avatar}
+            specialization={itemData.item.doctor.specialization}
+            role={itemData.item.doctor.role}
+            _id={_id}
+            navigation={navigation}
+          />
         )}
       />
     );
