@@ -1,21 +1,21 @@
-import { currentIp } from '../../helpers/currentIp'
+import { currentIp } from '../../helpers/currentIp';
 
-export const SET_PATIENT_MEDICINES = 'SET_PATIENT_MEDICINES'
-export const ASSIGN_MEDICINE = 'ASSIGN_MEDICINE'
+export const SET_PATIENT_MEDICINES = 'SET_PATIENT_MEDICINES';
+export const ASSIGN_MEDICINE = 'ASSIGN_MEDICINE';
 
 export const assignMedicine = (
   medicineName,
-  quantity,
+  // quantity,
   timeOfTaking,
   patientId
 ) => {
   return async (dispatch, getState) => {
-    const token = getState().authState.token
+    const token = getState().authState.token;
     fetch(`${currentIp}/medicine/assignMedicine/${patientId}`, {
       method: 'POST',
       body: JSON.stringify({
         medicineName: medicineName,
-        quantity: quantity,
+        // quantity: quantity,
         timeOfTaking: timeOfTaking,
       }),
       headers: {
@@ -25,19 +25,19 @@ export const assignMedicine = (
     })
       .then((res) => {
         if (res.status !== 201) {
-          throw new Error('Failed to assign medical')
+          throw new Error('Failed to assign medical');
         }
-        return res.json()
+        return res.json();
       })
       .then((resData) => {
-        dispatch({ type: ASSIGN_MEDICINE, medicine: resData.medicine })
-      })
-  }
-}
+        dispatch({ type: ASSIGN_MEDICINE, medicine: resData.medicine });
+      });
+  };
+};
 
 export const loadPatientMedicines = (patientId) => {
   return async (dispatch, getState) => {
-    const token = getState().authState.token
+    const token = getState().authState.token;
     fetch(`${currentIp}/medicine/loadPatientMedicines/${patientId}`, {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -45,22 +45,22 @@ export const loadPatientMedicines = (patientId) => {
     })
       .then((res) => {
         if (res.status !== 201) {
-          throw new Error('Failed to fetch patient medicines')
+          throw new Error('Failed to fetch patient medicines');
         }
-        return res.json()
+        return res.json();
       })
       .then((resData) => {
         dispatch({
           type: SET_PATIENT_MEDICINES,
           medicines: resData.medicines,
-        })
-      })
-  }
-}
+        });
+      });
+  };
+};
 
 export const deleteMedicine = (medicineId) => {
   return async (dispatch, getState) => {
-    const token = getState().authState.token
+    const token = getState().authState.token;
     fetch(`${currentIp}/medicine/deleteMedicine/${medicineId}`, {
       method: 'DELETE',
       headers: {
@@ -68,9 +68,32 @@ export const deleteMedicine = (medicineId) => {
       },
     }).then((res) => {
       if (res.status !== 200) {
-        throw new Error('Failed to delete medicine')
+        throw new Error('Failed to delete medicine');
       }
-      return res.json()
-    })
-  }
-}
+      return res.json();
+    });
+  };
+};
+
+export const editMedicine = (timeOfTaking, medicineId) => {
+  return async (dispatch, getState) => {
+    const token = getState().authState.token;
+    fetch(`${currentIp}/medicine/editMedicine/${medicineId}`, {
+      body: JSON.stringify({
+        // medicineName: medicineName,
+        // quantity: quantity,
+        timeOfTaking: timeOfTaking,
+      }),
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    }).then((res) => {
+      if (res.status !== 200) {
+        throw new Error('Failed to edit medicine');
+      }
+      return res.json();
+    });
+  };
+};

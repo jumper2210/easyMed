@@ -25,12 +25,9 @@ const PatientHealthinformationsScreen = (props) => {
         new HealthInformation(
           mc._id.toString(),
           mc.name,
-          mc.age,
-          mc.increase,
-          mc.locationOfPain,
           mc.symptom,
-          mc.radiance,
-          mc.scale,
+          mc.weight,
+          mc.doctorNotes,
           mc.createdAt,
           mc.imageUri,
           mc.resolved
@@ -44,7 +41,6 @@ const PatientHealthinformationsScreen = (props) => {
       Nie posiadasz historii medycznej w tej przychodni.
     </Text>
   );
-  console.log(medicalHistory);
   if (medicalHistory.length >= 1) {
     display = (
       <FlatList
@@ -55,13 +51,10 @@ const PatientHealthinformationsScreen = (props) => {
             createdAt={itemData.item.createdAt}
             onPress={() => {
               navigation.navigate('HealthInformationDetailsScreen', {
-                age: itemData.item.age,
                 name: name,
-                increase: itemData.item.increase,
-                locationOfPain: itemData.item.locationOfPain,
                 symptom: itemData.item.symptom,
-                radiance: itemData.item.radiance,
-                scale: itemData.item.scale,
+                doctorNotes: itemData.item.doctorNotes,
+                weight: itemData.item.weight,
                 createdAt: itemData.item.createdAt,
                 imageUri: itemData.item.imageUri,
                 role: role,

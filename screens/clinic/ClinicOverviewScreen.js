@@ -96,7 +96,7 @@ const ClinicOverviewScreen = ({ navigation, route }) => {
 };
 
 export const screenOptions = (navData) => {
-  const { userRole } = navData.route.params;
+  const { role } = navData.route.params;
 
   return {
     headerTitle: 'Twoja przychodnia',
@@ -116,7 +116,7 @@ export const screenOptions = (navData) => {
 
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        {userRole === 'ADMIN' ? (
+        {role === 'ADMIN' ? (
           <Item
             title='AddClinic'
             iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}

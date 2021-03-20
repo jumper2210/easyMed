@@ -22,7 +22,6 @@ const PatientDataScreen = ({ route, navigation }) => {
     patientPhoneNumber,
     patientId,
     avatar,
-    _id,
   } = route.params;
   const selfUser = useSelector((state) => state.usersState.selfUser);
   const chatMates = useSelector((state) => state.chatMatesState.chatMates);
@@ -90,12 +89,9 @@ const PatientDataScreen = ({ route, navigation }) => {
         new HealthInformation(
           mc._id.toString(),
           mc.name,
-          mc.age,
-          mc.increase,
-          mc.locationOfPain,
           mc.symptom,
-          mc.radiance,
-          mc.scale,
+          mc.weight,
+          mc.doctorNotes,
           mc.createdAt,
           mc.imageUri,
           mc.resolved
@@ -122,12 +118,9 @@ const PatientDataScreen = ({ route, navigation }) => {
                 navigation.navigate('HealthInformationDetailsScreen', {
                   name: patientName,
                   healthInformationId: itemData.item._id,
-                  age: itemData.item.age,
-                  increase: itemData.item.increase,
-                  locationOfPain: itemData.item.locationOfPain,
                   symptom: itemData.item.symptom,
-                  radiance: itemData.item.radiance,
-                  scale: itemData.item.scale,
+                  weight: itemData.item.weight,
+                  doctorNotes: itemData.item.doctorNotes,
                   createdAt: itemData.item.createdAt,
                   imageUri: itemData.item.imageUri,
                   role: 'DOCTOR',
@@ -160,7 +153,7 @@ const PatientDataScreen = ({ route, navigation }) => {
       <View style={styles.scrollViewStyled}>{healthInformationDisplay}</View>
       <Text style={styles.medicineInfo}>Lekarstwa: </Text>
       <View style={{ height: 100, width: '70%' }}>
-        <ListOfMedicines patientId={patientId} />
+        <ListOfMedicines patientId={patientId} navigation={navigation} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -230,6 +223,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: Colors.primary,
     textAlign: 'center',
+    marginVertical: 10,
   },
   healthInformationInfo: {
     fontFamily: 'open-sans-bold',

@@ -1,26 +1,25 @@
-// @ts-nocheck
-import React from 'react'
-import { ScrollView, View, StyleSheet, Text } from 'react-native'
-import MapPreview from '../../components/AddClinicComponents/MapPreview'
-import { useSelector } from 'react-redux'
-import Colors from '../../constants/Colors'
-import constants from '../../constants/Constants'
+import React from 'react';
+import { ScrollView, View, StyleSheet, Text } from 'react-native';
+import MapPreview from '../../components/AddClinicComponents/MapPreview';
+import { useSelector } from 'react-redux';
+import Colors from '../../constants/Colors';
+import constants from '../../constants/Constants';
 
 const ClinicDetailScreen = (props) => {
-  const { route, navigation } = props
-  const clinicId = route.params.placeId
+  const { route, navigation } = props;
+  const clinicId = route.params.placeId;
   const selectedClinic = useSelector((state) =>
     state.clinicsState.clinics.find((clinic) => clinic._id === clinicId)
-  )
+  );
 
-  const selectedLocation = { lat: selectedClinic.lat, lng: selectedClinic.lng }
+  const selectedLocation = { lat: selectedClinic.lat, lng: selectedClinic.lng };
 
   const showMapHandler = () => {
     navigation.navigate('MapScreen', {
       readonly: true,
       initialLocation: selectedLocation,
-    })
-  }
+    });
+  };
   return (
     <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
       <View style={styles.locationContainer}>
@@ -34,12 +33,12 @@ const ClinicDetailScreen = (props) => {
         />
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
 export const screenOptions = (navData) => {
-  return { title: navData.route.params.clinicTitle }
-}
+  return { title: navData.route.params.clinicTitle };
+};
 
 const styles = StyleSheet.create({
   locationContainer: {
@@ -75,5 +74,5 @@ const styles = StyleSheet.create({
     maxWidth: 350,
     height: 350,
   },
-})
-export default ClinicDetailScreen
+});
+export default ClinicDetailScreen;

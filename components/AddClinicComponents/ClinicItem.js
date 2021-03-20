@@ -1,8 +1,9 @@
-import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { View, Text, Image, StyleSheet } from 'react-native'
-import Colors from '../../constants/Colors'
-import constants from '../../constants/Constants'
+import React from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import Colors from '../../constants/Colors';
+import constants from '../../constants/Constants';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const ClinicItem = (props) => {
   return (
@@ -11,17 +12,18 @@ const ClinicItem = (props) => {
       onPress={props.onSelect}
       style={styles.placeItem}
     >
-      <Image style={styles.image} source={{ uri: props.image }} />
+      {/* <Image style={styles.image} source={{ uri: props.image }} /> */}
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{props.title}</Text>
       </View>
+      <FontAwesome5 name='clinic-medical' size={65} color='black' />
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   placeItem: {
-    paddingTop: 15,
+    paddingTop: 75,
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -47,6 +49,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 2,
   },
-})
+});
 
-export default ClinicItem
+export default ClinicItem;

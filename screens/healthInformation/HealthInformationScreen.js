@@ -56,19 +56,11 @@ const MedFormScreen = (props) => {
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       symptom: '',
-      age: '',
-      scale: '',
-      increase: '',
-      locationOfPain: '',
-      radiance: '',
+      weight: '',
     },
     inputValidities: {
       symptom: false,
-      age: false,
-      scale: false,
-      increase: false,
-      locationOfPain: false,
-      radiance: false,
+      weight: false,
     },
     formIsValid: false,
   });
@@ -108,11 +100,7 @@ const MedFormScreen = (props) => {
     action = healthInformationActions.createHealthInformation(
       selectedImage,
       formState.inputValues.symptom,
-      formState.inputValues.age,
-      formState.inputValues.scale,
-      formState.inputValues.increase,
-      formState.inputValues.locationOfPain,
-      formState.inputValues.radiance
+      formState.inputValues.weight
     );
     setError(null);
     setIsLoading(true);
@@ -157,54 +145,11 @@ const MedFormScreen = (props) => {
                 maxLength={200}
               />
               <Input
-                id='age'
-                label='*Podaj twój wiek'
-                required
-                autoCapitalize='none'
-                errorMessage='Podaj swój wiek'
-                onInputChange={inputChangeHandler}
-                keyboardType='decimal-pad'
-                initialValue=''
-              />
-              <Input
-                id='increase'
-                label='*Podaj twój wzrost'
-                keyboardType='decimal-pad'
-                required
-                autoCapitalize='none'
-                errorMessage='Podaj twój wzrost'
-                onInputChange={inputChangeHandler}
-                numeric
-                initialValue=''
-              />
-              <Input
-                id='locationOfPain'
-                label='W którym miejscu odczuwasz ból?'
-                keyboardType='default'
-                autoCapitalize='none'
-                errorMessage='Przekroczono ilość słów'
-                onInputChange={inputChangeHandler}
-                initialValue=''
-                editable
-                maxLength={20}
-              />
-              <Input
-                id='radiance'
-                label='Opisz promieniowanie bólu'
-                keyboardType='default'
-                autoCapitalize='none'
-                errorMessage='Przekroczono ilość słów'
-                onInputChange={inputChangeHandler}
-                initialValue=''
-                editable
-                maxLength={40}
-              />
-              <Input
-                id='scale'
-                label='Podaj skalę bólu (0-10)'
+                id='weight'
+                label='Podaj swoją wagę'
                 keyboardType='decimal-pad'
                 autoCapitalize='none'
-                errorMessage='Podaj skalę twojego bólu'
+                errorMessage='Podaj swoją wagę'
                 onInputChange={inputChangeHandler}
                 numeric
                 initialValue=''

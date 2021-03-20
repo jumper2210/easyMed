@@ -3,18 +3,14 @@ import { Image } from 'react-native';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
-import * as healthInformationActions from '../../store/actions/healthInformation';
 import Button from '../../UI/Button';
 
 const healthInformationDetailsScreen = ({ route, navigation }) => {
   const {
     name,
-    age,
-    increase,
-    locationOfPain,
     symptom,
-    radiance,
-    scale,
+    weight,
+    doctorNotes,
     createdAt,
     imageUri,
     healthInformationId,
@@ -23,30 +19,6 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
   const words = createdAt.split('T');
   const date = words[0];
   const dispatch = useDispatch();
-  const checkHealthInformationHandler = (healthInformationId) => {
-    Alert.alert(
-      'Zapis opisu dolegliowści do konta pacjenta',
-      '',
-      [
-        {
-          text: 'Zapisz',
-          onPress: () => {
-            navigation.navigate('HomeScreen');
-            dispatch(
-              healthInformationActions.checkHealthInformation(
-                healthInformationId
-              )
-            );
-          },
-        },
-        {
-          text: 'Anuluj',
-          onPress: () => {},
-        },
-      ],
-      { cancelable: false }
-    );
-  };
 
   return (
     <View style={styles.screen}>
@@ -56,37 +28,21 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
           <Text style={styles.labelContent}>{name}</Text>
         </View>
         <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>Główna dolegliwość:</Text>
+          <Text style={styles.labelTitle}>Opis dolegliwości:</Text>
           <Text style={styles.labelContent}>{symptom}</Text>
         </View>
-        <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>Wiek:</Text>
-          <Text style={styles.labelContent}>{age}</Text>
-        </View>
-        <View style={styles.labelContainer}>
-          <Text style={styles.labelTitle}>Wzrost:</Text>
-          <Text style={styles.labelContent}>{increase}</Text>
-        </View>
-        {scale ? (
+        {weight ? (
           <View style={styles.labelContainer}>
             <Text style={styles.labelTitle}>Waga:</Text>
-            <Text style={styles.labelContent}>{scale}</Text>
+            <Text style={styles.labelContent}>{weight}</Text>
           </View>
         ) : null}
-
-        {locationOfPain ? (
+        {doctorNotes ? (
           <View style={styles.labelContainer}>
-            <Text style={styles.labelTitle}>Umiejscowienie bólu:</Text>
-            <Text style={styles.labelContent}>{locationOfPain}</Text>
+            <Text style={styles.labelTitle}>Uwagi od lekarza:</Text>
+            <Text style={styles.labelContent}>{doctorNotes}</Text>
           </View>
         ) : null}
-        {radiance ? (
-          <View style={styles.labelContainer}>
-            <Text style={styles.labelTitle}>Promieniowanie:</Text>
-            <Text style={styles.labelContent}>{radiance}</Text>
-          </View>
-        ) : null}
-
         <View style={styles.labelContainer}>
           <Text style={styles.labelTitle}>Utworzono:</Text>
           <Text style={styles.labelContent}>{date}</Text>
@@ -97,9 +53,11 @@ const healthInformationDetailsScreen = ({ route, navigation }) => {
       </ScrollView>
       {role === 'DOCTOR' ? (
         <Button
-          title='Zapisz do historii pacjenta'
+          title='Dodaj swoje uwagi'
           onPress={() => {
-            checkHealthInformationHandler(healthInformationId);
+            navigation.navigate('AddHealthNotesScreen', {
+              healthInformationId: healthInformationId,
+            });
           }}
         />
       ) : null}

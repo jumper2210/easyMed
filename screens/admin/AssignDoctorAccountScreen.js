@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,24 +8,24 @@ import {
   Picker,
   KeyboardAvoidingView,
   ScrollView,
-} from 'react-native'
-import { Formik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
-import InputFormik from '../../UI/InputFormik'
-import * as Yup from 'yup'
-import Colors from '../../constants/Colors'
-import Card from '../../UI/Card'
-import * as adminActions from '../../store/actions/admin'
-import * as clinicActions from '../../store/actions/clinics'
+} from 'react-native';
+import { Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import InputFormik from '../../UI/InputFormik';
+import * as Yup from 'yup';
+import Colors from '../../constants/Colors';
+import Card from '../../UI/Card';
+import * as adminActions from '../../store/actions/admin';
+import * as clinicActions from '../../store/actions/clinics';
 
 const AssignDoctorAccountScreen = ({ route, navigation }) => {
-  const dispatch = useDispatch()
-  const [selectedValue, setSelectedValue] = useState('')
-  const clinics = useSelector((state) => state.clinicsState.clinics)
+  const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState('');
+  const clinics = useSelector((state) => state.clinicsState.clinics);
 
   useEffect(() => {
-    dispatch(clinicActions.loadClinics())
-  }, [])
+    dispatch(clinicActions.loadClinics());
+  }, []);
 
   const infoHandler = (email, password, name, specialization) => {
     Alert.alert(
@@ -43,8 +43,8 @@ const AssignDoctorAccountScreen = ({ route, navigation }) => {
                 specialization,
                 selectedValue
               )
-            )
-            navigation.navigate('HomeScreen')
+            );
+            navigation.navigate('HomeScreen');
           },
         },
         {
@@ -53,15 +53,15 @@ const AssignDoctorAccountScreen = ({ route, navigation }) => {
         },
       ],
       { cancelable: false }
-    )
-  }
+    );
+  };
 
   return (
     <Formik
       initialValues={{ email: '', password: '', name: '', specialization: '' }}
       onSubmit={(values) => {
-        const { email, password, name, specialization } = values
-        infoHandler(email, password, name, specialization, selectedValue)
+        const { email, password, name, specialization } = values;
+        infoHandler(email, password, name, specialization, selectedValue);
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().required(),
@@ -101,6 +101,7 @@ const AssignDoctorAccountScreen = ({ route, navigation }) => {
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
                   value={values.password}
+                  secureTextEntry
                   label='hasło'
                 />
                 {touched.password && errors.password && (
@@ -160,8 +161,8 @@ const AssignDoctorAccountScreen = ({ route, navigation }) => {
         </View>
       )}
     </Formik>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {
@@ -181,6 +182,6 @@ const styles = StyleSheet.create({
     height: '65%',
     padding: 15,
   },
-})
+});
 
-export default AssignDoctorAccountScreen
+export default AssignDoctorAccountScreen;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import * as medicineActions from '../../store/actions/medicine';
@@ -38,9 +38,8 @@ const PatientMedicalCasesScreen = (props) => {
         renderItem={(itemData) => (
           <MedicineControlItem
             name={itemData.item.name}
-            quantity={itemData.item.quantity}
+            isEdited={itemData.item.isEdited}
             timeOfTaking={itemData.item.timeOfTaking}
-            onDelete={() => infoHandler(itemData.item._id, itemData.item.name)}
             onTriggerNotification={() =>
               triggerNotificationHandler(itemData.item.name)
             }

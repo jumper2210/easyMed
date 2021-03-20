@@ -85,6 +85,10 @@ import DoctorMedicalVisitsScreen from '../screens/doctor/DoctorMedicalVisitsScre
 
 import PatientMedicalVisitsScreen from '../screens/patient/PatientMedicalVisitsScreen';
 
+import EditMedicineScreen from '../screens/medicine/EditMedicineScreen';
+
+import AddHealthNotesScreen from '../screens/healthInformation/AddHealthNotesScreen';
+
 const defaultNavOptions = {
   headerTitleStyle: {
     fontFamily: 'open-sans-bold',
@@ -268,6 +272,16 @@ export const EasyMedNavigator = () => {
         name='PatientMedicalVisitsScreen'
         component={PatientMedicalVisitsScreen}
         options={{ headerTitle: 'Wizyty lekarskie' }}
+      />
+      <EasyMedStackNavigator.Screen
+        name='EditMedicineScreen'
+        component={EditMedicineScreen}
+        options={{ headerTitle: 'Edytuj' }}
+      />
+      <EasyMedStackNavigator.Screen
+        name='AddHealthNotesScreen'
+        component={EditMedicineScreen}
+        options={{ headerTitle: 'Dodatkowe uwagi' }}
       />
     </EasyMedStackNavigator.Navigator>
   );

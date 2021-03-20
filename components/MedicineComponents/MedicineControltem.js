@@ -5,20 +5,16 @@ import constants from '../../constants/Constants';
 import Button from '../../UI/Button';
 
 const MedicineControlItem = (props) => {
-  const { name, quantity, timeOfTaking, onTriggerNotification } = props;
+  const { name, isEdited, timeOfTaking, onTriggerNotification } = props;
 
-  return (
-    <View style={styles.item}>
+  let display = (
+    <View style={styles.itemIsEdited}>
       <View style={styles.touchable}>
         <View style={styles.data}>
           <View style={styles.nameContainer}>
             <Text style={styles.name}>{name}</Text>
           </View>
           <View>
-            <View style={styles.details}>
-              <Text style={styles.description}>Ilość:</Text>
-              <Text style={styles.quantity}>{quantity}</Text>
-            </View>
             <View style={styles.details}>
               <Text style={styles.description}>Przyjmowanie:</Text>
               <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
@@ -36,6 +32,35 @@ const MedicineControlItem = (props) => {
       </View>
     </View>
   );
+  if (isEdited === true) {
+    display = (
+      <View style={styles.item}>
+        <View style={styles.touchable}>
+          <Text style={styles.infoText}>Ten lek został edytowany</Text>
+          <View style={styles.data}>
+            <View style={styles.nameContainer}>
+              <Text style={styles.name}>{name}</Text>
+            </View>
+            <View>
+              <View style={styles.details}>
+                <Text style={styles.description}>Przyjmowanie:</Text>
+                <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            style={{ backgroundColor: Colors.primary }}
+            textStyle={{ color: Colors.details }}
+            onPress={onTriggerNotification}
+            title='Ustaw powiadomienie'
+          />
+        </View>
+      </View>
+    );
+  }
+  return { display };
 };
 
 const styles = StyleSheet.create({
@@ -50,6 +75,18 @@ const styles = StyleSheet.create({
     margin: 30,
     height: constants.screenHeight / 2 - 65,
     justifyContent: 'space-around',
+  },
+  itemIsEdited: {
+    shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 5,
+    borderRadius: 10,
+    backgroundColor: '#272121',
+    margin: 30,
+    height: constants.screenHeight / 2 - 65,
+    justifyContent: 'space-between',
   },
   touchable: {
     borderRadius: 10,
@@ -81,6 +118,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: Colors.details,
     textTransform: 'uppercase',
+  },
+  infoText: {
+    textAlign: 'center',
+    paddingVertical: 13,
+    color: Colors.primary,
   },
   timeOfTaking: {
     fontFamily: 'open-sans-bold',

@@ -1,6 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Button, Text, Alert } from 'react-native';
-import { Formik } from 'formik';
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
+import { Formik, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import InputFormik from '../../UI/InputFormik';
 import * as Yup from 'yup';
@@ -11,7 +19,7 @@ import * as medicineActions from '../../store/actions/medicine';
 const AssignMedicineScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
-  const infoHandler = (medicineName, quantity, timeOfTaking) => {
+  const infoHandler = (medicineName, timeOfTaking) => {
     const { patientId } = route.params;
     Alert.alert(
       'Jesteś pewien?',
@@ -23,7 +31,6 @@ const AssignMedicineScreen = ({ route, navigation }) => {
             dispatch(
               medicineActions.assignMedicine(
                 medicineName,
-                quantity,
                 timeOfTaking,
                 patientId
               )
@@ -42,14 +49,13 @@ const AssignMedicineScreen = ({ route, navigation }) => {
 
   return (
     <Formik
-      initialValues={{ medicineName: '', quantity: '', timeOfTaking: '' }}
+      initialValues={{ medicineName: '', timeOfTaking: '' }}
       onSubmit={(values) => {
-        const { medicineName, quantity, timeOfTaking } = values;
-        infoHandler(medicineName, quantity, timeOfTaking);
+        const { medicineName, timeOfTaking } = values;
+        infoHandler(medicineName, timeOfTaking);
       }}
       validationSchema={Yup.object().shape({
         medicineName: Yup.string().min(3).required(),
-        quantity: Yup.string().min(3).required(),
         timeOfTaking: Yup.string().min(3).required(),
       })}
     >
@@ -64,39 +70,36 @@ const AssignMedicineScreen = ({ route, navigation }) => {
       }) => (
         <View style={styles.screen}>
           <Card style={styles.formContainer}>
-            <InputFormik
-              onChangeText={handleChange('medicineName')}
-              onBlur={() => setFieldTouched('medicineName')}
-              value={values.medicineName}
-              label='Nazwa leku'
-            />
-            {touched.medicineName && errors.medicineName && (
-              <Text style={{ fontSize: 10, color: 'red' }}>
-                {errors.medicineName}
-              </Text>
-            )}
-            <InputFormik
-              onChangeText={handleChange('quantity')}
-              onBlur={() => setFieldTouched('quantity')}
-              value={values.quantity}
-              label='Dawka leku'
-            />
-            {touched.quantity && errors.quantity && (
-              <Text style={{ fontSize: 10, color: 'red' }}>
-                {errors.quantity}
-              </Text>
-            )}
-            <InputFormik
-              onChangeText={handleChange('timeOfTaking')}
-              onBlur={() => setFieldTouched('timeOfTaking')}
-              value={values.timeOfTaking}
-              label='Czas zażywania leku'
-            />
-            {touched.timeOfTaking && errors.timeOfTaking && (
-              <Text style={{ fontSize: 10, color: 'red' }}>
-                {errors.timeOfTaking}
-              </Text>
-            )}
+            <ScrollView>
+              <KeyboardAvoidingView
+                behavior='padding'
+                keyboardVerticalOffset={35}
+              >
+                <InputFormik
+                  onChangeText={handleChange('medicineName')}
+                  onBlur={() => setFieldTouched('medicineName')}
+                  value={values.medicineName}
+                  label='Nazwa leku'
+                />
+                {touched.medicineName && errors.medicineName && (
+                  <Text style={{ fontSize: 10, color: 'red' }}>
+                    {errors.medicineName}
+                  </Text>
+                )}
+                <InputFormik
+                  numberOfLines={6}
+                  onChangeText={handleChange('timeOfTaking')}
+                  onBlur={() => setFieldTouched('timeOfTaking')}
+                  value={values.timeOfTaking}
+                  label='przyjmowanie'
+                />
+                {touched.timeOfTaking && errors.timeOfTaking && (
+                  <Text style={{ fontSize: 10, color: 'red' }}>
+                    {errors.timeOfTaking}
+                  </Text>
+                )}
+              </KeyboardAvoidingView>
+            </ScrollView>
           </Card>
           <View style={styles.buttonContainer}>
             <Button
@@ -115,7 +118,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: Colors.primary,
   },

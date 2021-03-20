@@ -4,15 +4,7 @@ export const CREATE_HEALTH_INFORMATION = ' CREATE_HEALTH_INFORMATION';
 export const LOAD_PATIENT_HEALTH_INFORMATIONS =
   'LOAD_PATIENT_HEALTH_INFORMATIONS';
 
-export const createHealthInformation = (
-  imageUri,
-  symptom,
-  age,
-  scale,
-  increase,
-  locationOfPain,
-  radiance
-) => {
+export const createHealthInformation = (imageUri, symptom, weight) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token;
     const response = await fetch(
@@ -26,11 +18,7 @@ export const createHealthInformation = (
         body: JSON.stringify({
           imageUri: imageUri,
           symptom: symptom,
-          age: age,
-          scale: scale,
-          increase: increase,
-          locationOfPain: locationOfPain,
-          radiance: radiance,
+          weight: weight,
         }),
       }
     );
@@ -73,13 +61,15 @@ export const loadPatientHealthInformation = (patientId) => {
   };
 };
 
-export const checkHealthInformation = (healthInformationId) => {
-  console.log(healthInformationId, ' z action');
+export const checkHealthInformation = (healthInformationId, doctorNotes) => {
   return async (dispatch, getState) => {
     const token = getState().authState.token;
     const response = await fetch(
       `${currentIp}/healthInformation/checkPatientHealthInformation/${healthInformationId}`,
       {
+        body: JSON.stringify({
+          doctorNotes: doctorNotes,
+        }),
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
