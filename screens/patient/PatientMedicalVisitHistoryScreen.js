@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
-import PatientMedicalVisitItem from '../../components/MedicalVisitComponents/PatientMedicalVisitItem';
+import PatientMedicalVisitHistoryItem from '../../components/MedicalVisitComponents/PatientMedicalVisitHistoryScreenItem';
 import Colors from '../../constants/Colors';
 import * as patientActions from '../../store/actions/patient';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import CustomHeaderButton from '../../UI/CustomHeaderButton';
 
-const PatientMedicalVisitsScreen = ({ navigation, route }) => {
+const AppoinmentsScreen = ({ navigation, route }) => {
   const patientData = useSelector(
     (state) => state.patientsState.patientMedicalVisits
   );
@@ -28,13 +26,13 @@ const PatientMedicalVisitsScreen = ({ navigation, route }) => {
         data={patientData}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
-          <PatientMedicalVisitItem
+          <PatientMedicalVisitHistoryItem
             date={itemData.item.date}
             hour={itemData.item.hour}
             medicalVisitId={itemData.item._id}
             doctorName={itemData.item.doctor.name}
-            doctorMail={itemData.item.doctor.mail}
-            doctorPhoneNumber={itemData.item.doctor.phoneNumber}
+            doctorMail={itemData.item.doctor.name}
+            doctorPhoneNumber={itemData.item.doctor.doctorPhoneNumber}
             doctorId={itemData.item.doctor._id}
             avatar={itemData.item.doctor.avatar}
             specialization={itemData.item.doctor.specialization}
@@ -49,25 +47,13 @@ const PatientMedicalVisitsScreen = ({ navigation, route }) => {
 
   return <View style={styles.screen}>{display}</View>;
 };
-export const screenOptions = (navData) => {
-  const { _id } = navData.route.params;
+
+export const screenOptions = () => {
   return {
-    headerTitle: 'Twoje wizyty',
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item
-          title=''
-          iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
-          onPress={() => {
-            navData.navigation.navigate('PatientMedicalVisitHistoryScreen', {
-              _id: _id,
-            });
-          }}
-        />
-      </HeaderButtons>
-    ),
+    headerTitle: 'Historia twoich wizyt',
   };
 };
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -84,4 +70,4 @@ const styles = StyleSheet.create({
     width: '60%',
   },
 });
-export default PatientMedicalVisitsScreen;
+export default AppoinmentsScreen;

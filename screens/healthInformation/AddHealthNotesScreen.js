@@ -5,6 +5,7 @@ import {
   Text,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -52,7 +53,6 @@ const AddHealthNotesScreen = ({ navigation, route }) => {
       onSubmit={(values) => {
         const { doctorNotes } = values;
         checkHealthInformationHandler(healthInformationId, doctorNotes);
-        navigation.goBack();
       }}
       validationSchema={Yup.object().shape({
         doctorNotes: Yup.string(),
@@ -69,7 +69,6 @@ const AddHealthNotesScreen = ({ navigation, route }) => {
       }) => (
         <View style={styles.screen}>
           <View style={styles.item}>
-            <Text style={styles.name}>{medicineName}</Text>
             <ScrollView>
               <KeyboardAvoidingView
                 behavior='padding'

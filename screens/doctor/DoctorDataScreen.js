@@ -21,14 +21,13 @@ const DoctorDataScreen = ({ route, navigation }) => {
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
   const {
-    doctorMail,
     doctorPhoneNumber,
     doctorId,
     avatar,
     _id,
     specialization,
+    doctorName,
   } = route.params;
-  // tu działa
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(conversationActions.loadConversations());
@@ -79,7 +78,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
         <UserAvatarItem avatar={avatar} role={'DOCTOR'} />
         <View style={styles.details}>
           <Text style={styles.label}>Nazwa:</Text>
-          <Text style={styles.label}>{doctorMail}</Text>
+          <Text style={styles.label}>{doctorName}</Text>
         </View>
         <View style={styles.details}>
           <Text style={styles.label}>Specjalizacja:</Text>

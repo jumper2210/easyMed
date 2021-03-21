@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+
 import Colors from '../../constants/Colors';
 import constants from '../../constants/Constants';
 import Button from '../../UI/Button';
@@ -7,36 +8,11 @@ import Button from '../../UI/Button';
 const MedicineControlItem = (props) => {
   const { name, isEdited, timeOfTaking, onTriggerNotification } = props;
 
-  let display = (
-    <View style={styles.itemIsEdited}>
-      <View style={styles.touchable}>
-        <View style={styles.data}>
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>{name}</Text>
-          </View>
-          <View>
-            <View style={styles.details}>
-              <Text style={styles.description}>Przyjmowanie:</Text>
-              <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          style={{ backgroundColor: Colors.primary }}
-          textStyle={{ color: Colors.details }}
-          onPress={onTriggerNotification}
-          title='Ustaw powiadomienie'
-        />
-      </View>
-    </View>
-  );
-  if (isEdited === true) {
+  let display = null;
+  if (isEdited === false) {
     display = (
       <View style={styles.item}>
         <View style={styles.touchable}>
-          <Text style={styles.infoText}>Ten lek został edytowany</Text>
           <View style={styles.data}>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>{name}</Text>
@@ -59,8 +35,38 @@ const MedicineControlItem = (props) => {
         </View>
       </View>
     );
+  } else {
+    display = (
+      <View style={styles.itemIsEdited}>
+        <View style={styles.touchable}>
+          <Text style={styles.infoText}>Ten lek został edytowany</Text>
+          <View style={styles.data}>
+            <View style={styles.nameContainer}>
+              <Text style={styles.name}>{name}</Text>
+            </View>
+            <View>
+              <View style={styles.details}>
+                <ScrollView>
+                  <Text style={styles.description}>Przyjmowanie:</Text>
+                  <Text style={styles.timeOfTaking}>{timeOfTaking}</Text>
+                </ScrollView>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            style={{ backgroundColor: Colors.primary }}
+            textStyle={{ color: Colors.details }}
+            onPress={onTriggerNotification}
+            title='Ustaw powiadomienie'
+          />
+        </View>
+      </View>
+    );
   }
-  return { display };
+
+  return <View>{display}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -72,9 +78,10 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     backgroundColor: Colors.primary,
-    margin: 30,
-    height: constants.screenHeight / 2 - 65,
-    justifyContent: 'space-around',
+    marginTop: 30,
+    padding: 15,
+    height: constants.screenHeight / 2,
+    justifyContent: 'space-evenly',
   },
   itemIsEdited: {
     shadowColor: 'black',
@@ -84,9 +91,10 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     backgroundColor: '#272121',
-    margin: 30,
-    height: constants.screenHeight / 2 - 65,
-    justifyContent: 'space-between',
+    marginTop: 30,
+    padding: 15,
+    height: constants.screenHeight / 2,
+    justifyContent: 'space-evenly',
   },
   touchable: {
     borderRadius: 10,
@@ -98,8 +106,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   details: {
-    padding: 10,
-    flexDirection: 'row',
+    padding: 20,
+    flexDirection: 'column',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
@@ -137,9 +145,10 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
   },
   description: {
-    fontSize: 19,
+    fontSize: 18,
     color: Colors.secondary,
     fontFamily: 'open-sans',
+    paddingBottom: 10,
   },
 });
 

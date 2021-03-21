@@ -44,6 +44,15 @@ const PatientDataScreen = ({ route, navigation }) => {
     dispatch(chatMateActions.loadChatMates());
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(
+        healthInformationActions.loadPatientHealthInformation(patientId)
+      );
+    });
+    return unsubscribe;
+  }, []);
+
   const setCurrentConversationId = (conversationId) => {
     dispatch(conversationActions.setCurrentConversation(conversationId));
   };
@@ -137,10 +146,6 @@ const PatientDataScreen = ({ route, navigation }) => {
     <View style={styles.screen}>
       <Card style={styles.patientDataCard}>
         <UserAvatarItem avatar={avatar} role={'PATIENT'} />
-        <View style={styles.details}>
-          <Text style={styles.label}>E-mail:</Text>
-          <Text style={styles.label}>{patientMail}</Text>
-        </View>
         <View style={styles.details}>
           <Text style={styles.label}>Numer telefonu:</Text>
           <Text style={styles.label}>

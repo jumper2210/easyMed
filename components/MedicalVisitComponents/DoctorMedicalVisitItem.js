@@ -1,33 +1,29 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
-import { useDispatch } from 'react-redux';
 import constants from '../../constants/Constants';
-import * as doctorActions from '../../store/actions/doctor';
 import Button from '../../UI/Button';
+
 const DoctorMedicalVisitItem = (props) => {
-  const dispatch = useDispatch();
   const {
     date,
     patientName,
+    hour,
+    navigation,
+    avatar,
     patientMail,
     patientPhoneNumber,
     patientId,
-    avatar,
-    _id,
     role,
-    navigation,
-    hour,
-    medicalVisitId,
+    _id,
   } = props;
-
   let display = null;
   let currentDay = new Date();
   let visitDate = new Date(date);
 
-  if (visitDate.getTime() < currentDay.getTime()) {
+  if (visitDate.getTime() + 3600000 > currentDay.getTime()) {
     display = (
-      <View style={styles.itemAfterDate}>
+      <View style={styles.item}>
         <View style={styles.touchable}>
           <View style={styles.data}>
             <View style={styles.dateContainer}>
@@ -38,37 +34,6 @@ const DoctorMedicalVisitItem = (props) => {
                 <Text style={styles.description}>Godzina wizyty:</Text>
                 <Text style={styles.quantity}>{hour}</Text>
               </View>
-              <View style={styles.details}>
-                <Text style={styles.description}>Pacjent:</Text>
-                <Text style={styles.quantity}>{patientName}</Text>
-              </View>
-            </View>
-          </View>
-          <Button
-            style={{ marginVertical: 20 }}
-            title='Usuń wizytę'
-            onPress={() => {
-              dispatch(
-                doctorActions.deleteDoctorMedicalVisit(
-                  medicalVisitId,
-                  patientId
-                )
-              );
-              navigation.navigate('HomeScreen', {});
-            }}
-          />
-        </View>
-      </View>
-    );
-  } else {
-    display = (
-      <View style={styles.item}>
-        <View style={styles.touchable}>
-          <View style={styles.data}>
-            <View style={styles.dateContainer}>
-              <Text style={styles.date}>{date}</Text>
-            </View>
-            <View>
               <View style={styles.details}>
                 <Text style={styles.description}>Pacjent:</Text>
                 <Text style={styles.quantity}>{patientName}</Text>
@@ -94,7 +59,6 @@ const DoctorMedicalVisitItem = (props) => {
       </View>
     );
   }
-
   return <View>{display}</View>;
 };
 

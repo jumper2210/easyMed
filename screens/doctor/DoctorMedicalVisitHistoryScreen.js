@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
-import DoctorMedicalVisitItem from '../../components/MedicalVisitComponents/DoctorMedicalVisitItem';
+import DoctorMedicalVisitHistoryScreenItem from '../../components/MedicalVisitComponents/DoctorMedicalVisitHistoryScreenItem';
 import Colors from '../../constants/Colors';
 import * as doctorActions from '../../store/actions/doctor';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -29,15 +29,16 @@ const DoctorMedicalVisitsScreen = ({ navigation, route }) => {
         data={doctorMedicalVisits}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => (
-          <DoctorMedicalVisitItem
+          <DoctorMedicalVisitHistoryScreenItem
             date={itemData.item.date}
             hour={itemData.item.hour}
             medicalVisitId={itemData.item._id}
             patientName={itemData.item.patient.name}
-            patientMail={itemData.item.patient.email}
+            patientMail={itemData.item.patient.mail}
             patientPhoneNumber={itemData.item.patient.phoneNumber}
             patientId={itemData.item.patient._id}
             avatar={itemData.item.patient.avatar}
+            specialization={itemData.item.patient.specialization}
             role={itemData.item.patient.role}
             _id={_id}
             navigation={navigation}
@@ -49,23 +50,9 @@ const DoctorMedicalVisitsScreen = ({ navigation, route }) => {
 
   return <View style={styles.screen}>{display}</View>;
 };
-export const screenOptions = (navData) => {
-  const { _id } = navData.route.params;
+export const screenOptions = () => {
   return {
-    headerTitle: 'Twoje wizyty',
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title=''
-          iconName={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
-          onPress={() => {
-            navData.navigation.navigate('DoctorMedicalVisitHistoryScreen', {
-              _id: _id,
-            });
-          }}
-        />
-      </HeaderButtons>
-    ),
+    headerTitle: 'Historia twoich wizyt',
   };
 };
 

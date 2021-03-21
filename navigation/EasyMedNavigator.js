@@ -81,13 +81,25 @@ import DoctorsAppointmentScreen from '../screens/doctorsAppointment/DoctorsAppoi
 
 import AvaibleHoursScreen from '../screens/doctorsAppointment/AvaibleHoursScreen';
 
-import DoctorMedicalVisitsScreen from '../screens/doctor/DoctorMedicalVisitsScreen';
+import DoctorMedicalVisitsScreen, {
+  screenOptions as DoctorMedicalVisitsScreenOptions,
+} from '../screens/doctor/DoctorMedicalVisitsScreen';
 
-import PatientMedicalVisitsScreen from '../screens/patient/PatientMedicalVisitsScreen';
+import PatientMedicalVisitsScreen, {
+  screenOptions as PatientMedicalVisitsScreenOptions,
+} from '../screens/patient/PatientMedicalVisitsScreen';
 
 import EditMedicineScreen from '../screens/medicine/EditMedicineScreen';
 
 import AddHealthNotesScreen from '../screens/healthInformation/AddHealthNotesScreen';
+
+import DoctorMedicalVisitHistoryScreen, {
+  screenOptions as DoctorScreenHistoryOptions,
+} from '../screens/doctor/DoctorMedicalVisitHistoryScreen';
+
+import PatientMedicalVisitHistoryScreen, {
+  screenOptions as PatientScreenHistoryOptions,
+} from '../screens/patient/PatientMedicalVisitHistoryScreen';
 
 const defaultNavOptions = {
   headerTitleStyle: {
@@ -266,12 +278,12 @@ export const EasyMedNavigator = () => {
       <EasyMedStackNavigator.Screen
         name='DoctorMedicalVisitsScreen'
         component={DoctorMedicalVisitsScreen}
-        options={{ headerTitle: 'Porady lekarskie' }}
+        options={DoctorMedicalVisitsScreenOptions}
       />
       <EasyMedStackNavigator.Screen
         name='PatientMedicalVisitsScreen'
         component={PatientMedicalVisitsScreen}
-        options={{ headerTitle: 'Wizyty lekarskie' }}
+        options={PatientMedicalVisitsScreenOptions}
       />
       <EasyMedStackNavigator.Screen
         name='EditMedicineScreen'
@@ -280,8 +292,18 @@ export const EasyMedNavigator = () => {
       />
       <EasyMedStackNavigator.Screen
         name='AddHealthNotesScreen'
-        component={EditMedicineScreen}
+        component={AddHealthNotesScreen}
         options={{ headerTitle: 'Dodatkowe uwagi' }}
+      />
+      <EasyMedStackNavigator.Screen
+        name='DoctorMedicalVisitHistoryScreen'
+        component={DoctorMedicalVisitHistoryScreen}
+        options={DoctorScreenHistoryOptions}
+      />
+      <EasyMedStackNavigator.Screen
+        name='PatientMedicalVisitHistoryScreen'
+        component={PatientMedicalVisitHistoryScreen}
+        options={PatientScreenHistoryOptions}
       />
     </EasyMedStackNavigator.Navigator>
   );

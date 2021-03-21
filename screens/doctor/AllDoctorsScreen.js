@@ -34,7 +34,7 @@ const AllDoctorsScreen = ({ navigation, route }) => {
               navigation.navigate('DoctorDataScreen', {
                 avatar: itemData.item.avatar,
                 doctorName: itemData.item.name,
-                doctorMail: itemData.item.email,
+                doctorMail: itemData.item.mail,
                 doctorId: itemData.item._id,
                 doctorPhoneNumber: itemData.item.phoneNumber,
                 role: itemData.item.role,

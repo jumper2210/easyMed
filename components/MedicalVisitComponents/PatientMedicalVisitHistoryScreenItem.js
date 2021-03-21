@@ -1,32 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import constants from '../../constants/Constants';
-import Button from '../../UI/Button';
 
-const PatientMedicalVisitItem = (props) => {
-  const {
-    date,
-    doctorName,
-    doctorMail,
-    doctorPhoneNumber,
-    doctorId,
-    avatar,
-    specialization,
-    _id,
-    role,
-    navigation,
-    hour,
-  } = props;
+const PatientMedicalVisitHistoryScreenItem = (props) => {
+  const { date, doctorName, hour } = props;
 
   let display = null;
   let currentDay = new Date();
   let visitDate = new Date(date);
 
-  if (visitDate.getTime() + 3600000 > currentDay.getTime()) {
+  if (visitDate.getTime() + 3600000 < currentDay.getTime()) {
     display = (
-      <View style={styles.item}>
+      <View style={styles.itemAfterDate}>
         <View style={styles.touchable}>
           <View style={styles.data}>
             <View style={styles.dateContainer}>
@@ -43,22 +29,6 @@ const PatientMedicalVisitItem = (props) => {
               </View>
             </View>
           </View>
-          <Button
-            style={{ marginVertical: 20 }}
-            title='Szczegóły lekarza'
-            onPress={() => {
-              navigation.navigate('DoctorDataScreen', {
-                avatar: avatar,
-                doctorMail: doctorMail,
-                doctorName: doctorName,
-                doctorPhoneNumber: doctorPhoneNumber,
-                doctorId: doctorId,
-                role: role,
-                specialization: specialization,
-                _id: _id,
-              });
-            }}
-          />
         </View>
       </View>
     );
@@ -67,20 +37,6 @@ const PatientMedicalVisitItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  item: {
-    width: constants.screenWidth - 40,
-    shadowColor: 'black',
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: Colors.primary,
-    margin: 30,
-    height: constants.screenHeight / 2 - 105,
-    justifyContent: 'space-between',
-    padding: 10,
-  },
   itemAfterDate: {
     width: constants.screenWidth - 40,
     shadowColor: 'black',
@@ -132,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PatientMedicalVisitItem;
+export default PatientMedicalVisitHistoryScreenItem;

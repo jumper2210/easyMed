@@ -8,7 +8,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
-import { Formik, Field } from 'formik';
+import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import InputFormik from '../../UI/InputFormik';
 import * as Yup from 'yup';
