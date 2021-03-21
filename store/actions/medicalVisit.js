@@ -3,6 +3,7 @@ export const CREATE_MEDICAL_VISIT = 'CREATE_MEDICAL_VISIT';
 import { arrayOfAvaibleHours } from '../../helpers/arrayOfAvaibleHours';
 
 export const createMedicalVisit = (day, doctorId, hour) => {
+  console.log(day, doctorId, hour);
   return async (dispatch, getState) => {
     const token = getState().authState.token;
     fetch(`${currentIp}/medicalVisit/createMedicalVisit`, {

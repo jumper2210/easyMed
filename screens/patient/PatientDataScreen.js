@@ -157,7 +157,7 @@ const PatientDataScreen = ({ route, navigation }) => {
       </Card>
       <View style={styles.scrollViewStyled}>{healthInformationDisplay}</View>
       <Text style={styles.medicineInfo}>Lekarstwa: </Text>
-      <View style={{ height: 100, width: '70%' }}>
+      <View style={{ height: 100, width: '80%' }}>
         <ListOfMedicines patientId={patientId} navigation={navigation} />
       </View>
 

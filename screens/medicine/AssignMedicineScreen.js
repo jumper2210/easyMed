@@ -35,7 +35,7 @@ const AssignMedicineScreen = ({ route, navigation }) => {
                 patientId
               )
             );
-            navigation.navigate('HomeScreen');
+            navigation.goBack();
           },
         },
         {

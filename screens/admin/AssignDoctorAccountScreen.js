@@ -5,7 +5,6 @@ import {
   Button,
   Text,
   Alert,
-  Picker,
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
@@ -17,10 +16,11 @@ import Colors from '../../constants/Colors';
 import Card from '../../UI/Card';
 import * as adminActions from '../../store/actions/admin';
 import * as clinicActions from '../../store/actions/clinics';
+import { Picker } from '@react-native-picker/picker';
 
 const AssignDoctorAccountScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState('Wybierz klinikę');
   const clinics = useSelector((state) => state.clinicsState.clinics);
 
   useEffect(() => {
@@ -131,6 +131,7 @@ const AssignDoctorAccountScreen = ({ route, navigation }) => {
                     {errors.specialization}
                   </Text>
                 )}
+
                 <Picker
                   selectedValue={selectedValue}
                   style={{ height: 100, width: '80%' }}
@@ -138,6 +139,7 @@ const AssignDoctorAccountScreen = ({ route, navigation }) => {
                     setSelectedValue(itemValue)
                   }
                 >
+                  <Picker.Item label={selectedValue} />
                   {clinics &&
                     clinics.map((cl) => (
                       <Picker.Item

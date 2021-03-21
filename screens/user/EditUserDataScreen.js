@@ -96,6 +96,7 @@ const EditUserDataScreen = ({ navigation }) => {
                       onChangeText={handleChange('password')}
                       onBlur={() => setFieldTouched('password')}
                       value={values.password}
+                      secureTextEntry
                       label='Wpisz nowe hasło'
                     />
                     {touched.password && errors.password && (

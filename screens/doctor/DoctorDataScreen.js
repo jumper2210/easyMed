@@ -71,7 +71,7 @@ const DoctorDataScreen = ({ route, navigation }) => {
       }}
     />
   );
-
+  console.log(doctorPhoneNumber, 'z d');
   return (
     <View style={styles.screen}>
       <Card style={styles.doctorDataCard}>

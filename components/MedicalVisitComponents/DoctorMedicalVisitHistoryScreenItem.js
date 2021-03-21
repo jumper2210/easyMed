@@ -22,7 +22,7 @@ const DoctorMedicalVisitHistoryScreenItem = (props) => {
   let currentDay = new Date();
   let visitDate = new Date(date);
 
-  if (visitDate.getTime() + 3600000 > currentDay.getTime()) {
+  if (visitDate.getTime() + 3600000 < currentDay.getTime()) {
     display = (
       <View style={styles.itemAfterDate}>
         <View style={styles.touchable}>

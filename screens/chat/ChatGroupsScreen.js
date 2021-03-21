@@ -26,8 +26,6 @@ const ChatGroupsScreen = ({ navigation }) => {
     dispatch(userActions.loadUserData());
   }, [dispatch]);
 
-  // console.log(chatMates);
-  console.log(conversations);
   const findConversationHandler = (chatMateId) => {
     const findConversation = conversations.find(
       (conversation) => conversation.chatMateId === chatMateId
